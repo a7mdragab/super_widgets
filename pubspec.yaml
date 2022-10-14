@@ -1,0 +1,50 @@
+name: super_widgets
+description: A new Flutter package project.
+version: 0.0.1
+homepage: ''
+
+environment:
+  sdk: '>=2.19.0-244.0.dev <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dart_extensions: ^2.2.0
+  time: ^2.1.3
+  intl: ^0.17.0
+  flutter_form_builder: ^7.7.0
+  form_builder_validators: ^8.3.0
+  datetime_picker_formfield: ^2.0.1
+  dotted_line: ^3.1.0
+  dropdown_search: ^5.0.3
+  file_picker_cross: ^4.6.0
+  image_picker: ^0.8.6
+  photo_view: ^0.14.0
+  cached_network_image: ^3.2.2
+  flutter_svg: ^1.1.5
+  flutter_svg_provider: ^1.0.3
+  jovial_svg: ^1.1.6
+  shape_of_view_null_safe: ^2.0.0
+  curved_progress_bar: ^1.0.2
+  progress_indicator: ^0.2.2
+  url_launcher: ^6.1.6
+  dotted_border: 2.0.0+2
+  draggable_scrollbar: ^0.1.0
+  flutter_custom_clippers: ^2.0.0
+  flutter_hooks: ^0.18.5+1
+  simple_animations: ^5.0.0+2
+  string_validator: ^0.3.0
+  logger: ^1.1.0
+  ready_extensions: ^1.0.8
+  list_ext: ^1.0.6
+  flutter_smart_dialog: ^4.5.5+6
+  get: ^4.6.5
+  responsive_framework: ^0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:
