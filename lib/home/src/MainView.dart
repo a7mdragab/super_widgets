@@ -219,8 +219,8 @@ class MainApp extends StatelessWidget {
     if (themeMode != null) {
       ThemeService.to.setThemeMode(themeMode);
     }
-    if (locale != null) {
-      LanguageService.to.updateLocale(locale);
+    if (locale?.languageCode != null) {
+      LanguageService.to.updateLocale(locale.languageCode);
     }
     _instance = MainApp._internal(
       routeInformationProvider,
