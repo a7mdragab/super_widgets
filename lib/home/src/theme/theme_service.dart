@@ -152,7 +152,7 @@ class ThemeService extends GetxController implements GetxService {
   // by making a setter and getter for each property.
 
   // Private value, getter and setter for the ThemeMode
-  late ThemeMode _themeMode;
+  ThemeMode _themeMode=ThemeMode.system;
 
   /// Getter for the current ThemeMode.
   ThemeMode get themeMode => _themeMode;
