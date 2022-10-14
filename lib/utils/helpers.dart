@@ -202,6 +202,12 @@ final logger = Logger(
       ),
 );
 
+const mShowToast=SmartDialog.showToast;
+const mShowLoading=SmartDialog.showLoading;
+const mShowAttach=SmartDialog.showAttach;
+const mShow=SmartDialog.show;
+const mHide=SmartDialog.dismiss;
+
 void mPrint(s)  {
   if (foundation.kDebugMode) {
     logger.i('$s');

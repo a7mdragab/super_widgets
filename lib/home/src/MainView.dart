@@ -207,6 +207,9 @@ class MainApp extends StatelessWidget {
     onGenerateInitialRoutes,
     onUnknownRoute,
   }) {
+    if (GetPlatform.isMobile) {
+      HttpOverrides.global = MyHttpOverrides();
+    }
     _instance = MainApp._internal(
       routeInformationProvider,
       routeInformationParser,
