@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
-
+import 'txt.dart';
 
 // ignore_for_file: comment_references
 
@@ -53,8 +53,11 @@ class ResponsiveMenuItems {
   final IconData? _iconSecondary;
 
   String get tooltip => _tooltip ?? label;
+
   String get labelSecondary => _labelSecondary ?? label;
+
   String get tooltipSecondary => _tooltipSecondary ?? tooltip;
+
   IconData get iconSecondary => _iconSecondary ?? icon;
 }
 
@@ -411,16 +414,22 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
   // Controls the active width of the menu-rail: expanded - collapsed - 0.
   late double activeMenuWidth;
   late double previousMenuWidth;
+
   // Controls if the menu is expanded, when it can be.
   bool isMenuExpanded = true;
+
   // Controls if the rail is closed when it can be.
   bool isMenuClosed = false;
+
   // Menu completed closing.
   bool menuDoneClosing = false;
+
   // Enabled state of each menuItem.
   late List<bool> menuItemsEnabled;
+
   // Active state of each menuItem.
   late List<ResponsiveMenuItemIconState> menuItemsIconState;
+
   // Previous media size.
   late Size mediaSize;
 
@@ -439,14 +448,12 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
       }
     }
     if (widget.menuItemsEnabled != null) {
-      if (widget.menuItemsEnabled != oldWidget.menuItemsEnabled &&
-          (widget.menuItemsEnabled?.length ?? 0) == widget.menuItems.length) {
+      if (widget.menuItemsEnabled != oldWidget.menuItemsEnabled && (widget.menuItemsEnabled?.length ?? 0) == widget.menuItems.length) {
         menuItemsEnabled = widget.menuItemsEnabled!;
       }
     }
     if (widget.menuItemsIconState != null) {
-      if (widget.menuItemsIconState != oldWidget.menuItemsIconState &&
-          (widget.menuItemsIconState?.length ?? 0) == widget.menuItems.length) {
+      if (widget.menuItemsIconState != oldWidget.menuItemsIconState && (widget.menuItemsIconState?.length ?? 0) == widget.menuItems.length) {
         menuItemsIconState = widget.menuItemsIconState!;
       }
     }
@@ -465,16 +472,13 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
     previousMenuWidth = activeMenuWidth;
     // No value provided for enabled or state used, will default to
     // enabled and primary state.
-    menuItemsEnabled =
-        List<bool>.generate(widget.menuItems.length, (int i) => true);
+    menuItemsEnabled = List<bool>.generate(widget.menuItems.length, (int i) => true);
     if (widget.menuItemsEnabled != null) {
       if ((widget.menuItemsEnabled?.length ?? 0) == widget.menuItems.length) {
         menuItemsEnabled = widget.menuItemsEnabled!;
       }
     }
-    menuItemsIconState = List<ResponsiveMenuItemIconState>.generate(
-        widget.menuItems.length,
-        (int i) => ResponsiveMenuItemIconState.primary);
+    menuItemsIconState = List<ResponsiveMenuItemIconState>.generate(widget.menuItems.length, (int i) => ResponsiveMenuItemIconState.primary);
     if (widget.menuItemsIconState != null) {
       if ((widget.menuItemsIconState?.length ?? 0) == widget.menuItems.length) {
         menuItemsIconState = widget.menuItemsIconState!;
@@ -561,8 +565,7 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
               actions: actions,
               // Some logic to show the implicit menu button on AppBar when
               // there is no rail or menu.
-              automaticallyImplyLeading:
-                  !isDesktop && isMenuClosed && menuDoneClosing,
+              automaticallyImplyLeading: !isDesktop && isMenuClosed && menuDoneClosing,
             ),
             // The menu content when used in the Drawer.
             drawer: ConstrainedBox(
@@ -628,8 +631,7 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
             drawerScrimColor: widget.drawerScrimColor,
             drawerEdgeDragWidth: widget.drawerEdgeDragWidth,
             drawerEnableOpenDragGesture: !isDesktop && isMenuClosed,
-            endDrawerEnableOpenDragGesture:
-                widget.endDrawerEnableOpenDragGesture,
+            endDrawerEnableOpenDragGesture: widget.endDrawerEnableOpenDragGesture,
             restorationId: widget.restorationId,
           ),
         ),
@@ -660,6 +662,7 @@ class _AppMenu extends StatefulWidget {
     required this.menuItemsEnabled,
     required this.menuItemsIconState,
   });
+
   final Widget? title;
   final double maxWidth;
   final VoidCallback? onOperate;
@@ -730,8 +733,7 @@ class _AppMenuState extends State<_AppMenu> {
                             railWidth: widget.railWidth,
                             menuLeadingTitle: widget.menuLeadingTitle,
                             menuLeadingSubtitle: widget.menuLeadingSubtitle,
-                            menuLeadingAvatarLabel:
-                                widget.menuLeadingAvatarLabel,
+                            menuLeadingAvatarLabel: widget.menuLeadingAvatarLabel,
                           ),
                           // Add all the menu items.
                           for (int i = 0; i < widget.menuItems.length; i++)
@@ -745,18 +747,9 @@ class _AppMenuState extends State<_AppMenu> {
                                 widget.onSelect?.call(i);
                               },
                               selected: selectedItem == i,
-                              icon: widget.menuItemsIconState[i] ==
-                                      ResponsiveMenuItemIconState.primary
-                                  ? widget.menuItems[i].icon
-                                  : widget.menuItems[i].iconSecondary,
-                              label: widget.menuItemsIconState[i] ==
-                                      ResponsiveMenuItemIconState.primary
-                                  ? widget.menuItems[i].label
-                                  : widget.menuItems[i].labelSecondary,
-                              tooltip: widget.menuItemsIconState[i] ==
-                                      ResponsiveMenuItemIconState.primary
-                                  ? widget.menuItems[i].tooltip
-                                  : widget.menuItems[i].tooltipSecondary,
+                              icon: widget.menuItemsIconState[i] == ResponsiveMenuItemIconState.primary ? widget.menuItems[i].icon : widget.menuItems[i].iconSecondary,
+                              label: widget.menuItemsIconState[i] == ResponsiveMenuItemIconState.primary ? widget.menuItems[i].label : widget.menuItems[i].labelSecondary,
+                              tooltip: widget.menuItemsIconState[i] == ResponsiveMenuItemIconState.primary ? widget.menuItems[i].tooltip : widget.menuItems[i].tooltipSecondary,
                               enabled: widget.menuItemsEnabled[i],
                               showDivider: i.isEven,
                               railWidth: widget.railWidth,
@@ -822,9 +815,7 @@ class _MenuItem extends StatelessWidget {
     //         : Color.alphaBlend(theme.colorScheme.primary.withAlpha(0x7F),
     //             theme.colorScheme.onSurface)
     //     : theme.colorScheme.onSurface.withAlpha(0x55);
-    final Color textColor = enabled
-        ? theme.colorScheme.onSurface.withAlpha(0xCC)
-        : theme.colorScheme.onSurface.withAlpha(0x55);
+    final Color textColor = enabled ? theme.colorScheme.onSurface.withAlpha(0xCC) : theme.colorScheme.onSurface.withAlpha(0x55);
     // The M3 guide calls for 12dp padding after the selection indicator on
     // the menu highlight in a Drawer or side menu. We can do that, but we
     // have such a narrow rail for phone size, so at rail sizes we will make it
@@ -892,11 +883,7 @@ class _MenuItem extends StatelessWidget {
                         // if (width < railWidth + 10)
                         //   const SizedBox.shrink()
                         // else
-                          Text(
-                            label,
-                            style: theme.textTheme.bodyLarge!
-                                .copyWith(color: textColor),
-                          )
+                        Txt(label)
                       ],
                     ),
                   ),
@@ -918,6 +905,7 @@ class _MenuLeadingItem extends StatefulWidget {
     this.menuLeadingSubtitle,
     this.menuLeadingAvatarLabel = '',
   });
+
   final double railWidth;
   final Widget? menuLeadingTitle;
   final Widget? menuLeadingSubtitle;
@@ -950,9 +938,7 @@ class _MenuLeadingItemState extends State<_MenuLeadingItem> {
             radius: widget.railWidth / 2 - hPadding,
             child: Text(
               widget.menuLeadingAvatarLabel,
-              style: primaryTextTheme.titleMedium!.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w600),
+              style: primaryTextTheme.titleMedium!.copyWith(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.w600),
             ),
           ),
           title: widget.menuLeadingTitle,
@@ -991,7 +977,7 @@ class _MenuLeadingItemState extends State<_MenuLeadingItem> {
                       const Spacer(),
                       TextButton(
                         onPressed: () {
-                          SmartDialog.show(builder: (context)=>const Text('About'));
+                          SmartDialog.show(builder: (context) => const Text('About'));
                         },
                         child: Column(
                           children: <Widget>[
