@@ -148,6 +148,7 @@ class MainApp extends StatelessWidget {
 
   static late final MainApp _instance;
 
+  ///region factory
   factory MainApp({
     routeInformationProvider,
     RouteInformationParser<Object>? routeInformationParser,
@@ -159,7 +160,7 @@ class MainApp extends StatelessWidget {
     color,
     lightTheme,
     darkTheme,
-    useInheritedMediaQuery=false,
+    useInheritedMediaQuery = false,
     highContrastTheme,
     highContrastDarkTheme,
     themeMode = ThemeMode.system,
@@ -283,6 +284,8 @@ class MainApp extends StatelessWidget {
     );
     return _instance;
   }
+
+  ///endregion factory
 
   @override
   Widget build(BuildContext context) {
