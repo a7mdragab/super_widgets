@@ -159,7 +159,7 @@ class MainApp extends StatelessWidget {
     color,
     lightTheme,
     darkTheme,
-    useInheritedMediaQuery,
+    useInheritedMediaQuery=false,
     highContrastTheme,
     highContrastDarkTheme,
     themeMode,
