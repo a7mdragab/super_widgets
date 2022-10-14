@@ -9,7 +9,6 @@ import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
-
 launchStringURL(String link) async {
   if (await canLaunchUrl(Uri.parse(link))) {
     await launchUrl(Uri.parse(link));
@@ -65,9 +64,9 @@ String getFormattedString(String x, List vals) {
   return temp;
 }
 
-Future<ImageSource> showImagePickerDialog() {
+Future<ImageSource> showImagePickerDialog() async {
   Completer<ImageSource> completer = Completer<ImageSource>();
-  SmartDialog.show(
+  await SmartDialog.show(
     clickMaskDismiss: false,
     backDismiss: true,
     alignment: Alignment.center,
@@ -105,7 +104,7 @@ Future<ImageSource> showImagePickerDialog() {
   return completer.future;
 }
 
-showConfirmationDialog(String msg, Function function) {
+showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
   SmartDialog.show(
     clickMaskDismiss: false,
     backDismiss: true,
@@ -118,7 +117,7 @@ showConfirmationDialog(String msg, Function function) {
         children: [
           Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
           vSpace32,
-          Expanded(child: Txt('Are you sure you want to'.tr + msg.tr, fontSize: 16)),
+          Expanded(child: Txt(msg != null ? 'Are you sure you want to'.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16)),
           Row(
             children: [
               Expanded(
@@ -202,13 +201,13 @@ final logger = Logger(
       ),
 );
 
-const mShowToast=SmartDialog.showToast;
-const mShowLoading=SmartDialog.showLoading;
-const mShowAttach=SmartDialog.showAttach;
-const mShow=SmartDialog.show;
-const mHide=SmartDialog.dismiss;
+const mShowToast = SmartDialog.showToast;
+const mShowLoading = SmartDialog.showLoading;
+const mShowAttach = SmartDialog.showAttach;
+const mShowDialog = SmartDialog.show;
+const mHide = SmartDialog.dismiss;
 
-void mPrint(s)  {
+void mPrint(s) {
   if (foundation.kDebugMode) {
     logger.i('$s');
   }
