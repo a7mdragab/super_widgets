@@ -16,7 +16,7 @@ const double _kMenuWidth = 275;
 // We make it extra compact to not be so intrusive on phones. It looks a bit
 // silly on desktop. But parent can vary it based on media size if so desired.
 // The default example and example 5 do so.
-const double _kRailWidth = 52;
+const double _kRailWidth = 100;
 
 // The minimum media size needed for desktop/large tablet menu view.
 // Only at higher than this breakpoint will the menu open and be possible
@@ -532,22 +532,19 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
                 maxWidth: widget.menuWidth,
                 railWidth: widget.railWidth,
                 onSelect: widget.onSelect,
-                // User pushed the menu button, change menu state, on desktop
-                // we toggle the the menuExpanded and not menuExpanded state.
-                // On not desktop size (phone or tablet) we toggle the state
-                // isMenuClosed or not.
                 onOperate: () {
                   setState(() {
+                    isMenuClosed = true;
                     // Desktop case, we can only expand or collapse the menu.
-                    if (isDesktop) {
-                      // So we toggle its state.
-                      isMenuExpanded = !isMenuExpanded;
-                    } else {
-                      // Tablet or phone case, we can only close the menu, it
-                      // will then be in the Drawer, from where it can be
-                      // opened again as a drawer with the menu button.
-                      isMenuClosed = true;
-                    }
+                    // if (isDesktop) {
+                    //   // So we toggle its state.
+                    //   isMenuExpanded = !isMenuExpanded;
+                    // } else {
+                    //   // Tablet or phone case, we can only close the menu, it
+                    //   // will then be in the Drawer, from where it can be
+                    //   // opened again as a drawer with the menu button.
+                    //   isMenuClosed = true;
+                    // }
                   });
                 },
               ),
@@ -857,35 +854,7 @@ class _MenuItem extends StatelessWidget {
                   maxWidth: math.max(menuWidth, 0),
                   child: InkWell(
                     onTap: enabled ? onTap : null,
-                    child: Row(
-                      children: <Widget>[
-                        // MaybeTooltip(
-                        //   // Show tooltips only at rail size or if
-                        //   // the label and tooltip are different and when
-                        //   // tooltip is not empty string and item is enabled.
-                        //   condition: (width == railWidth || label != tooltip) &&
-                        //       tooltip != '' &&
-                        //       enabled,
-                        //   // The item menu labels is a tooltip on rail size.
-                        //   message: tooltip,
-                        //   // Just to get the tooltip outside the rail.
-                        //   margin: const EdgeInsetsDirectional.only(start: 50),
-                        //   // Constrain icon to min of rail width.
-                        //   child: ConstrainedBox(
-                        //     constraints: BoxConstraints.tightFor(
-                        //       width: railWidth,
-                        //       height: railWidth,
-                        //     ),
-                        //     child: Icon(icon, color: iconColor),
-                        //   ),
-                        // ),
-                        // Below width of 10dp we remove the label.
-                        // if (width < railWidth + 10)
-                        //   const SizedBox.shrink()
-                        // else
-                        Txt(label)
-                      ],
-                    ),
+                    child: Txt(label)
                   ),
                 ),
               ),
