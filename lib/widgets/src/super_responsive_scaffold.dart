@@ -534,17 +534,17 @@ class _SuperResponsiveScaffoldState extends State<SuperResponsiveScaffold> {
                 onSelect: widget.onSelect,
                 onOperate: () {
                   setState(() {
-                    isMenuClosed = true;
+                    // isMenuClosed = true;
                     // Desktop case, we can only expand or collapse the menu.
-                    // if (isDesktop) {
-                    //   // So we toggle its state.
-                    //   isMenuExpanded = !isMenuExpanded;
-                    // } else {
-                    //   // Tablet or phone case, we can only close the menu, it
-                    //   // will then be in the Drawer, from where it can be
-                    //   // opened again as a drawer with the menu button.
-                    //   isMenuClosed = true;
-                    // }
+                    if (isDesktop) {
+                      // So we toggle its state.
+                      isMenuExpanded = !isMenuExpanded;
+                    } else {
+                      // Tablet or phone case, we can only close the menu, it
+                      // will then be in the Drawer, from where it can be
+                      // opened again as a drawer with the menu button.
+                      isMenuClosed = true;
+                    }
                   });
                 },
               ),
