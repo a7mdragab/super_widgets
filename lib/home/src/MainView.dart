@@ -8,7 +8,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:super_widgets/home/src/language_service.dart';
 import 'package:super_widgets/utils/http_overrides.dart';
+
+import 'theme/theme_service.dart';
 
 class MainApp extends StatelessWidget {
   ///region Vars
@@ -160,14 +163,14 @@ class MainApp extends StatelessWidget {
     highContrastTheme,
     highContrastDarkTheme,
     themeMode,
-    locale=const Locale('en'),
+    locale = const Locale('en'),
     localizationsDelegates,
     localeListResolutionCallback,
     localeResolutionCallback,
-    supportedLocales=const <Locale>[
-  Locale('ar'),
-  Locale('en'),
-  ],
+    supportedLocales = const <Locale>[
+      Locale('ar'),
+      Locale('en'),
+    ],
     debugShowMaterialGrid,
     showPerformanceOverlay,
     checkerboardRasterCacheImages,
@@ -209,6 +212,15 @@ class MainApp extends StatelessWidget {
   }) {
     if (GetPlatform.isMobile) {
       HttpOverrides.global = MyHttpOverrides();
+    }
+    Get.put<ThemeService>(ThemeService());
+    Get.put<LanguageService>(LanguageService());
+
+    if (themeMode != null) {
+      ThemeService.to.setThemeMode(themeMode);
+    }
+    if (locale != null) {
+      LanguageService.to.updateLocale(locale);
     }
     _instance = MainApp._internal(
       routeInformationProvider,
@@ -274,78 +286,86 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      key: key,
-      navigatorKey: navigatorKey,
-      debugShowCheckedModeBanner: false,
-      title: title,
-      translations: translations,
-      color: color,
-      actions: actions,
-      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
-      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
-      customTransition: customTransition,
-      debugShowMaterialGrid: debugShowMaterialGrid,
-      defaultGlobalState: defaultGlobalState,
-      enableLog: enableLog,
-      fallbackLocale: fallbackLocale,
-      highContrastDarkTheme: highContrastDarkTheme,
-      highContrastTheme: highContrastTheme,
-      home: home,
-      initialBinding: initialBinding,
-      localeListResolutionCallback: localeListResolutionCallback,
-      localeResolutionCallback: localeResolutionCallback,
-      logWriterCallback: logWriterCallback,
-      onDispose: onDispose,
-      onGenerateInitialRoutes: onGenerateInitialRoutes,
-      onGenerateRoute: onGenerateRoute,
-      onGenerateTitle: onGenerateTitle,
-      onInit: onInit,
-      onReady: onReady,
-      onUnknownRoute: onUnknownRoute,
-      opaqueRoute: opaqueRoute,
-      popGesture: popGesture,
-      routes: routes ?? {},
-      routingCallback: routingCallback,
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      shortcuts: shortcuts,
-      showPerformanceOverlay: showPerformanceOverlay,
-      showSemanticsDebugger: showSemanticsDebugger,
-      smartManagement: smartManagement,
-      textDirection: textDirection,
-      translationsKeys: translationsKeys,
-      unknownRoute: unknownRoute,
-      useInheritedMediaQuery: useInheritedMediaQuery,
+    return GetBuilder<LanguageService>(builder: (languageController) {
+      return GetBuilder<ThemeService>(builder: (themeController) {
+        return AnimatedBuilder(
+            animation: themeController,
+            builder: (BuildContext context, Widget? child) {
+              return GetMaterialApp(
+                key: key,
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+                title: title,
+                translations: translations,
+                color: color,
+                actions: actions,
+                checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+                checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+                customTransition: customTransition,
+                debugShowMaterialGrid: debugShowMaterialGrid,
+                defaultGlobalState: defaultGlobalState,
+                enableLog: enableLog,
+                fallbackLocale: fallbackLocale,
+                highContrastDarkTheme: highContrastDarkTheme,
+                highContrastTheme: highContrastTheme,
+                home: home,
+                initialBinding: initialBinding,
+                localeListResolutionCallback: localeListResolutionCallback,
+                localeResolutionCallback: localeResolutionCallback,
+                logWriterCallback: logWriterCallback,
+                onDispose: onDispose,
+                onGenerateInitialRoutes: onGenerateInitialRoutes,
+                onGenerateRoute: onGenerateRoute,
+                onGenerateTitle: onGenerateTitle,
+                onInit: onInit,
+                onReady: onReady,
+                onUnknownRoute: onUnknownRoute,
+                opaqueRoute: opaqueRoute,
+                popGesture: popGesture,
+                routes: routes ?? {},
+                routingCallback: routingCallback,
+                scaffoldMessengerKey: scaffoldMessengerKey,
+                shortcuts: shortcuts,
+                showPerformanceOverlay: showPerformanceOverlay,
+                showSemanticsDebugger: showSemanticsDebugger,
+                smartManagement: smartManagement,
+                textDirection: textDirection,
+                translationsKeys: translationsKeys,
+                unknownRoute: unknownRoute,
+                useInheritedMediaQuery: useInheritedMediaQuery,
 
-      ///region Routing
-      initialRoute: initialRoute,
-      getPages: getPages,
+                ///region Routing
+                initialRoute: initialRoute,
+                getPages: getPages,
 
-      ///region Routing
+                ///endregion Routing
 
-      ///region Themes
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: themeMode,
+                ///region Themes
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                themeMode: themeController.themeMode,
 
-      ///endregion Themes
+                ///endregion Themes
 
-      ///region Locales
-      supportedLocales:supportedLocales,
-      locale: locale,
-      localizationsDelegates: localizationDelegates,
+                ///region Locales
+                supportedLocales: supportedLocales,
+                locale: languageController.getLocale,
+                localizationsDelegates: localizationDelegates,
 
-      ///endregion Locales
+                ///endregion Locales
 
-      ///endregion UI
-      navigatorObservers: [FlutterSmartDialog.observer],
-      builder: mainResponsiveBuilder,
-      scrollBehavior: scrollBehavior,
-      defaultTransition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 100),
+                ///region UI
+                navigatorObservers: [FlutterSmartDialog.observer],
+                builder: mainResponsiveBuilder,
+                scrollBehavior: scrollBehavior,
+                defaultTransition: Transition.fade,
+                transitionDuration: const Duration(milliseconds: 100),
 
-      ///endregion UI
-    );
+                ///endregion UI
+              );
+            });
+      });
+    });
   }
 }
 
