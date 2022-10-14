@@ -103,7 +103,7 @@ Future<ImageSource> showImagePickerDialog() async {
 
   return completer.future;
 }
-
+//Hello
 showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
   SmartDialog.show(
     clickMaskDismiss: false,
