@@ -40,32 +40,12 @@ class SuperPanel extends StatelessWidget {
                 child: InputDecorator(
                     isFocused: hasFocus,
                     decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-                          isDense: true,
-                          alignLabelWithHint: true,
+
                           contentPadding: contentPadding,
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          filled: true,
                           fillColor: fillColor,
                           labelStyle: TextStyle(color: hasError ? Colors.red : (hasFocus ? Colors.blue : Colors.black)),
                           labelText: title,
-                          // label: Row(
-                          //   mainAxisSize: MainAxisSize.min,
-                          //   children: [
-                          //     // Image.asset('assets/images/docker_icon.svg',
-                          //     //     height: 24, width: 24),
-                          //     // const SizedBox(width: 8),
-                          //     Text(title ?? '')
-                          //   ],
-                          // ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: BorderSide(color: hasError ? Colors.red : Colors.grey)),
-                          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: BorderSide(color: hasError ? Colors.red : Colors.grey)),
-                          // : (hasFocus ? Colors.blue : Colors.grey))),
-                          // errorBorder: OutlineInputBorder(
-                          //     borderRadius: BorderRadius.circular(4),
-                          //     borderSide:
-                          //         const BorderSide(color: Colors.red, width: 2)),
-                          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: BorderSide(color: hasError ? Colors.red : Colors.blue)),
-                        ),
+                          ),
                     child: child),
               );
             }),
