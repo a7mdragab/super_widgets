@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-String appName='App Name';
 String appUploadCenter='UploadCenter';
 
 const hSpace4 = SizedBox(width: 4);
