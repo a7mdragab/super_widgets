@@ -889,9 +889,9 @@ class _MenuItem extends StatelessWidget {
                         //   ),
                         // ),
                         // Below width of 10dp we remove the label.
-                        if (width < railWidth + 10)
-                          const SizedBox.shrink()
-                        else
+                        // if (width < railWidth + 10)
+                        //   const SizedBox.shrink()
+                        // else
                           Text(
                             label,
                             style: theme.textTheme.bodyLarge!
