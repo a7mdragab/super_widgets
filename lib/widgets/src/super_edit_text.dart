@@ -151,14 +151,14 @@ class SuperEditTextState extends State<SuperEditText> {
                                   icon: const Icon(Icons.close),
                                 )
                           : Txt(widget.suffixText))),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: ThemeService.to.currentColors!.primary),
-                // borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
-              focusedBorder: OutlineInputBorder(
-                  // borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide: BorderSide(color: ThemeService.to.currentColors!.primaryContainer, width: 1)),
-              suffixIconConstraints: const BoxConstraints.tightForFinite(width: 30),
+              // enabledBorder: OutlineInputBorder(
+              //   borderSide: BorderSide(color: ThemeService.to.currentColors!.primary),
+              //   // borderRadius: BorderRadius.circular(widget.borderRadius),
+              // ),
+              // focusedBorder: OutlineInputBorder(
+              //     // borderRadius: BorderRadius.circular(widget.borderRadius),
+              //     borderSide: BorderSide(color: ThemeService.to.currentColors!.primaryContainer, width: 1)),
+              // suffixIconConstraints: const BoxConstraints.tightForFinite(width: 30),
             ),
         textDirection: isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
         textAlign: isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left,
