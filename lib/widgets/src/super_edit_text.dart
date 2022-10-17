@@ -85,82 +85,85 @@ class SuperEditTextState extends State<SuperEditText> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
-      child: FormBuilderTextField(
-        // showCursor: true,
-        name: widget.eHint,
-        enabled: widget.enabled,
-        maxLines: widget.maxLines,
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
-        controller: widget.eController,
-        obscureText: isObscured,
-        textInputAction: widget.textInputAction,
-
-        onChanged: (s) {
-          widget.onChanged?.call(s);
-          setState(() {});
-        },
-        // style: const TextStyle(fontSize: 14),
-        readOnly: widget.ontap != null,
-        onSubmitted: widget.onSubmitted == null
-            ? null
-            : (s) {
-                widget.onSubmitted?.call();
-              },
-        onTap: () {
-          if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
-            setState(() {
-              widget.eController!.selection = TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length));
-            });
-          }
-        },
-
-        decoration: const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
-              hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
-              floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
-              labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
-              fillColor: widget.fillColor,
-              suffixText: widget.suffixText,
-              labelText: widget.eHint,
-              hintText: widget.eHint,
-              // prefixIconConstraints: BoxConstraints.tightForFinite(width: 30),
-              prefixIcon: widget.prefixIconData == null
-                  ? widget.prefixWidget
-                  : Icon(
-                      widget.prefixIconData,
-                      color: context.theme.primaryColor,
-                    ),
-
-              suffixIcon: widget.suffixWidget ??
-                  (widget.obscureText
-                      ? (IconButton(
-                          onPressed: () {
-                            isObscured = !isObscured;
-                            setState(() {});
-                          },
-                          // icon: Icon(isObscured ? Icons.remove_red_eye : Icons.remove_red_eye_outlined),
-                          icon: Icon(isObscured ? Icons.lock_open_rounded : Icons.lock_rounded),
-                        ))
-                      : (widget.suffixText == null
-                          ? widget.eController!.text.isNullOrWhiteSpace
-                              ? null
-                              : IconButton(
-                                  onPressed: widget.eController!.clear,
-                                  icon: const Icon(Icons.close),
-                                )
-                          : Txt(widget.suffixText))),
-              // enabledBorder: OutlineInputBorder(
-              //     borderSide: BorderSide(color: ThemeController.to.currentColors!.primary), borderRadius: BorderRadius.circular(widget.borderRadius)),
-              // focusedBorder: OutlineInputBorder(
-              //     borderRadius: BorderRadius.circular(widget.borderRadius),
-              //     borderSide: BorderSide(color: ThemeController.to.currentColors!.primaryContainer, width: 1)),
-              // suffixIconConstraints: const BoxConstraints.tightForFinite(width: 30),
-            ),
+    return Theme(
+      data: Get.theme,
+      child: Directionality(
         textDirection: isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
-        textAlign: isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left,
-        validator: FormBuilderValidators.compose(widget.validators ?? []),
-        keyboardType: widget.keyboardType,
+        child: FormBuilderTextField(
+          // showCursor: true,
+          name: widget.eHint,
+          enabled: widget.enabled,
+          maxLines: widget.maxLines,
+          // autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: widget.eController,
+          obscureText: isObscured,
+          textInputAction: widget.textInputAction,
+
+          onChanged: (s) {
+            widget.onChanged?.call(s);
+            setState(() {});
+          },
+          // style: const TextStyle(fontSize: 14),
+          readOnly: widget.ontap != null,
+          onSubmitted: widget.onSubmitted == null
+              ? null
+              : (s) {
+                  widget.onSubmitted?.call();
+                },
+          onTap: () {
+            if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
+              setState(() {
+                widget.eController!.selection = TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length));
+              });
+            }
+          },
+
+          decoration: const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
+                hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
+                floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
+                labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
+                fillColor: widget.fillColor,
+                suffixText: widget.suffixText,
+                labelText: widget.eHint,
+                hintText: widget.eHint,
+                // prefixIconConstraints: BoxConstraints.tightForFinite(width: 30),
+                prefixIcon: widget.prefixIconData == null
+                    ? widget.prefixWidget
+                    : Icon(
+                        widget.prefixIconData,
+                        color: context.theme.primaryColor,
+                      ),
+
+                suffixIcon: widget.suffixWidget ??
+                    (widget.obscureText
+                        ? (IconButton(
+                            onPressed: () {
+                              isObscured = !isObscured;
+                              setState(() {});
+                            },
+                            // icon: Icon(isObscured ? Icons.remove_red_eye : Icons.remove_red_eye_outlined),
+                            icon: Icon(isObscured ? Icons.lock_open_rounded : Icons.lock_rounded),
+                          ))
+                        : (widget.suffixText == null
+                            ? widget.eController!.text.isNullOrWhiteSpace
+                                ? null
+                                : IconButton(
+                                    onPressed: widget.eController!.clear,
+                                    icon: const Icon(Icons.close),
+                                  )
+                            : Txt(widget.suffixText))),
+                // enabledBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(color: ThemeController.to.currentColors!.primary), borderRadius: BorderRadius.circular(widget.borderRadius)),
+                // focusedBorder: OutlineInputBorder(
+                //     borderRadius: BorderRadius.circular(widget.borderRadius),
+                //     borderSide: BorderSide(color: ThemeController.to.currentColors!.primaryContainer, width: 1)),
+                // suffixIconConstraints: const BoxConstraints.tightForFinite(width: 30),
+              ),
+          textDirection: isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
+          textAlign: isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left,
+          validator: FormBuilderValidators.compose(widget.validators ?? []),
+          keyboardType: widget.keyboardType,
+        ),
       ),
     );
   }
