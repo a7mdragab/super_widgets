@@ -291,7 +291,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LanguageService>(builder: (languageController) {
       return GetBuilder<ThemeService>(builder: (themeController) {
-        Get.changeTheme(lightTheme!);
         return AnimatedBuilder(
             animation: themeController,
             builder: (BuildContext context, Widget? child) {
