@@ -146,7 +146,7 @@ class MainApp extends StatelessWidget {
 
   ///endregion _internal
 
-  static late final MainApp _instance;
+  static late final MainApp? _instance;
 
   ///region factory
   factory MainApp({
@@ -223,7 +223,7 @@ class MainApp extends StatelessWidget {
     if (locale?.languageCode != null) {
       LanguageService.to.updateLocale(locale.languageCode);
     }
-    _instance = MainApp._internal(
+    _instance ??= MainApp._internal(
       routeInformationProvider,
       routeInformationParser,
       routerDelegate,
@@ -282,7 +282,7 @@ class MainApp extends StatelessWidget {
       onGenerateInitialRoutes,
       onUnknownRoute,
     );
-    return _instance;
+    return _instance!;
   }
 
   ///endregion factory
