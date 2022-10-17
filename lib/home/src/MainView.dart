@@ -146,7 +146,7 @@ class MainApp extends StatelessWidget {
 
   ///endregion _internal
 
-  static late final MainApp? _instance;
+  static MainApp? _instance;
 
   ///region factory
   factory MainApp({
