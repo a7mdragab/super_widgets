@@ -99,9 +99,11 @@ class SuperEditTextState extends State<SuperEditText> {
         },
         // style: const TextStyle(fontSize: 14),
         readOnly: widget.ontap != null,
-        onSubmitted: (s) {
-          widget.onSubmitted?.call();
-        },
+        onSubmitted: widget.onSubmitted == null
+            ? null
+            : (s) {
+                widget.onSubmitted?.call();
+              },
         onTap: () {
           if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
             setState(() {

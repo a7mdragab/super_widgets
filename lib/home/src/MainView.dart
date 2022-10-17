@@ -291,6 +291,9 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LanguageService>(builder: (languageController) {
       return GetBuilder<ThemeService>(builder: (themeController) {
+        if (lightTheme != null) {
+          Get.changeTheme(lightTheme!);
+        }
         return AnimatedBuilder(
             animation: themeController,
             builder: (BuildContext context, Widget? child) {
@@ -362,7 +365,7 @@ class MainApp extends StatelessWidget {
                 builder: mainResponsiveBuilder,
                 scrollBehavior: scrollBehavior,
                 defaultTransition: Transition.fade,
-                transitionDuration: const Duration(milliseconds: 100),
+                transitionDuration: const Duration(milliseconds: 50),
 
                 ///endregion UI
               );
@@ -375,19 +378,19 @@ class MainApp extends StatelessWidget {
 Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
   final smartDialog = FlutterSmartDialog.init();
   child = smartDialog(context, child);
-  child = ResponsiveWrapper.builder(
-    ClampingScrollWrapper(child: child),
-    minWidth: 480,
-    maxWidth: 1600,
-    mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
-    defaultScale: true,
-    breakpoints: const [
-      ResponsiveBreakpoint.autoScale(480, name: MOBILE),
-      ResponsiveBreakpoint.autoScale(700, name: TABLET),
-      ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
-      ResponsiveBreakpoint.autoScale(2460, name: '4K'),
-    ],
-  );
+  // child = ResponsiveWrapper.builder(
+  //   ClampingScrollWrapper(child: child),
+  //   minWidth: 480,
+  //   maxWidth: 1980,
+  //   mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+  //   defaultScale: true,
+  //   breakpoints: const [
+  //     ResponsiveBreakpoint.autoScale(480, name: MOBILE),
+  //     ResponsiveBreakpoint.autoScale(700, name: TABLET),
+  //     ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
+  //     ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+  //   ],
+  // );
   return child;
 }
 
