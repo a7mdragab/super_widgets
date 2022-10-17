@@ -289,12 +289,88 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return GetMaterialApp(
+      ///region Others
+      key: key,
+      navigatorKey: navigatorKey,
+      debugShowCheckedModeBanner: false,
+      title: title,
+      translations: translations,
+      color: color,
+      actions: actions,
+      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+      customTransition: customTransition,
+      debugShowMaterialGrid: debugShowMaterialGrid,
+      defaultGlobalState: defaultGlobalState,
+      enableLog: enableLog,
+      fallbackLocale: fallbackLocale,
+      highContrastDarkTheme: highContrastDarkTheme,
+      highContrastTheme: highContrastTheme,
+      home: home,
+      initialBinding: initialBinding,
+      localeListResolutionCallback: localeListResolutionCallback,
+      localeResolutionCallback: localeResolutionCallback,
+      logWriterCallback: logWriterCallback,
+      onDispose: onDispose,
+      onGenerateInitialRoutes: onGenerateInitialRoutes,
+      onGenerateRoute: onGenerateRoute,
+      onGenerateTitle: onGenerateTitle,
+      onInit: onInit,
+      onReady: onReady,
+      onUnknownRoute: onUnknownRoute,
+      opaqueRoute: opaqueRoute,
+      popGesture: popGesture,
+      routes: routes ?? {},
+      routingCallback: routingCallback,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      shortcuts: shortcuts,
+      showPerformanceOverlay: showPerformanceOverlay,
+      showSemanticsDebugger: showSemanticsDebugger,
+      smartManagement: smartManagement,
+      textDirection: textDirection,
+      translationsKeys: translationsKeys,
+      unknownRoute: unknownRoute,
+      useInheritedMediaQuery: useInheritedMediaQuery,
+
+      ///endregion others
+
+      ///region Routing
+      initialRoute: initialRoute,
+      getPages: getPages,
+
+      ///endregion Routing
+
+      ///region Themes
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
+
+      ///endregion Themes
+
+      ///region Locales
+      supportedLocales: supportedLocales,
+      locale: locale,
+      localizationsDelegates: localizationDelegates,
+
+      ///endregion Locales
+
+      ///region UI
+      navigatorObservers: [FlutterSmartDialog.observer],
+      builder: mainResponsiveBuilder,
+      scrollBehavior: scrollBehavior,
+      defaultTransition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 50),
+
+      ///endregion UI
+    );
     return GetBuilder<LanguageService>(builder: (languageController) {
       return GetBuilder<ThemeService>(builder: (themeController) {
         return AnimatedBuilder(
             animation: themeController,
             builder: (BuildContext context, Widget? child) {
               return GetMaterialApp(
+                ///region Others
                 key: key,
                 navigatorKey: navigatorKey,
                 debugShowCheckedModeBanner: false,
@@ -336,6 +412,8 @@ class MainApp extends StatelessWidget {
                 translationsKeys: translationsKeys,
                 unknownRoute: unknownRoute,
                 useInheritedMediaQuery: useInheritedMediaQuery,
+
+                ///endregion others
 
                 ///region Routing
                 initialRoute: initialRoute,
