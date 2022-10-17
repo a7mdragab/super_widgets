@@ -378,19 +378,18 @@ class MainApp extends StatelessWidget {
 Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
   final smartDialog = FlutterSmartDialog.init();
   child = smartDialog(context, child);
-  // child = ResponsiveWrapper.builder(
-  //   ClampingScrollWrapper(child: child),
-  //   minWidth: 480,
-  //   maxWidth: 1980,
-  //   mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
-  //   defaultScale: true,
-  //   breakpoints: const [
-  //     ResponsiveBreakpoint.autoScale(480, name: MOBILE),
-  //     ResponsiveBreakpoint.autoScale(700, name: TABLET),
-  //     ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
-  //     ResponsiveBreakpoint.autoScale(2460, name: '4K'),
-  //   ],
-  // );
+  child = ResponsiveWrapper.builder(
+    ClampingScrollWrapper(child: child),
+    minWidth: 480,
+    maxWidth: 1980,
+    mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+    defaultScale: true,
+    breakpoints: const [
+      ResponsiveBreakpoint.resize(480, name: MOBILE),
+      ResponsiveBreakpoint.autoScale(700, name: TABLET),
+      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+    ],
+  );
   return child;
 }
 
