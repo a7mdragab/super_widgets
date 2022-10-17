@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:super_widgets/home/src/theme/theme_service.dart';
 import 'txt.dart';
 
 import '../../utils/helpers.dart';
@@ -150,12 +151,14 @@ class SuperEditTextState extends State<SuperEditText> {
                                   icon: const Icon(Icons.close),
                                 )
                           : Txt(widget.suffixText))),
-              // enabledBorder: OutlineInputBorder(
-              //     borderSide: BorderSide(color: ThemeController.to.currentColors!.primary), borderRadius: BorderRadius.circular(widget.borderRadius)),
-              // focusedBorder: OutlineInputBorder(
-              //     borderRadius: BorderRadius.circular(widget.borderRadius),
-              //     borderSide: BorderSide(color: ThemeController.to.currentColors!.primaryContainer, width: 1)),
-              // suffixIconConstraints: const BoxConstraints.tightForFinite(width: 30),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: ThemeService.to.currentColors!.primary),
+                // borderRadius: BorderRadius.circular(widget.borderRadius),
+              ),
+              focusedBorder: OutlineInputBorder(
+                  // borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: BorderSide(color: ThemeService.to.currentColors!.primaryContainer, width: 1)),
+              suffixIconConstraints: const BoxConstraints.tightForFinite(width: 30),
             ),
         textDirection: isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
         textAlign: isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left,
