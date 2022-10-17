@@ -41,6 +41,7 @@ class SuperEditText extends StatefulWidget {
   final void Function(String?)? onChanged;
 
   final TextInputType keyboardType;
+  final TextInputAction? textInputAction;
 
   final Color fillColor;
 
@@ -51,6 +52,7 @@ class SuperEditText extends StatefulWidget {
     this.eAsset,
     this.fillColor = Colors.white,
     this.keyboardType = TextInputType.text,
+    this.textInputAction,
     this.prefixIconData,
     this.prefixWidget,
     this.postfixAsset,
@@ -93,6 +95,8 @@ class SuperEditTextState extends State<SuperEditText> {
         // autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: widget.eController,
         obscureText: isObscured,
+        textInputAction: widget.textInputAction,
+
         onChanged: (s) {
           widget.onChanged?.call(s);
           setState(() {});
