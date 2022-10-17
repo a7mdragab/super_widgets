@@ -116,9 +116,9 @@ class SuperEditTextState extends State<SuperEditText> {
           }
         },
 
-        decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+        decoration: const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
               hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
-              floatingLabelStyle: context.textTheme.titleLarge!.copyWith(color: context.theme.primaryColor),
+              floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
               labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
               fillColor: widget.fillColor,
               suffixText: widget.suffixText,
