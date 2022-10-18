@@ -12,6 +12,14 @@ import 'package:super_widgets/super_widgets.dart';
 class PickImageController {
   static PickImageController get instance => PickImageController();
 
+  Future<String?> pickDirectory(SuperImageClass imageClass, {String dialogTitle='Pick a directory',bool lockParentWindow=true,String? initialDirectory}) async {
+    try {
+      return await FilePicker.platform.getDirectoryPath(dialogTitle: dialogTitle,lockParentWindow: lockParentWindow,initialDirectory: initialDirectory);
+    } on Exception catch (e) {
+      mPrintError('pickDirectory Exception $e');
+      return '';
+    }
+  }
   Future<FilePickerCross?> cropImageFromFileWeb(SuperImageClass imageClass, {String? barTitle}) async {
     // show a dialog to open a file
     FilePickerCross? myFile = await FilePickerCross.importFromStorage(
