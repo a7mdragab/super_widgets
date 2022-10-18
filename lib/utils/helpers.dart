@@ -218,3 +218,52 @@ void mPrintError(s) {
     logger.e('$s');
   }
 }
+
+///region Helpers Functions
+
+/// Converts field name to CamelCase format
+String toCamelCase(String? fieldName) => fieldName != null
+    ? fieldName.length == 1
+    ? fieldName.toUpperCase()
+    : fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)
+    : '';
+
+/// Converts field name to camelCase format
+String tocamelCase(String? fieldName) => fieldName != null
+    ? fieldName.length == 1
+    ? fieldName.toLowerCase()
+    : fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1)
+    : '';
+
+/// Convert singular field name to plural format
+String toPluralName(String s) => s.endsWith('y')
+    ? '${s.substring(0, s.length - 1)}ies'
+    : (s.endsWith('s') || s.endsWith('o '))
+    ? '${s}es'
+    : '${s}s';
+
+/// Convert field name to lowercase plural format
+String toPluralLowerName(String s) => s.endsWith('y')
+    ? '${s.substring(0, s.length - 1).toLowerCase()}ies'
+    : (s.endsWith('s') || s.endsWith('o '))
+    ? '${s.toLowerCase()}es'
+    : '${s.toLowerCase()}s';
+
+/// Convert field name to singular format
+String toSingularName(String s) => s.endsWith('ies')
+    ? '${s.substring(0, s.length - 3)}y'
+    : s.endsWith('ses') || s.endsWith('oes')
+    ? s.substring(0, s.length - 2)
+    : s.endsWith('s')
+    ? s.substring(0, s.length - 1)
+    : s;
+
+/// Convert field name to lowercase singular format
+String toSingularLowerName(String s) => toSingularName(s).toLowerCase();
+
+/// Set model name by defined if the model name set null
+String toModelName(String? modelName, String definedName) =>
+    modelName == null || modelName.isEmpty ? toCamelCase(toSingularName(definedName)) : toCamelCase(modelName);
+
+
+///endregion

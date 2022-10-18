@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:super_widgets/super_widgets.dart';
 
 import '../../image_utils/img_utils.dart';
-
-
 
 class ScaffoldGradientBackground extends StatelessWidget {
   /// The gradient that you wanna put as the background color of scaffold
@@ -356,8 +355,11 @@ class ScaffoldGradientBackground extends StatelessWidget {
   final String? restorationId;
   final bool? showBackBtn;
 
+  final Widget? decorationImage;
+
   const ScaffoldGradientBackground({
     this.gradient,
+    this.decorationImage,
     Key? key,
     this.appBar,
     required this.body,
@@ -391,12 +393,13 @@ class ScaffoldGradientBackground extends StatelessWidget {
       child: Scaffold(
         key: key,
         appBar: appBar,
-        body: Container(
-          decoration: gradient == null ? null : BoxDecoration(gradient: gradient),
+        body: DecoratedContainer(
+          gradient: gradient,
           child: Stack(
             // fit: StackFit.loose,
             children: [
-              const SuperImageView(width: double.infinity, height: double.infinity, imgAssetPath: 'assets/images/bg.png'),
+              if(decorationImage!=null)
+              decorationImage!,
               body,
               if (showBackBtn!)
                 Positioned(
