@@ -9,13 +9,13 @@ import 'package:time/time.dart';
 /// region Dates Formats
 ///
 /// Specify a defaultDateFormat (Optional) default (dd-MM-yyyy)
-final defaultDateFormat = intl.DateFormat('dd-MMMM-yyyy');
+DateFormat defaultDateFormat = intl.DateFormat('dd-MMMM-yyyy');
 
 /// Specify a defaultTimeFormat (Optional) default (hh:mm a)
-final defaultTimeFormat = intl.DateFormat('hh:mm a');
+DateFormat defaultTimeFormat = intl.DateFormat('hh:mm a');
 
 /// Specify a defaultDateTimeFormat (Optional) default (dd-MM-yyyy - hh:mm a)
-final defaultDateTimeFormat = intl.DateFormat('$defaultDateFormat - $defaultTimeFormat');
+DateFormat defaultDateTimeFormat = intl.DateFormat('$defaultDateFormat - $defaultTimeFormat');
 
 DateTime toDateTime(TimeOfDay x) {
   return DateTime(2020, 1, 1, x.hour, x.minute);

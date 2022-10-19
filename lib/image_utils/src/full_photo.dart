@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -22,7 +23,7 @@ class FullPhoto extends StatelessWidget {
               InkWell(
                 onTap: cancelFunc ??
                     () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                 child: Container(
                   decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
