@@ -20,11 +20,11 @@ Future<bool> isAndroidRealDevice() async {
   return ((await getAndroidDeviceInfo()).isPhysicalDevice);
 }
 
-bool isValidHash(String cryptFormatHash, String enteredPassword) {
+bool isValidHash(String cryptFormatHash, String enteredPlain) {
   try {
-    return Crypt(cryptFormatHash).match(enteredPassword);
+    return Crypt(cryptFormatHash).match(enteredPlain);
   } on Exception catch (e) {
-    mPrint('Exception $e - ($cryptFormatHash , $enteredPassword)');
+    mPrint('Exception $e - ($cryptFormatHash , $enteredPlain)');
     return false;
   }
 }
