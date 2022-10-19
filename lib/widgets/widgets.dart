@@ -31,4 +31,5 @@ export 'src/super_text_with_hint.dart';
 export 'src/super_timefield.dart';
 export 'src/super_responsive_scaffold.dart';
 export 'src/super_page_body.dart';
+export 'src/super_phone_field.dart';
 export 'src/txt.dart';
