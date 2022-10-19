@@ -1,4 +1,6 @@
 # This is a generated file; do not edit or check into version control.
+device_info=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\device_info-2.0.3\\
+device_info_plus=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\device_info_plus-7.0.0\\
 disk_space=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\disk_space-0.2.1\\
 file_picker=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\file_picker-4.6.1\\
 file_selector=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\file_selector-0.8.4+3\\
@@ -23,6 +25,16 @@ path_provider_ios=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dart
 path_provider_linux=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_linux-2.1.7\\
 path_provider_macos=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_macos-2.0.6\\
 path_provider_windows=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_windows-2.0.7\\
+permission_handler=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\permission_handler-10.2.0\\
+permission_handler_android=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\permission_handler_android-10.2.0\\
+permission_handler_apple=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\permission_handler_apple-9.0.7\\
+permission_handler_windows=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\permission_handler_windows-0.1.2\\
+platform_device_id=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\platform_device_id-1.0.1\\
+platform_device_id_linux=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\platform_device_id_linux-1.0.0\\
+platform_device_id_macos=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\platform_device_id_macos-1.0.0\\
+platform_device_id_web=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\platform_device_id_web-1.0.0\\
+platform_device_id_windows=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\platform_device_id_windows-1.0.0\\
+root=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\root-2.0.4\\
 share_plus=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\share_plus-4.5.3\\
 share_plus_linux=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\share_plus_linux-3.0.1\\
 share_plus_macos=C:\\Users\\ahmed\\AppData\\Local\\Pub\\Cache\\hosted\\pub.dartlang.org\\share_plus_macos-3.0.1\\

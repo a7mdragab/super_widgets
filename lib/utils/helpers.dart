@@ -1,13 +1,67 @@
 import 'dart:async';
+import 'package:crypt/crypt.dart';
 import 'package:dart_extensions/dart_extensions.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:platform_device_id/platform_device_id.dart';
+import 'package:root/root.dart';
 import 'package:super_widgets/super_widgets.dart';
 import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' as foundation;
+
+Future<bool> isRooted() async {
+  return (await Root.isRooted()) ?? false;
+}
+Future<bool> isAndroidRealDevice() async {
+  return ((await getAndroidDeviceInfo()).isPhysicalDevice);
+}
+
+bool isValidHash(String cryptFormatHash, String enteredPassword) {
+  try {
+    return Crypt(cryptFormatHash).match(enteredPassword);
+  } on Exception catch (e) {
+    mPrint('Exception $e - ($cryptFormatHash , $enteredPassword)');
+    return false;
+  }
+}
+
+String computeHash(String input) => Crypt.sha256(input).toString();
+
+
+Future<AndroidDeviceInfo> getAndroidDeviceInfo() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  return await deviceInfo.androidInfo;
+}
+Future<IosDeviceInfo> getIOSDeviceInfo() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  return await deviceInfo.iosInfo;
+}
+Future<WebBrowserInfo> getWebBrowserInfo() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  return await deviceInfo.webBrowserInfo;
+}
+Future<WindowsDeviceInfo> getWindowsBrowserInfo() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  return await deviceInfo.windowsInfo;
+}
+Future<LinuxDeviceInfo> getLinuxInfo() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  return await deviceInfo.linuxInfo;
+}
+Future<String> getAndroidDeviceID() async {
+  String? deviceId = await PlatformDeviceId.getDeviceId;
+  AndroidDeviceInfo androidInfo = await getAndroidDeviceInfo();
+  return ('${androidInfo.id}_${androidInfo.device}_$deviceId');
+}
+
+String getYoutubeVideoThumbnail(String videoUrl) {
+  String vidID = videoUrl.substring(videoUrl.indexOf('?v=') + 3);
+  return 'https://img.youtube.com/vi/$vidID/0.jpg';
+}
 
 launchStringURL(String link) async {
   if (await canLaunchUrl(Uri.parse(link))) {

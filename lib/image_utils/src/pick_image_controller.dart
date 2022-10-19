@@ -27,7 +27,7 @@ class PickImageController {
             fileExtension: 'png, jpg, jpeg' // Only if FileTypeCross.custom. May be any file extension like `dot`, `ppt,pptx,odp`
             )
         .catchError((onError, _) {
-      print('Error FilePickerCross');
+      mPrintError('Error FilePickerCross');
     });
 
     if (myFile != null) {
