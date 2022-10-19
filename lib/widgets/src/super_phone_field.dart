@@ -31,8 +31,9 @@ class SuperPhoneField extends StatefulWidget {
   final List<String? Function(PhoneNumber?)>? validators;
 
   final String initialCountryCode;
+  final TextEditingController phoneController;
 
-  const SuperPhoneField({
+  const SuperPhoneField(this.phoneController,{
     super.key,
     this.initialCountryCode = '+20',
     this.eHint = '',
@@ -57,7 +58,6 @@ class SuperPhoneField extends StatefulWidget {
 }
 
 class SuperPhoneFieldState extends State<SuperPhoneField> {
-  final TextEditingController phoneController = TextEditingController();
   PhoneNumber? phoneNum;
   Country? country;
 
@@ -67,7 +67,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
     if (!countryCode.isNullOrEmptyOrWhiteSpace) {
       mPrint('Country Code = $countryCode');
       try {
-        country ??= await getCountryByCountryCode(context, countryCode!);
+        country ??= await getCountryByCountryCode(context, countryCode);
       } on Exception catch (e) {
         if (widget.enableDebug == true) {
           mPrintError('Exception getCountryByCountryCode $e');
@@ -81,7 +81,6 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
     }
     if (country != null) {
       phoneNum = PhoneNumber(countryISOCode: country!.countryCode, countryCode: country!.callingCode, number: '');
-      phoneController.text = '';
     }
   }
 
@@ -94,7 +93,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
-      controller: phoneController,
+      controller: widget.phoneController,
       initialCountryCode: country?.countryCode,
       onChanged: (phone) {
         if (widget.enableDebug == true) {
