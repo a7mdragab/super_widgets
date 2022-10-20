@@ -858,7 +858,7 @@ class _FullCalendarState extends State<FullCalendar> {
   }
 }
 
-void showFullCalenderBottomSheet({required DateTime firstDate, required DateTime endDate, DateTime? selectedDate, List<String>? datesWithEntries, double padding = 8, String? locale = 'en'}) {
+void showFullCalenderBottomSheet({DateTime? firstDate, DateTime? endDate, DateTime? selectedDate, List<String>? datesWithEntries, double padding = 8, String? locale = 'en'}) {
   showModalBottomSheet<void>(
     context: Get.context!,
     isScrollControlled: true,
@@ -868,8 +868,10 @@ void showFullCalenderBottomSheet({required DateTime firstDate, required DateTime
     ),
     builder: (BuildContext context) {
       double height;
+      firstDate ??= DateTime.now();
+      endDate ??= DateTime.now();
 
-      if (firstDate.year == endDate.year && firstDate.month == endDate.month) {
+      if (firstDate!.year == endDate!.year && firstDate!.month == endDate!.month) {
         height = ((MediaQuery.of(context).size.width - 2 * padding) / 7) * 5 + 150.0;
       } else {
         height = (MediaQuery.of(context).size.height - 100.0);
@@ -880,7 +882,7 @@ void showFullCalenderBottomSheet({required DateTime firstDate, required DateTime
         ///usage of full calender widget, which is defined below
         child: FullCalendar(
           height: height,
-          startDate: firstDate,
+          startDate: firstDate!,
           endDate: endDate,
           padding: padding,
           accent: Colors.blueAccent,
