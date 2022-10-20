@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:super_widgets/image_utils/img_utils.dart';
 
 import '../../utils/constants.dart';
 
 class ShadowedCard extends StatelessWidget {
-  const ShadowedCard({Key? key, required this.child, this.hasBack = false,this.borderColor , this.opacity = 1}) : super(key: key);
+  const ShadowedCard({Key? key, required this.child, this.hasBack = false, this.borderColor, this.opacity = 1}) : super(key: key);
   final Widget child;
   final bool hasBack;
   final double opacity;
   final Color? borderColor;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +26,7 @@ class ShadowedCard extends StatelessWidget {
             offset: Offset(0, -0.5),
           ),
           BoxShadow(
-            color: borderColor??context.theme.colorScheme.secondary,
+            color: borderColor ?? context.theme.colorScheme.secondary,
             blurRadius: 10,
             // spreadRadius: 2,
             offset: const Offset(0, 1),
@@ -46,7 +48,7 @@ class ShadowedCard extends StatelessWidget {
             side: BorderSide(
               width: 3,
               strokeAlign: -1,
-              color: borderColor??context.theme.colorScheme.secondary,
+              color: borderColor ?? context.theme.colorScheme.secondary,
             )),
         child: hasBack
             ? Column(
@@ -63,13 +65,11 @@ class ShadowedCard extends StatelessWidget {
                           icon: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                            child: SvgPicture.asset(
-                              'assets/images/back_icon.svg',
+                            child: SuperImageView(
+                              svgAssetPath: 'assets/images/back_icon.svg',
                               width: context.width,
                               height: context.height * 0.3,
                               fit: BoxFit.fill,
-                              // color: Colors.red,
-                              // semanticsLabel: 'A red up arrow'
                             ),
                           ),
                         ),
