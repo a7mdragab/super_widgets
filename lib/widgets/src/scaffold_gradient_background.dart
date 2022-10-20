@@ -328,6 +328,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
   ///
   /// By default, the color is [Colors.black54]
   final Color? drawerScrimColor;
+  final Color? backgroundColor;
 
   /// The width of the area within which a horizontal swipe will open the
   /// drawer.
@@ -379,6 +380,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
     this.extendBody = false,
     this.extendBodyBehindAppBar = false,
     this.drawerScrimColor,
+    this.backgroundColor,
     this.drawerEdgeDragWidth,
     this.drawerEnableOpenDragGesture = true,
     this.endDrawerEnableOpenDragGesture = true,
@@ -430,7 +432,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
         onEndDrawerChanged: onEndDrawerChanged,
         bottomNavigationBar: bottomNavigationBar,
         bottomSheet: bottomSheet,
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundColor,
         resizeToAvoidBottomInset: resizeToAvoidBottomInset,
         primary: primary,
         drawerDragStartBehavior: drawerDragStartBehavior,
