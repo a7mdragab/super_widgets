@@ -872,38 +872,40 @@ void showFullCalenderBottomSheet({DateTime? firstDate, DateTime? endDate, DateTi
       endDate ??= DateTime.now();
 
       if (firstDate!.year == endDate!.year && firstDate!.month == endDate!.month) {
-        height = ((MediaQuery.of(context).size.width - 2 * padding) / 7) * 5 + 150.0;
+        height = ((Get.width - 2 * padding) / 7) * 5 + 250.0;
       } else {
-        height = (MediaQuery.of(context).size.height - 100.0);
+        height = (Get.height - 100.0);
       }
       return SizedBox(
         height: height,
 
         ///usage of full calender widget, which is defined below
-        child: FullCalendar(
-          height: height,
-          startDate: firstDate!,
-          endDate: endDate,
-          padding: padding,
-          accent: Colors.blueAccent,
-          black: Colors.black,
-          white: Colors.white,
-          events: datesWithEntries,
-          selectedDate: selectedDate,
-          locale: locale,
-          onDateChange: (value) {
-            ///systematics of selecting specific date
-            //HapticFeedback.lightImpact();
-            selectedDate = value;
+        child: SingleChildScrollView(
+          child: FullCalendar(
+            height: height,
+            startDate: firstDate!,
+            endDate: endDate,
+            padding: padding,
+            accent: Colors.blueAccent,
+            black: Colors.black,
+            white: Colors.white,
+            events: datesWithEntries,
+            selectedDate: selectedDate,
+            locale: locale,
+            onDateChange: (value) {
+              ///systematics of selecting specific date
+              //HapticFeedback.lightImpact();
+              selectedDate = value;
 
-            ///hide modal bottom sheet
-            Navigator.pop(context);
+              ///hide modal bottom sheet
+              Navigator.pop(context);
 
-            ///define new variables
-            // DateTime referentialDate = DateTime.parse("${value.toString().split(" ").first} 12:00:00.000");
+              ///define new variables
+              // DateTime referentialDate = DateTime.parse("${value.toString().split(" ").first} 12:00:00.000");
 
-            ///call function to return new selected date
-          },
+              ///call function to return new selected date
+            },
+          ),
         ),
       );
     },

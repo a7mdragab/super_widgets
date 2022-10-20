@@ -47,7 +47,7 @@ dependencies:
 #  Security
   uuid: ^3.0.6
   platform_device_id: ^1.0.1
-  device_info_plus: ^7.0.0
+  device_info_plus: ^7.0.1
   crypt: ^4.2.1
   root: ^2.0.4
 
