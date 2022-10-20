@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import '../../utils/constants.dart';
 
 class ShadowedCard extends StatelessWidget {
-  const ShadowedCard({Key? key, required this.child, this.hasBack = false, this.opacity = 1}) : super(key: key);
+  const ShadowedCard({Key? key, required this.child, this.hasBack = false,this.borderColor , this.opacity = 1}) : super(key: key);
   final Widget child;
   final bool hasBack;
   final double opacity;
+  final Color? borderColor;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +24,7 @@ class ShadowedCard extends StatelessWidget {
             offset: Offset(0, -0.5),
           ),
           BoxShadow(
-            color: context.theme.colorScheme.secondary,
+            color: borderColor??context.theme.colorScheme.secondary,
             blurRadius: 10,
             // spreadRadius: 2,
             offset: const Offset(0, 1),
