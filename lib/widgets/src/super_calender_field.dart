@@ -874,7 +874,7 @@ void showFullCalenderBottomSheet({DateTime? firstDate, DateTime? endDate, DateTi
       if (firstDate!.year == endDate!.year && firstDate!.month == endDate!.month) {
         height = ((Get.width - 2 * padding) / 7) * 5 + 250.0;
       } else {
-        height = (Get.height - 100.0);
+        height = (Get.height - 200.0);
       }
       return SizedBox(
         height: height,
