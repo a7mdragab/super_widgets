@@ -46,7 +46,7 @@ class ShadowedCard extends StatelessWidget {
             side: BorderSide(
               width: 3,
               strokeAlign: -1,
-              color: context.theme.colorScheme.secondary,
+              color: borderColor??context.theme.colorScheme.secondary,
             )),
         child: hasBack
             ? Column(
