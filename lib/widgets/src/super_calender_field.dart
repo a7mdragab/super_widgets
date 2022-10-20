@@ -1,3 +1,4 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:flutter/material.dart';
@@ -601,6 +602,7 @@ class FullCalendar extends StatefulWidget {
     this.selectedDate,
     required this.onDateChange,
   }) : super(key: key);
+
   @override
   State<FullCalendar> createState() => _FullCalendarState();
 }
@@ -898,7 +900,7 @@ void showFullCalenderBottomSheet({DateTime? firstDate, DateTime? endDate, DateTi
               selectedDate = value;
 
               ///hide modal bottom sheet
-              Navigator.pop(context);
+              Get.back();
 
               ///define new variables
               // DateTime referentialDate = DateTime.parse("${value.toString().split(" ").first} 12:00:00.000");
@@ -910,6 +912,54 @@ void showFullCalenderBottomSheet({DateTime? firstDate, DateTime? endDate, DateTi
       );
     },
   );
+}
+
+void showFullCalenderDialog({DateTime? firstDate, DateTime? endDate, DateTime? selectedDate, List<String>? datesWithEntries, double padding = 8, String? locale = 'en'}) {
+  SmartDialog.show(
+      alignment: Alignment.center,
+      builder: (_) {
+        double height;
+        firstDate ??= DateTime.now();
+        endDate ??= DateTime.now();
+
+        if (firstDate!.year == endDate!.year && firstDate!.month == endDate!.month) {
+          height = ((Get.width - 2 * padding) / 7) * 5 + 250.0;
+        } else {
+          height = (Get.height - 200.0);
+        }
+        return SizedBox(
+          height: height,
+
+          ///usage of full calender widget, which is defined below
+          child: FittedBox(
+            child: FullCalendar(
+              height: height,
+              startDate: firstDate!,
+              endDate: endDate,
+              padding: padding,
+              accent: Colors.blueAccent,
+              black: Colors.black,
+              white: Colors.white,
+              events: datesWithEntries,
+              selectedDate: selectedDate,
+              locale: locale,
+              onDateChange: (value) {
+                ///systematics of selecting specific date
+                //HapticFeedback.lightImpact();
+                selectedDate = value;
+
+                ///hide modal bottom sheet
+                Get.back();
+
+                ///define new variables
+                // DateTime referentialDate = DateTime.parse("${value.toString().split(" ").first} 12:00:00.000");
+
+                ///call function to return new selected date
+              },
+            ),
+          ),
+        );
+      });
 }
 
 ///end of code
