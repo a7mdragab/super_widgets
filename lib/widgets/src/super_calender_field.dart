@@ -626,7 +626,7 @@ class _FullCalendarState extends State<FullCalendar> {
       endDate = DateTime.parse("${widget.endDate.toString().split(" ").first} 23:00:00.000");
 
       ///initializing [events]
-      events = widget.events;
+      events = widget.events ?? [];
     });
     super.initState();
   }
