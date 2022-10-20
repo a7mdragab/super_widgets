@@ -587,7 +587,7 @@ class FullCalendar extends StatefulWidget {
   ///function which returns currently selected date
   final Function onDateChange;
 
-  FullCalendar({
+  const FullCalendar({
     Key? key,
     this.accent,
     this.endDate,
@@ -602,7 +602,7 @@ class FullCalendar extends StatefulWidget {
     required this.onDateChange,
   }) : super(key: key);
   @override
-  _FullCalendarState createState() => _FullCalendarState();
+  State<FullCalendar> createState() => _FullCalendarState();
 }
 
 class _FullCalendarState extends State<FullCalendar> {
@@ -880,7 +880,7 @@ void showFullCalenderBottomSheet({DateTime? firstDate, DateTime? endDate, DateTi
         height: height,
 
         ///usage of full calender widget, which is defined below
-        child: SingleChildScrollView(
+        child: FittedBox(
           child: FullCalendar(
             height: height,
             startDate: firstDate!,
