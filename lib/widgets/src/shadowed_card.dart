@@ -6,11 +6,12 @@ import 'package:super_widgets/image_utils/img_utils.dart';
 import '../../utils/constants.dart';
 
 class ShadowedCard extends StatelessWidget {
-  const ShadowedCard({Key? key, required this.child, this.hasBack = false, this.borderColor, this.opacity = 1}) : super(key: key);
+  const ShadowedCard({Key? key, required this.child, this.hasBack = false, this.borderColor, this.shadowColor, this.opacity = 1}) : super(key: key);
   final Widget child;
   final bool hasBack;
   final double opacity;
   final Color? borderColor;
+  final Color? shadowColor;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class ShadowedCard extends StatelessWidget {
             offset: Offset(0, -0.5),
           ),
           BoxShadow(
-            color: borderColor ?? context.theme.colorScheme.secondary,
+            color: shadowColor ?? context.theme.colorScheme.secondary,
             blurRadius: 10,
             // spreadRadius: 2,
             offset: const Offset(0, 1),

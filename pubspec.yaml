@@ -69,3 +69,5 @@ dev_dependencies:
 
 
 flutter:
+  assets:
+    - assets/back_icon.svg
