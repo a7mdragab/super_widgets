@@ -9,21 +9,21 @@ import 'package:intl/intl.dart';
 import 'package:super_widgets/utils/my_extensions.dart';
 
 class SuperDateField extends StatefulWidget {
-  String? label, hint;
-  bool enabled;
-  void Function(dynamic)? onChanged;
+  final String? label, hint;
+  final bool enabled;
+  final void Function(dynamic)? onChanged;
 
   final ValueNotifier<DateTime?> _curValue = ValueNotifier(null);
   DateTime? get curValue => _curValue.value;
   set curValue(DateTime? val) => _curValue.value = val;
 
-  TextEditingController mController = TextEditingController();
+  final TextEditingController mController = TextEditingController();
 
   setValue(DateTime? val) {
     curValue = val;
   }
 
-  List<String? Function(dynamic)>? validators;
+  final List<String? Function(dynamic)>? validators;
 
   SuperDateField({super.key, this.label = 'From', this.hint = 'To', this.enabled = true, this.onChanged, this.validators = const [], value}) {
     curValue = value;
@@ -42,7 +42,7 @@ class SuperDateField extends StatefulWidget {
   }
 
   @override
-  _SuperDateFieldState createState() => _SuperDateFieldState();
+  State<SuperDateField> createState() => _SuperDateFieldState();
 }
 
 class _SuperDateFieldState extends State<SuperDateField> {
