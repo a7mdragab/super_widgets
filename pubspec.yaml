@@ -57,9 +57,11 @@ dependencies:
   flutter_sim_country_code: ^0.1.2
   internet_file: ^1.2.0
 
+  paged_vertical_calendar: ^1.1.5
+
 dependency_overrides:
   ffi: ^2.0.1
-  device_info_plus: ^7.0.0
+  device_info_plus: ^7.0.1
   permission_handler: ^10.2.0
 
 dev_dependencies:

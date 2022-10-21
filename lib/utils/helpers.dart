@@ -326,3 +326,13 @@ String toSingularLowerName(String s) => toSingularName(s).toLowerCase();
 String toModelName(String? modelName, String definedName) => modelName == null || modelName.isEmpty ? toCamelCase(toSingularName(definedName)) : toCamelCase(modelName);
 
 ///endregion
+///
+
+bool isDateInRange(DateTime start, DateTime end, DateTime date) {
+  return ((date == start || date.isAfter(start)) && (date == end || date.isBefore(end)));
+}
+
+DateTime getDateOnly(DateTime dateTime) {
+  List<String> partsStart = dateTime.toString().split(" ").first.split("-");
+  return DateTime.parse("${partsStart.first}-${partsStart[1].padLeft(2, '0')}-${partsStart[2].padLeft(2, '0')} 00:00:00.000");
+}
