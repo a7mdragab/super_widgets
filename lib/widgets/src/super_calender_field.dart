@@ -11,7 +11,8 @@ import 'package:super_widgets/utils/helpers.dart';
 import 'super_decorated_container.dart';
 import 'txt.dart';
 
-final Widget daysOfWeekRowWidget = Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: List.generate(7, (index) => Expanded(child: Txt(daysNames[index]))));
+final Widget daysOfWeekRowWidget =
+    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: List.generate(7, (index) => Expanded(child: Center(child: Txt(daysNames[index], textAlign: TextAlign.center)))));
 
 // ignore: must_be_immutable
 class SuperVerticalPaginatedCalender extends StatelessWidget {
