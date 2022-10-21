@@ -2,14 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:dart_extensions/dart_extensions.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
-
-///adding necesarry packages
-import 'package:flutter/rendering.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:super_widgets/utils/constants.dart';
 import 'package:super_widgets/utils/helpers.dart';
 
@@ -163,6 +158,7 @@ Future<DateTime?> showFullCalenderDialog({DateTime? firstDate, DateTime? endDate
       return SafeArea(
         child: Scaffold(
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               vSpace8,
               IconButton(
