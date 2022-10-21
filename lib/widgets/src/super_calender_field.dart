@@ -47,7 +47,7 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
           child: daysOfWeekRowWidget,
         ),
         Expanded(
