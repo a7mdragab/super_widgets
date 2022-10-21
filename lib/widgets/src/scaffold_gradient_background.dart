@@ -395,13 +395,12 @@ class ScaffoldGradientBackground extends StatelessWidget {
       child: Scaffold(
         key: key,
         appBar: appBar,
-        body: DecoratedContainer(
+        body: SuperDecoratedContainer(
           gradient: gradient,
           child: Stack(
             // fit: StackFit.loose,
             children: [
-              if(decorationImage!=null)
-              decorationImage!,
+              if (decorationImage != null) decorationImage!,
               body,
               if (showBackBtn!)
                 Positioned(

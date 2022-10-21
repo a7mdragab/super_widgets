@@ -11,7 +11,6 @@ import '../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 import 'full_photo.dart';
 
-
 // ignore: must_be_immutable
 class SuperImageView extends StatelessWidget {
   final String? imgUrl;
@@ -95,7 +94,7 @@ class SuperImageView extends StatelessWidget {
     );
   }
 
-  Widget _getBorderedImageWidget() => DecoratedContainer(
+  Widget _getBorderedImageWidget() => SuperDecoratedContainer(
         height: height,
         width: width,
         borderColor: borderColor,

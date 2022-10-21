@@ -3,7 +3,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:super_widgets/widgets/src/decorated_container.dart';
+import 'package:super_widgets/widgets/src/super_decorated_container.dart';
 
 import '../../utils/constants.dart';
 
@@ -16,7 +16,7 @@ class FullPhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DecoratedContainer(
+      body: SuperDecoratedContainer(
           color: Colors.black,
           child: Column(
             children: <Widget>[

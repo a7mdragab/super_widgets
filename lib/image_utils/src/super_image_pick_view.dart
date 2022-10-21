@@ -5,12 +5,11 @@ import 'package:time/time.dart';
 import 'package:list_ext/list_ext.dart';
 import '../../utils/constants.dart';
 import '../../utils/helpers.dart';
-import '../../widgets/src/decorated_container.dart';
+import '../../widgets/src/super_decorated_container.dart';
 import '../../widgets/src/txt.dart';
 import 'pick_image_controller.dart';
 import 'super_image_class.dart';
 import 'super_imageview.dart';
-
 
 // ignore: must_be_immutable
 class SuperImagePickView extends StatefulWidget {
@@ -47,7 +46,7 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
   Widget build(BuildContext context) {
     // return Container();
     // printInfo(info: 'imgString View: ' + widget.imageClass.imgString!);
-    return DecoratedContainer(
+    return SuperDecoratedContainer(
       // width: mSize * 1,
       // height: mSize * 1,
       color: Colors.transparent,
@@ -75,7 +74,7 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
               child: !widget.imageClass.imgString.isNullOrWhiteSpace && widget.imageClass.imgString!.contains(appUploadCenter)
                   ? Stack(
                       children: [
-                        DecoratedContainer(
+                        SuperDecoratedContainer(
                           // width: mSize,
                           // height: mSize,
                           borderRadius: 16,

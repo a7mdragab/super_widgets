@@ -2,7 +2,7 @@ export 'src/app_button.dart';
 export 'src/dashboard/chart.dart';
 export 'src/dashboard/super_gridview.dart';
 export 'src/dashboard/super_infocard.dart';
-export 'src/decorated_container.dart';
+export 'src/super_decorated_container.dart';
 export 'src/fade_animator.dart';
 export 'src/gradient_background.dart';
 export 'src/gredient_button.dart';

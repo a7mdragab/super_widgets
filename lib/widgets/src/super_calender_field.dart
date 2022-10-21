@@ -8,7 +8,7 @@ import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:super_widgets/utils/constants.dart';
 import 'package:super_widgets/utils/helpers.dart';
 
-import 'decorated_container.dart';
+import 'super_decorated_container.dart';
 import 'txt.dart';
 
 final Widget daysOfWeekRowWidget = Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: List.generate(7, (index) => Expanded(child: Txt(daysNames[index]))));
@@ -55,7 +55,7 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
             maxDate: endDate,
             initialDate: mSelectedDate.value,
             invisibleMonthsThreshold: 1,
-            startWeekWithSunday: true,
+            startWeekWithSunday: false,
             monthBuilder: (BuildContext context, int month, int year) => Align(
               alignment: Alignment.centerLeft,
               child: Padding(
@@ -70,7 +70,7 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
             ),
             dayBuilder: (context, date) {
               return Obx(() {
-                return DecoratedContainer(
+                return SuperDecoratedContainer(
                   color: mSelectedDate.value == date ? Colors.lightBlue : Colors.transparent,
                   shape: BoxShape.circle,
                   child: Center(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DecoratedContainer extends StatelessWidget {
+class SuperDecoratedContainer extends StatelessWidget {
   final double? width;
   final double? height;
 
@@ -57,11 +57,10 @@ class DecoratedContainer extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
-  const DecoratedContainer(
+  const SuperDecoratedContainer(
       {Key? key,
       this.color,
       this.decorationImage,
-      this.border,
       this.borderRadiusGeometry,
       this.boxShadow,
       this.gradient,
@@ -72,6 +71,7 @@ class DecoratedContainer extends StatelessWidget {
       this.height,
       this.margin,
       this.padding,
+      this.border,
       this.borderWidth,
       this.borderColor,
       this.child})
@@ -93,7 +93,7 @@ class DecoratedContainer extends StatelessWidget {
         gradient: gradient,
         backgroundBlendMode: backgroundBlendMode,
         borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-        border: hasBorder ? border ?? Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1) : null,
+        border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
       ),
       child: child == null
           ? null

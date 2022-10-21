@@ -129,7 +129,7 @@ Future<ImageSource> showImagePickerDialog() async {
     clickMaskDismiss: false,
     backDismiss: true,
     alignment: Alignment.center,
-    builder: (_) => DecoratedContainer(
+    builder: (_) => SuperDecoratedContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -169,7 +169,7 @@ showConfirmationDialog({String? msg, String? fullMsg, required Function function
     clickMaskDismiss: false,
     backDismiss: true,
     alignment: Alignment.center,
-    builder: (_) => DecoratedContainer(
+    builder: (_) => SuperDecoratedContainer(
       width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.7, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
