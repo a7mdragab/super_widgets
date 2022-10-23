@@ -14,11 +14,30 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 Future<bool> isRooted() async {
-  return (await Root.isRooted()) ?? false;
+  try {
+    return (await Root.isRooted()) ?? false;
+  } on Exception catch (e) {
+    mPrintError('Exception $e');
+    return false;
+  }
 }
 
 Future<bool> isAndroidRealDevice() async {
-  return ((await getAndroidDeviceInfo()).isPhysicalDevice);
+  if (GetPlatform.isAndroid) {
+    return ((await getAndroidDeviceInfo()).isPhysicalDevice);
+  }
+  return false;
+}
+
+Future<bool> isIosRealDevice() async {
+  if (GetPlatform.isIOS) {
+    return ((await getIOSDeviceInfo()).isPhysicalDevice);
+  }
+  return false;
+}
+
+Future<bool> isRealMobileDevice() async {
+  return ((await isAndroidRealDevice()) || (await isIosRealDevice()));
 }
 
 bool isValidHash(String cryptFormatHash, String enteredPlain) {
@@ -59,8 +78,24 @@ Future<LinuxDeviceInfo> getLinuxInfo() async {
 
 Future<String> getAndroidDeviceID() async {
   String? deviceId = await PlatformDeviceId.getDeviceId;
-  AndroidDeviceInfo androidInfo = await getAndroidDeviceInfo();
-  return ('${androidInfo.id}_${androidInfo.device}_$deviceId');
+  AndroidDeviceInfo info = await getAndroidDeviceInfo();
+  return ('${info.id}_${info.device}_$deviceId');
+}
+
+Future<String> getIOSDeviceID() async {
+  String? deviceId = await PlatformDeviceId.getDeviceId;
+  IosDeviceInfo info = await getIOSDeviceInfo();
+  return ('${info.identifierForVendor}_$deviceId');
+}
+
+Future<String> getMobileDeviceID() async {
+  if (GetPlatform.isAndroid) {
+    return await getAndroidDeviceID();
+  } else if (GetPlatform.isIOS) {
+    return await getIOSDeviceID();
+  }
+  mPrintError('Not a mobile');
+  return 'Not a mobile';
 }
 
 String getYoutubeVideoThumbnail(String videoUrl) {
@@ -68,7 +103,7 @@ String getYoutubeVideoThumbnail(String videoUrl) {
   return 'https://img.youtube.com/vi/$vidID/0.jpg';
 }
 
-launchStringURL(String link) async {
+Future<void> launchStringURL(String link) async {
   if (await canLaunchUrl(Uri.parse(link))) {
     await launchUrl(Uri.parse(link));
   } else {
@@ -76,7 +111,7 @@ launchStringURL(String link) async {
   }
 }
 
-_getWhatsNum(String phone) {
+String _getWhatsNum(String phone) {
   String num = phone.replaceAll('+', '').replaceAll(' ', '');
   for (int I = 0; I < num.length; I++) {
     if (num[0] == '0') {
@@ -86,15 +121,15 @@ _getWhatsNum(String phone) {
   return num;
 }
 
-launchWhatsApp(String phone, [String? msg = 'Hello']) async {
+launchWhatsApp(String phone, [String msg = 'Hello']) async {
   String num = _getWhatsNum(phone);
-  // await MylaunchURL(('whatsapp://send?phone=$num&text=hello'));
-  // await MylaunchURL("https://api.whatsapp.com/send?phone=${num}&text=${AuthService.to.whatsAppMsg.replaceAll(' ', '%20')}");
-  // await MylaunchURL("https://wa.me/$num?text=Hello%2C%20I%20want%20to%20add%20fund%20for%20my%20account%20for%20Dr.%20Hussam%20Abo%20Al-Rob%20Courses");
-  await launchStringURL("whatsapp://send?phone=$num&text=$msg");
-  // await MylaunchURL("whatsapp://send?phone=$num&text=Hi, I need some help");
-  // await MylaunchURL(('https://wa.me/$num'));
-  // await MylaunchURL(('https://wa.me/$num?text=${AuthService.to.whatsAppMsg}'));
+  String url = '';
+  if (GetPlatform.isAndroid) {
+    url = "whatsapp://send?phone=$num&text=$msg";
+  } else {
+    url = "https://api.whatsapp.com/send?phone=$num&text=${msg.replaceAll(' ', '%20')}";
+  }
+  await launchStringURL(url);
 }
 
 launchFacePage(String fbLink) async {
@@ -163,8 +198,7 @@ Future<ImageSource> showImagePickerDialog() async {
   return completer.future;
 }
 
-//Hello
-showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
+void showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
   SmartDialog.show(
     clickMaskDismiss: false,
     backDismiss: true,
@@ -230,18 +264,7 @@ void hideKeyboard(BuildContext context) {
 
 bool isArabic(String text) {
   if (text.isNullOrWhiteSpace) return false;
-  // RegExp regExp = new RegExp("/[\u0600-\u06FF]/");
-  // print('text $text is ${regExp.allMatches(text)}');
-
-  // print('arabicCharacters =${jsonEncode(arabicCharacters)}');
   return text.anyChar((element) => arabicCharacters.contains(element));
-  // print('Result = $x');
-
-  // return regExp.hasMatch(text);
-}
-
-bool isValid(String text, [int n = 10]) {
-  return text.length >= n;
 }
 
 final logger = Logger(
@@ -266,6 +289,7 @@ const mShowLoading = SmartDialog.showLoading;
 const mShowAttach = SmartDialog.showAttach;
 const mShowDialog = SmartDialog.show;
 const mHide = SmartDialog.dismiss;
+
 bool get isDialogShown => SmartDialog.config.isExist;
 
 void mPrint(s) {
@@ -326,7 +350,6 @@ String toSingularLowerName(String s) => toSingularName(s).toLowerCase();
 String toModelName(String? modelName, String definedName) => modelName == null || modelName.isEmpty ? toCamelCase(toSingularName(definedName)) : toCamelCase(modelName);
 
 ///endregion
-///
 
 bool isDateInRange(DateTime start, DateTime end, DateTime date) {
   return ((date == start || date.isAfter(start)) && (date == end || date.isBefore(end)));
