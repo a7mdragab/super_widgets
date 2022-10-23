@@ -204,6 +204,8 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
     backDismiss: true,
     alignment: Alignment.center,
     builder: (_) => SuperDecoratedContainer(
+      color: Colors.white,
+      borderRadius: 24,
       width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.7, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
