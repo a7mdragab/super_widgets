@@ -21,6 +21,7 @@ class SuperPhoneField extends StatefulWidget {
   final bool readOnly;
   final bool enableValidate;
   final bool enableDebug;
+  final bool useSimIfAvailable;
 
   final InputDecoration? inputDecoration;
   final EdgeInsets? contentPadding;
@@ -33,7 +34,8 @@ class SuperPhoneField extends StatefulWidget {
   final String initialCountryCode;
   final TextEditingController phoneController;
 
-  const SuperPhoneField(this.phoneController,{
+  const SuperPhoneField(
+    this.phoneController, {
     super.key,
     this.initialCountryCode = '+20',
     this.eHint = '',
@@ -44,6 +46,7 @@ class SuperPhoneField extends StatefulWidget {
     this.onFullPhoneChanged,
     this.onSubmitted,
     this.onTap,
+    this.useSimIfAvailable = true,
     this.enableDebug = false,
     this.enabled = true,
     this.readOnly = false,
@@ -62,16 +65,27 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   Country? country;
 
   void initCountry(context) async {
-    String? simCode = await FlutterSimCountryCode.simCountryCode;
-    String countryCode = simCode ?? widget.initialCountryCode;
-    if (!countryCode.isNullOrEmptyOrWhiteSpace) {
-      mPrint('Country Code = $countryCode');
-      try {
-        country ??= await getCountryByCountryCode(context, countryCode);
-      } on Exception catch (e) {
-        if (widget.enableDebug == true) {
-          mPrintError('Exception getCountryByCountryCode $e');
+    try {
+      String? countryCode = widget.initialCountryCode;
+      if (widget.useSimIfAvailable) {
+        String? simCode = await FlutterSimCountryCode.simCountryCode;
+        if (!simCode.isNullOrEmptyOrWhiteSpace) {
+          countryCode = simCode!;
         }
+      }
+      if (!countryCode.isNullOrEmptyOrWhiteSpace) {
+        mPrint('Country Code = $countryCode');
+        try {
+          country ??= await getCountryByCountryCode(context, countryCode);
+        } on Exception catch (e) {
+          if (widget.enableDebug == true) {
+            mPrintError('Exception getCountryByCountryCode $e');
+          }
+        }
+      }
+    } on Exception catch (e) {
+      if (widget.enableDebug == true) {
+        mPrintError('Exception $e');
       }
     }
     country ??= const Country('Egypt', 'flags/eg.png', 'EG', '+20');
