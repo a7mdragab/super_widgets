@@ -206,32 +206,58 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
     builder: (_) => SuperDecoratedContainer(
       color: Colors.white,
       borderRadius: 24,
-      // width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.7, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
+      width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       // height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
           vSpace32,
-          Txt(msg != null ? 'Are you sure you want to'.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16),
+          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 20, color: Get.theme.primaryColor),
+          vSpace32,
+          Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16),
           Row(
             children: [
               Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        function.call();
-                        mHide();
-                      },
-                      child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
+                child: InkWell(
+                  onTap: () {
+                    function.call();
+                    mHide();
+                  },
+                  child: const SuperDecoratedContainer(
+                    padding: EdgeInsets.all(20),
+                    color: Colors.lightGreen,
+                    child: Center(child: Txt('Yes', color: Colors.white)),
+                  ),
+                ),
+              ),
+              // Expanded(
+              //     child: ElevatedButton(
+              //         onPressed: () {
+              //           function.call();
+              //           mHide();
+              //         },
+              //         child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
               hSpace16,
               Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        mHide();
-                      },
-                      child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
+                child: InkWell(
+                  onTap: () {
+                    mHide();
+                  },
+                  child: const SuperDecoratedContainer(
+                    padding: EdgeInsets.all(20),
+                    color: Colors.red,
+                    child: Center(child: Txt('No', color: Colors.white)),
+                  ),
+                ),
+              ),
+              // Expanded(
+              //     child: ElevatedButton(
+              //         onPressed: () {
+              //           mHide();
+              //         },
+              //         child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
             ],
           ),
         ],
