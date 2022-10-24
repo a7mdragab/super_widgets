@@ -114,7 +114,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   Widget build(BuildContext context) {
     return IntlPhoneField(
       controller: widget.phoneController,
-      initialCountryCode: country?.dialCode,
+      initialCountryCode: country?.code,
       onChanged: (phone) {
         if (widget.enableDebug == true) {
           mPrint('onChanged: $phone');
