@@ -67,19 +67,22 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   PhoneNumber? phoneNum;
   Country? country;
 
-  void initCountry(context) async {
+  void initCountry() async {
     try {
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
           country ??= getCountryByCountryCode(simCode!);
+          if (country != null) mPrint('Got from simCode');
         }
       }
       if (country == null) {
         if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
           country ??= getCountryByCallingCode(widget.initialDialCode);
+          if (country != null) mPrint('Got from initialDialCode');
         } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
           country ??= getCountryByCountryCode(widget.initialCountryCode!);
+          if (country != null) mPrint('Got from initialCountryCode');
         }
       }
       mPrint('Selected country: ${country?.toMap()}');
@@ -100,7 +103,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
 
   @override
   void initState() {
-    initCountry(context);
+    initCountry();
     super.initState();
   }
 
