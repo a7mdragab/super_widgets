@@ -66,6 +66,12 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
 
   void initCountry(context) async {
     try {
+      var countries = await getCountries(context);
+      mPrint('''///region All countries
+      const List<Country> allCountries=[
+      ${countries.map((e) => "Country.withFields(${e.name}-${e.flag}-${e.countryCode}-${e.callingCode}),\n")}
+      ];
+      ///endregion All countries''');
       String? countryCode = widget.initialCountryCode;
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;

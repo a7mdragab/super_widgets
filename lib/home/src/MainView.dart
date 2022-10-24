@@ -215,8 +215,8 @@ class MainApp extends StatelessWidget {
       HttpOverrides.global = MyHttpOverrides();
     }
 
-    Get.put<ThemeService>(ThemeService(),permanent: true);
-    Get.put<LanguageService>(LanguageService(),permanent: true);
+    Get.put<ThemeService>(ThemeService(), permanent: true);
+    Get.put<LanguageService>(LanguageService(), permanent: true);
 
     if (themeMode != null) {
       ThemeService.to.setThemeMode(themeMode);
