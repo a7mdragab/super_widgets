@@ -214,51 +214,57 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           vSpace32,
-          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 20, color: Get.theme.primaryColor),
-          vSpace32,
+          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 24, color: Get.theme.primaryColor),
+          vSpace24,
           Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16),
-          Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    function.call();
-                    mHide();
-                  },
-                  child: const SuperDecoratedContainer(
-                    padding: EdgeInsets.all(20),
-                    color: Colors.lightGreen,
-                    child: Center(child: Txt('Yes', color: Colors.white)),
+          vSpace32,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      function.call();
+                      mHide();
+                    },
+                    child: const SuperDecoratedContainer(
+                      borderRadius: 16,
+                      padding: EdgeInsets.all(10),
+                      color: Colors.lightGreen,
+                      child: Center(child: Txt('Yes', color: Colors.white)),
+                    ),
                   ),
                 ),
-              ),
-              // Expanded(
-              //     child: ElevatedButton(
-              //         onPressed: () {
-              //           function.call();
-              //           mHide();
-              //         },
-              //         child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-              hSpace16,
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    mHide();
-                  },
-                  child: const SuperDecoratedContainer(
-                    padding: EdgeInsets.all(20),
-                    color: Colors.red,
-                    child: Center(child: Txt('No', color: Colors.white)),
+                // Expanded(
+                //     child: ElevatedButton(
+                //         onPressed: () {
+                //           function.call();
+                //           mHide();
+                //         },
+                //         child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
+                hSpace16,
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      mHide();
+                    },
+                    child: const SuperDecoratedContainer(
+                      borderRadius: 16,
+                      padding: EdgeInsets.all(10),
+                      color: Colors.red,
+                      child: Center(child: Txt('No', color: Colors.white)),
+                    ),
                   ),
                 ),
-              ),
-              // Expanded(
-              //     child: ElevatedButton(
-              //         onPressed: () {
-              //           mHide();
-              //         },
-              //         child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-            ],
+                // Expanded(
+                //     child: ElevatedButton(
+                //         onPressed: () {
+                //           mHide();
+                //         },
+                //         child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
+              ],
+            ),
           ),
         ],
       ),
