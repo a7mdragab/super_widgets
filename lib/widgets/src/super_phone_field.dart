@@ -72,23 +72,23 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
-          mPrint('Getting from simCode');
+          if (widget.enableDebug == true) mPrint('Getting from simCode');
           country ??= getCountryByCountryCode(simCode!);
-          if (country != null) mPrint('Got from simCode');
+          if (widget.enableDebug == true) if (country != null) mPrint('Got from simCode');
         }
       }
       if (country == null) {
         if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
-          mPrint('Getting from initialDialCode');
+          if (widget.enableDebug == true) mPrint('Getting from initialDialCode');
           country ??= getCountryByCallingCode(widget.initialDialCode);
-          if (country != null) mPrint('Got from initialDialCode');
+          if (widget.enableDebug == true) if (country != null) mPrint('Got from initialDialCode');
         } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
-          mPrint('Getting from initialCountryCode');
+          if (widget.enableDebug == true) mPrint('Getting from initialCountryCode');
           country ??= getCountryByCountryCode(widget.initialCountryCode!);
-          if (country != null) mPrint('Got from initialCountryCode');
+          if (widget.enableDebug == true) if (country != null) mPrint('Got from initialCountryCode');
         }
       }
-      mPrint('Selected country: ${country?.toMap()}');
+      if (widget.enableDebug == true) mPrint('Selected country: ${country?.toMap()}');
     } on Exception catch (e) {
       if (widget.enableDebug == true) {
         mPrintError('Exception $e');
@@ -100,7 +100,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
       mPrint('Initial country: ${country?.toMap()}');
     }
     if (country != null) {
-      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: country!.dialCode, number: '');
+      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: '');
     }
   }
 
