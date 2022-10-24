@@ -32,14 +32,16 @@ class SuperPhoneField extends StatefulWidget {
   final void Function(String?)? onPhoneChanged, onCountryChanged, onFullPhoneChanged;
   final List<String? Function(PhoneNumber?)>? validators;
 
-  final String initialCountryCode;
+  final String? initialCountryCode;
+  final String initialDialCode;
   final TextEditingController phoneController;
 
   const SuperPhoneField(
     this.phoneController, {
     super.key,
-    this.initialCountryCode = '+20',
-    this.eHint = '',
+    this.initialDialCode = '+20',
+    this.initialCountryCode,
+    this.eHint = 'Phone number',
     this.eLabel,
     this.fillColor = Colors.white,
     this.onPhoneChanged,
@@ -67,24 +69,15 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
 
   void initCountry(context) async {
     try {
-      String? dialCode = widget.initialCountryCode;
-      String? simCode = await FlutterSimCountryCode.simCountryCode;
-      mPrint('simCode =$simCode');
       if (widget.useSimIfAvailable) {
-        // String? simCode = await FlutterSimCountryCode.simCountryCode;
+        String? simCode = await FlutterSimCountryCode.simCountryCode;
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
-          dialCode = simCode!;
+          country ??= getCountryByCountryCode(simCode!);
         }
-      }
-      if (!dialCode.isNullOrEmptyOrWhiteSpace) {
-        mPrint('dialCode = $dialCode');
-        try {
-          country ??= getCountryByCallingCode(dialCode);
-        } on Exception catch (e) {
-          if (widget.enableDebug == true) {
-            mPrintError('Exception getCountryByCountryCode $e');
-          }
-        }
+      } else if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
+        country ??= getCountryByCallingCode(widget.initialDialCode);
+      } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
+        country ??= getCountryByCallingCode(widget.initialCountryCode!);
       }
     } on Exception catch (e) {
       if (widget.enableDebug == true) {
