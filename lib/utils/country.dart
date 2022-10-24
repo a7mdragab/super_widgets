@@ -2046,13 +2046,11 @@ const Country jordanCountry = Country(
 );
 
 Country? getCountryByCallingCode(String callingCode) {
-  callingCode = callingCode.trim();
-  if (!callingCode.startsWith('+')) {
-    callingCode = '+$callingCode';
-  }
-  mPrint('callingCode $callingCode');
+  callingCode = callingCode.trim().replaceAll('+', '');
+
+  // mPrint('callingCode $callingCode');
   int ind = allCountries.indexWhere((element) => element.dialCode == callingCode);
-  mPrint('ind $ind');
+  // mPrint('ind $ind');
   return ind == -1 ? null : allCountries[ind];
 }
 
