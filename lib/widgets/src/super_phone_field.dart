@@ -69,7 +69,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
       var countries = await getCountries(context);
       mPrint('''///region All countries
       const List<Country> allCountries=[
-      ${countries.map((e) => "Country.withFields(${e.name}-${e.flag}-${e.countryCode}-${e.callingCode}),\n")}
+      ${countries.map((e) => "Country.withFields(${e.name}-${e.flag}-${e.countryCode}-${e.callingCode})").join(",\n")}
       ];
       ///endregion All countries''');
       String? countryCode = widget.initialCountryCode;
