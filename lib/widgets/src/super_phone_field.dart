@@ -67,17 +67,17 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
 
   void initCountry(context) async {
     try {
-      String? countryCode = widget.initialCountryCode;
+      String? dialCode = widget.initialCountryCode;
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
-          countryCode = simCode!;
+          dialCode = simCode!;
         }
       }
-      if (!countryCode.isNullOrEmptyOrWhiteSpace) {
-        mPrint('Country Code = $countryCode');
+      if (!dialCode.isNullOrEmptyOrWhiteSpace) {
+        mPrint('Country Code = $dialCode');
         try {
-          country ??= getCountryByCountryCode(countryCode);
+          country ??= getCountryByCallingCode(dialCode);
         } on Exception catch (e) {
           if (widget.enableDebug == true) {
             mPrintError('Exception getCountryByCountryCode $e');
