@@ -1,6 +1,7 @@
 import 'package:country_calling_code_picker/country.dart';
 import 'package:country_calling_code_picker/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -67,11 +68,15 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   void initCountry(context) async {
     try {
       var countries = await getCountries(context);
-      mPrint('''///region All countries
+      String countriesStr = '''///region All countries
       const List<Country> allCountries=[
-      ${countries.map((e) => "Country.withFields(${e.name}-${e.flag}-${e.countryCode}-${e.callingCode})").join(",\n")}
+      ${countries.map((e) => "Country.withFields(${e.name},${e.flag},${e.countryCode},${e.callingCode})").join(",\n")}
       ];
-      ///endregion All countries''');
+      ///endregion All countries''';
+      mPrint(countriesStr);
+
+      await Clipboard.setData(ClipboardData(text: countriesStr));
+
       String? countryCode = widget.initialCountryCode;
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
