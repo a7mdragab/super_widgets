@@ -206,7 +206,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
     builder: (_) => SuperDecoratedContainer(
       color: Colors.white,
       borderRadius: 24,
-      width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
+      width: Get.context!.responsiveValue<double>(mobile: Get.width * .9, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       // height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -219,7 +219,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
           Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16),
           vSpace32,
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(24),
             child: Row(
               children: [
                 Expanded(
@@ -230,7 +230,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
                     },
                     child: const SuperDecoratedContainer(
                       borderRadius: 16,
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       color: Colors.lightGreen,
                       child: Center(child: Txt('Yes', color: Colors.white)),
                     ),
@@ -251,7 +251,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
                     },
                     child: const SuperDecoratedContainer(
                       borderRadius: 16,
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       color: Colors.red,
                       child: Center(child: Txt('No', color: Colors.white)),
                     ),
