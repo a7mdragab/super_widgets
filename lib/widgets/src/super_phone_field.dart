@@ -1,7 +1,6 @@
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/functions.dart';
+// import 'package:country_calling_code_picker/country.dart';
+// import 'package:country_calling_code_picker/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -10,6 +9,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:list_ext/list_ext.dart';
 import 'package:ready_extensions/ready_extensions.dart';
+import 'package:super_widgets/utils/country.dart';
 
 import '../../utils/helpers.dart';
 
@@ -67,16 +67,6 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
 
   void initCountry(context) async {
     try {
-      var countries = await getCountries(context);
-      String countriesStr = '''///region All countries
-      final List<Country> allCountries=[
-      ${countries.map((e) => "Country.withFields('${e.name}','${e.flag}','${e.countryCode}','${e.callingCode}')").join(",\n")}
-      ];
-      ///endregion All countries''';
-      mPrint(countriesStr);
-
-      await Clipboard.setData(ClipboardData(text: countriesStr));
-
       String? countryCode = widget.initialCountryCode;
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
@@ -87,7 +77,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
       if (!countryCode.isNullOrEmptyOrWhiteSpace) {
         mPrint('Country Code = $countryCode');
         try {
-          country ??= await getCountryByCountryCode(context, countryCode);
+          country ??= getCountryByCountryCode(countryCode);
         } on Exception catch (e) {
           if (widget.enableDebug == true) {
             mPrintError('Exception getCountryByCountryCode $e');
@@ -99,13 +89,13 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
         mPrintError('Exception $e');
       }
     }
-    country ??= const Country('Egypt', 'flags/eg.png', 'EG', '+20');
+    country ??= egyptCountry;
 
     if (widget.enableDebug == true) {
-      mPrint('Initial country: ${country?.name}-${country?.flag}-${country?.callingCode}-${country?.countryCode}');
+      mPrint('Initial country: ${country?.toMap()}');
     }
     if (country != null) {
-      phoneNum = PhoneNumber(countryISOCode: country!.countryCode, countryCode: country!.callingCode, number: '');
+      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: country!.dialCode, number: '');
     }
   }
 
@@ -119,7 +109,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   Widget build(BuildContext context) {
     return IntlPhoneField(
       controller: widget.phoneController,
-      initialCountryCode: country?.countryCode,
+      initialCountryCode: country?.dialCode,
       onChanged: (phone) {
         if (widget.enableDebug == true) {
           mPrint('onChanged: $phone');
