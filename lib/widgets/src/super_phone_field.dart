@@ -74,11 +74,15 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
           country ??= getCountryByCountryCode(simCode!);
         }
-      } else if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
-        country ??= getCountryByCallingCode(widget.initialDialCode);
-      } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
-        country ??= getCountryByCallingCode(widget.initialCountryCode!);
       }
+      if (country == null) {
+        if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
+          country ??= getCountryByCallingCode(widget.initialDialCode);
+        } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
+          country ??= getCountryByCountryCode(widget.initialCountryCode!);
+        }
+      }
+      mPrint('Selected country: ${country?.toMap()}');
     } on Exception catch (e) {
       if (widget.enableDebug == true) {
         mPrintError('Exception $e');
