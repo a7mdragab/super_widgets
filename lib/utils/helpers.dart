@@ -206,10 +206,12 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
     builder: (_) => SuperDecoratedContainer(
       color: Colors.white,
       borderRadius: 24,
-      width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.7, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
-      height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
+      // width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.7, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
+      // height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
           vSpace32,
@@ -217,15 +219,16 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
           Row(
             children: [
               Expanded(
-                  child: InkWell(
-                      onTap: () {
+                  child: ElevatedButton(
+                      onPressed: () {
                         function.call();
                         Get.back();
                       },
                       child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
+              hSpace16,
               Expanded(
-                  child: InkWell(
-                      onTap: () {
+                  child: ElevatedButton(
+                      onPressed: () {
                         Get.back();
                       },
                       child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
