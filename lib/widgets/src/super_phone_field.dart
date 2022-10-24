@@ -72,15 +72,18 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
       if (widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
+          mPrint('Getting from simCode');
           country ??= getCountryByCountryCode(simCode!);
           if (country != null) mPrint('Got from simCode');
         }
       }
       if (country == null) {
         if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
+          mPrint('Getting from initialDialCode');
           country ??= getCountryByCallingCode(widget.initialDialCode);
           if (country != null) mPrint('Got from initialDialCode');
         } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
+          mPrint('Getting from initialCountryCode');
           country ??= getCountryByCountryCode(widget.initialCountryCode!);
           if (country != null) mPrint('Got from initialCountryCode');
         }
