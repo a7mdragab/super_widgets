@@ -215,21 +215,21 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
         children: [
           Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
           vSpace32,
-          Expanded(child: Txt(msg != null ? 'Are you sure you want to'.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16)),
+          Txt(msg != null ? 'Are you sure you want to'.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16),
           Row(
             children: [
               Expanded(
                   child: ElevatedButton(
                       onPressed: () {
                         function.call();
-                        Get.back();
+                        mHide();
                       },
                       child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
               hSpace16,
               Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        Get.back();
+                        mHide();
                       },
                       child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
             ],
