@@ -69,8 +69,8 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
     try {
       var countries = await getCountries(context);
       String countriesStr = '''///region All countries
-      const List<Country> allCountries=[
-      ${countries.map((e) => "Country.withFields(${e.name},${e.flag},${e.countryCode},${e.callingCode})").join(",\n")}
+      final List<Country> allCountries=[
+      ${countries.map((e) => "Country.withFields('${e.name}','${e.flag}','${e.countryCode}','${e.callingCode}')").join(",\n")}
       ];
       ///endregion All countries''';
       mPrint(countriesStr);
