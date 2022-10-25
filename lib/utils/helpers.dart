@@ -158,37 +158,77 @@ String getFormattedString(String x, List vals) {
   return temp;
 }
 
-Future<ImageSource> showImagePickerDialog() async {
-  Completer<ImageSource> completer = Completer<ImageSource>();
+Future<ImageSource?> showImagePickerDialog() async {
+  Completer<ImageSource?> completer = Completer<ImageSource?>();
   await SmartDialog.show(
-    clickMaskDismiss: false,
+    clickMaskDismiss: true,
     backDismiss: true,
     alignment: Alignment.center,
     builder: (_) => SuperDecoratedContainer(
+      color: Colors.white,
+      borderRadius: 24,
+      width: Get.context!.responsiveValue<double>(mobile: Get.width, tablet: Get.width * 0.9, desktop: Get.width * 0.7),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          Align(
+            alignment: LanguageService.to.alignment,
+            child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.red),
+                onPressed: () {
+                  completer.complete(null);
+                  mHide();
+                }),
+          ),
           Txt('Pick image'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
-          vSpace32,
+          vSpace24,
           Txt('Choose the image source.'.tr, fontSize: 16),
-          vSpace32,
-          Row(
-            children: [
-              Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        completer.complete(ImageSource.camera);
-                        Get.back();
-                      },
-                      child: Txt('Camera'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-              Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        completer.complete(ImageSource.gallery);
-                        Get.back();
-                      },
-                      child: Txt('Gallery'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-            ],
+          vSpace8,
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Row(
+              textDirection: LanguageService.to.isArabic ? TextDirection.rtl : TextDirection.ltr,
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
+                    label: const Txt('Camera', color: Colors.white),
+                    icon: const Icon(Icons.camera_alt),
+                    onPressed: () {
+                      completer.complete(ImageSource.camera);
+                      mHide();
+                    },
+
+                    // child: InkWell(
+                    //   onTap: () {
+                    //     completer.complete(ImageSource.camera);
+                    //     mHide();
+                    //   },
+                    //   child: const SuperDecoratedContainer(
+                    //     borderRadius: 16,
+                    //     padding: EdgeInsets.all(8),
+                    //     color: Colors.lightGreen,
+                    //     child: Center(child: Txt('Camera', color: Colors.white)),
+                    //   ),
+                    // ),
+                  ),
+                ),
+                hSpace16,
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                    label: const Txt('Gallery', color: Colors.white),
+                    icon: const Icon(Icons.image),
+                    onPressed: () {
+                      completer.complete(ImageSource.gallery);
+                      mHide();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -206,63 +246,53 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
     builder: (_) => SuperDecoratedContainer(
       color: Colors.white,
       borderRadius: 24,
-      width: Get.context!.responsiveValue<double>(mobile: Get.width * .9, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
-      // height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
+      width: Get.context!.responsiveValue<double>(mobile: Get.width, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          vSpace32,
-          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 24, color: Get.theme.primaryColor),
+          Align(
+            alignment: LanguageService.to.alignment,
+            child: const IconButton(icon: Icon(Icons.close, color: Colors.red), onPressed: mHide),
+          ),
+          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 22, color: Get.theme.primaryColor),
           vSpace24,
-          Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16),
-          vSpace32,
+          Center(child: Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, textAlign: TextAlign.center, fontSize: 16)),
+          vSpace8,
           Padding(
             padding: const EdgeInsets.all(24),
             child: Row(
+              textDirection: LanguageService.to.isArabic ? TextDirection.rtl : TextDirection.ltr,
               children: [
                 Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      function.call();
-                      mHide();
-                    },
-                    child: const SuperDecoratedContainer(
-                      borderRadius: 16,
-                      padding: EdgeInsets.all(8),
-                      color: Colors.lightGreen,
-                      child: Center(child: Txt('Yes', color: Colors.white)),
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
                     ),
+                    label: const Txt('Yes', color: Colors.white),
+                    icon: const Icon(Icons.done),
+                    onPressed: () {
+                      mHide();
+                      function();
+                    },
                   ),
                 ),
-                // Expanded(
-                //     child: ElevatedButton(
-                //         onPressed: () {
-                //           function.call();
-                //           mHide();
-                //         },
-                //         child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
                 hSpace16,
                 Expanded(
-                  child: InkWell(
-                    onTap: () {
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+                    ),
+                    label: const Txt('No', color: Colors.white),
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
                       mHide();
                     },
-                    child: const SuperDecoratedContainer(
-                      borderRadius: 16,
-                      padding: EdgeInsets.all(8),
-                      color: Colors.red,
-                      child: Center(child: Txt('No', color: Colors.white)),
-                    ),
                   ),
                 ),
-                // Expanded(
-                //     child: ElevatedButton(
-                //         onPressed: () {
-                //           mHide();
-                //         },
-                //         child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
               ],
             ),
           ),
@@ -321,15 +351,85 @@ final logger = Logger(
       ),
 );
 
-const mShowToast = SmartDialog.showToast;
+const mShowToast2 = SmartDialog.showToast;
 const mShowLoading = SmartDialog.showLoading;
 const mShowAttach = SmartDialog.showAttach;
 const mShowDialog = SmartDialog.show;
 const mHide = SmartDialog.dismiss;
 
+class CustomToast extends StatelessWidget {
+  const CustomToast(this.msg,
+      {this.alignment,
+      this.color = Colors.black87,
+      this.txtColor = Colors.white,
+      this.margin = const EdgeInsets.only(bottom: 30, top: 30),
+      this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      Key? key})
+      : super(key: key);
+  final AlignmentGeometry? alignment;
+  final String msg;
+  final Color? color, txtColor;
+  final EdgeInsets? margin, padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: alignment ?? Alignment.center,
+      child: SuperDecoratedContainer(
+        borderRadius: 16,
+        margin: margin,
+        padding: padding,
+        color: color,
+        child: Txt(
+          msg,
+          color: txtColor,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+}
+
+void mShowToast(String msg,
+    {Color? color = Colors.black87,
+    Color? txtColor = Colors.white,
+    EdgeInsets? margin = const EdgeInsets.only(bottom: 30, top: 30),
+    EdgeInsets? padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+    SmartDialogController? controller,
+    Duration? displayTime,
+    AlignmentGeometry? alignment,
+    bool? clickMaskDismiss,
+    SmartAnimationType? animationType,
+    bool? usePenetrate,
+    bool? useAnimation,
+    Duration? animationTime,
+    Color? maskColor,
+    Widget? maskWidget,
+    bool? consumeEvent,
+    bool? debounce,
+    SmartToastType? displayType}) {
+  mShowToast2(msg,
+      alignment: alignment,
+      controller: controller,
+      animationTime: animationTime,
+      animationType: animationType,
+      clickMaskDismiss: clickMaskDismiss,
+      consumeEvent: consumeEvent,
+      debounce: debounce,
+      displayType: displayType,
+      displayTime: displayTime,
+      maskColor: maskColor,
+      maskWidget: maskWidget,
+      useAnimation: useAnimation,
+      usePenetrate: usePenetrate, builder: (context) {
+    return CustomToast(msg, color: color, alignment: alignment, padding: padding, margin: margin, txtColor: txtColor);
+  });
+}
+
 bool get isDialogShown => SmartDialog.config.isExist;
 
 void mPrint(s) {
+  // SmartDialog.showToast('',)
   if (foundation.kDebugMode) {
     logger.i('$s');
   }

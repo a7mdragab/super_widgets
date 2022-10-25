@@ -10,7 +10,9 @@ import 'package:super_widgets/utils/my_extensions.dart';
 
 class SuperTimeField extends StatefulWidget {
   final String? label, hint;
+  final bool showClearBtn;
   final bool enabled;
+  final Color? txtColor, fillColor;
   final void Function(dynamic)? onChanged;
 
   final ValueNotifier<TimeOfDay?> _curValue = ValueNotifier(null);
@@ -25,7 +27,7 @@ class SuperTimeField extends StatefulWidget {
 
   final List<String? Function(dynamic)>? validators;
 
-  SuperTimeField({super.key, this.label = 'من', this.hint = 'الوقت', this.enabled = true, this.onChanged, this.validators = const [], value}) {
+  SuperTimeField({super.key, this.txtColor, this.fillColor, this.label, this.hint, this.enabled = true, this.showClearBtn = true, this.onChanged, this.validators = const [], value}) {
     curValue = value;
     if (curValue != null) {
       mController.text = curValue!.toTimeStr();
@@ -52,26 +54,24 @@ class SuperTimeFieldState extends State<SuperTimeField> {
       enabled: widget.enabled,
       format: DateFormat("hh:mm a", 'en'),
       validator: FormBuilderValidators.compose(widget.validators!),
+      style: TextStyle(fontSize: 14, color: widget.txtColor ?? context.theme.primaryColor),
       decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-            isDense: true,
-            isCollapsed: true,
-            alignLabelWithHint: true,
-            contentPadding: const EdgeInsets.all(4),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            filled: true,
-            fillColor: Colors.white,
-            suffixIcon: InkWell(
-                onTap: () {
-                  widget.mController.clear();
-                  widget.setValue(null);
-                  setState(() {});
-                },
-                child: const Icon(Icons.close, size: 16)),
+            fillColor: widget.fillColor,
+            suffixIcon: widget.showClearBtn == true
+                ? InkWell(
+                    onTap: () {
+                      widget.mController.clear();
+                      widget.setValue(null);
+                      setState(() {});
+                    },
+                    child: const Icon(Icons.close, size: 16))
+                : const SizedBox(),
             suffixIconConstraints: const BoxConstraints(maxHeight: 20, maxWidth: 20),
-            labelStyle: TextStyle(fontSize: 16, color: context.theme.primaryColor),
-            labelText: widget.hint,
+            labelStyle: TextStyle(color: widget.txtColor ?? context.theme.primaryColor),
+            hintStyle: TextStyle(color: widget.txtColor ?? context.theme.primaryColor),
+            labelText: widget.label,
             hintText: widget.hint,
-      ),
+          ),
       initialValue: widget.curValue?.dateTime,
       controller: widget.mController,
       onShowPicker: (BuildContext context, DateTime? currentValue) async {

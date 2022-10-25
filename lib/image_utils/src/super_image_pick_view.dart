@@ -57,18 +57,20 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
                   ? () async {
                       mPrint('Picking image');
                       var src = await showImagePickerDialog();
-                      await PickImageController.instance
-                          .cropImageFromFile2(
-                        widget.imageClass,
-                        imageSource: src,
-                      )
-                          .then((x) {
-                        if (x != null) {
-                          mPrint('Image is picked');
-                          widget.onChanged?.call();
-                          setState(() {});
-                        }
-                      });
+                      if (src != null) {
+                        await PickImageController.instance
+                            .cropImageFromFile2(
+                          widget.imageClass,
+                          imageSource: src,
+                        )
+                            .then((x) {
+                          if (x != null) {
+                            mPrint('Image is picked');
+                            widget.onChanged?.call();
+                            setState(() {});
+                          }
+                        });
+                      }
                     }
                   : null,
               child: !widget.imageClass.imgString.isNullOrWhiteSpace && widget.imageClass.imgString!.contains(appUploadCenter)

@@ -100,9 +100,6 @@ class SuperDropdownMenuState extends State<SuperDropdownMenu> {
         dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
               labelText: widget.eHint,
               hintText: '${widget.eHint}...',
-              border: widget.enableBorders ? null : InputBorder.none,
-              enabledBorder: widget.enableBorders ? null : InputBorder.none,
-              focusedBorder: widget.enableBorders ? null : InputBorder.none,
             ),
         // dropdownSearchDecoration: InputDecoration(
         //   isDense: true,

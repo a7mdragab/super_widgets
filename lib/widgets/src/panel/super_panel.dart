@@ -40,15 +40,10 @@ class SuperPanel extends StatelessWidget {
                 child: InputDecorator(
                     isFocused: hasFocus,
                     decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-
                           contentPadding: contentPadding,
                           fillColor: fillColor,
                           labelStyle: TextStyle(color: hasError ? Colors.red : (hasFocus ? Colors.blue : Colors.black)),
                           labelText: title,
-
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: BorderSide(color: hasError ? Colors.red : Colors.grey)),
-                          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: BorderSide(color: hasError ? Colors.red : Colors.grey)),
-                          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: BorderSide(color: hasError ? Colors.red : Colors.blue)),
                         ),
                     child: child),
               );

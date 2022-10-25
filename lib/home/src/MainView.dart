@@ -9,6 +9,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:super_widgets/home/src/language_service.dart';
+import 'package:super_widgets/super_widgets.dart';
 import 'package:super_widgets/utils/http_overrides.dart';
 
 import 'theme/theme_service.dart';
@@ -386,9 +387,9 @@ Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
     mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
     defaultScale: true,
     breakpoints: const [
-      ResponsiveBreakpoint.resize(480, name: MOBILE),
+      ResponsiveBreakpoint.autoScale(480, name: MOBILE),
       ResponsiveBreakpoint.autoScale(700, name: TABLET),
-      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+      ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
     ],
   );
   return child;

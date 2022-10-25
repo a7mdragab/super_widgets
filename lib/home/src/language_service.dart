@@ -8,7 +8,9 @@ class LanguageService extends GetxController implements GetxService {
   static LanguageService get to => Get.find();
 
   final _currentLanguage = 'en'.obs;
+
   String get currentLanguage => _currentLanguage.value;
+
   set currentLanguage(String val) => _currentLanguage.value = val;
 
   @override
@@ -29,17 +31,20 @@ class LanguageService extends GetxController implements GetxService {
     // updateLanguage(_deviceLanguage);
   }
 
+  Alignment get alignment => isArabic ? Alignment.centerRight : Alignment.centerLeft;
+  TextDirection get textDirection => isArabic ? TextDirection.rtl : TextDirection.ltr;
+
   // gets the language locale app is set to
   Locale get getLocale {
     // gets the default language key (from the translation language system)
     return Locale(currentLanguage);
   }
 
-  final String keyIsFirst='ISFIRSTKEY';
+  final String keyIsFirst = 'ISFIRSTKEY';
 
   // updates the language stored
   Future<void> updateLocale(String value) async {
-    if(!value.isNullOrEmptyOrWhiteSpace) {
+    if (!value.isNullOrEmptyOrWhiteSpace) {
       upLocale() {
         if (value.isEmpty) value = 'en';
         if (value == "عربى") value = 'ar';
