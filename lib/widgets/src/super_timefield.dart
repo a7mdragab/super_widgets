@@ -66,6 +66,7 @@ class SuperTimeFieldState extends State<SuperTimeField> {
                     },
                     child: const Icon(Icons.close, size: 16))
                 : const SizedBox(),
+            contentPadding: EdgeInsets.zero,
             suffixIconConstraints: const BoxConstraints(maxHeight: 20, maxWidth: 20),
             labelStyle: TextStyle(color: widget.txtColor ?? context.theme.primaryColor),
             hintStyle: TextStyle(color: widget.txtColor ?? context.theme.primaryColor),

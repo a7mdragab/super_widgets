@@ -32,6 +32,7 @@ class LanguageService extends GetxController implements GetxService {
   }
 
   Alignment get alignment => isArabic ? Alignment.centerRight : Alignment.centerLeft;
+  Alignment get alignmentReverse => !isArabic ? Alignment.centerRight : Alignment.centerLeft;
   TextDirection get textDirection => isArabic ? TextDirection.rtl : TextDirection.ltr;
 
   // gets the language locale app is set to

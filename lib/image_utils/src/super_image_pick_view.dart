@@ -49,6 +49,8 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
     return SuperDecoratedContainer(
       // width: mSize * 1,
       // height: mSize * 1,
+      borderColor: Colors.grey[300],
+      borderRadius: 16,
       color: Colors.transparent,
       shape: BoxShape.rectangle,
       child: widget.imageClass.imgList.isNullOrEmpty

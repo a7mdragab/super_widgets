@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:ready_extensions/ready_extensions.dart';
 import 'package:time/time.dart';
+import 'dart:convert';
 
 /// region Dates Formats
 ///
@@ -91,7 +93,7 @@ extension DateTimeExtension on DateTime {
     return format.format(date);
   }
 
-  String toDateStr([String formatStr = 'dd-MMMM-yyyy']) {
+  String toDateStr([String formatStr = 'dd-MM-yyyy']) {
     var format = intl.DateFormat(formatStr);
     var date = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
     return format.format(date);
@@ -216,7 +218,7 @@ extension GenericListExtension<T extends List> on T? {
   }
 }
 
-extension color on matLib.Color {
+extension ColorExt on matLib.Color {
   MaterialColor get toMaterial {
     Map<int, matLib.Color> colors = {
       50: matLib.Color.fromRGBO(red, green, blue, 0.1),
@@ -243,5 +245,19 @@ extension color on matLib.Color {
       // toMaterial[500]!,
       // toMaterial[400]!,
     ].reversed.toList();
+  }
+}
+
+extension StringNullExtension on String? {
+  bool get isBase64 {
+    if (!isNullOrEmptyOrWhiteSpace) {
+      try {
+        base64Decode(this!);
+        return true;
+      } on Exception catch (_) {
+        return false;
+      }
+    }
+    return false;
   }
 }

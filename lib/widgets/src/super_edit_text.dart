@@ -144,7 +144,7 @@ class SuperEditTextState extends State<SuperEditText> {
                           icon: Icon(isObscured ? Icons.lock_open_rounded : Icons.lock_rounded),
                         ))
                       : (widget.suffixText == null
-                          ? widget.eController!.text.isNullOrWhiteSpace
+                          ? widget.eController!.text.isNullOrWhiteSpace || !widget.enabled
                               ? null
                               : IconButton(
                                   onPressed: widget.eController!.clear,
