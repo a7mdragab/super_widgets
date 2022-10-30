@@ -2059,4 +2059,9 @@ Country? getCountryByCountryCode(String countryCode) {
   return ind == -1 ? null : allCountries[ind];
 }
 
+Country? getCountryFromPhoneNum(String phoneNum) {
+  int ind = allCountries.indexWhere((element) => phoneNum.startsWith('+${element.dialCode}'));
+  return ind == -1 ? null : allCountries[ind];
+}
+
 ///endregion All countries

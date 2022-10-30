@@ -19,6 +19,8 @@ const vSpace32 = SizedBox(height: 32);
 const vSpace48 = SizedBox(height: 48);
 const vSpace64 = SizedBox(height: 64);
 const vSpace96 = SizedBox(height: 96);
+Widget hSpace(double x) => SizedBox(width: x);
+Widget vSpace(double x) => SizedBox(height: x);
 
 const List<String> arabicCharacters = ["أ", "ؤ", "إ", "ئ", "ا", "ب", "ة", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ػ", "ؼ", "ؽ", "ؾ", "ؿ"];
 

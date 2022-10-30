@@ -32,6 +32,7 @@ class SuperPhoneField extends StatefulWidget {
   final void Function(String?)? onPhoneChanged, onCountryChanged, onFullPhoneChanged;
   final List<String? Function(PhoneNumber?)>? validators;
 
+  final String initialPhone;
   final String? initialCountryCode;
   final String initialDialCode;
   final TextEditingController phoneController;
@@ -41,6 +42,7 @@ class SuperPhoneField extends StatefulWidget {
     super.key,
     this.initialDialCode = '+20',
     this.initialCountryCode,
+    this.initialPhone = '',
     this.eHint = 'Phone number',
     this.eLabel,
     this.fillColor = Colors.white,
@@ -69,12 +71,15 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
 
   void initCountry() async {
     try {
-      if (widget.useSimIfAvailable) {
+      if (!widget.initialPhone.isNullOrEmptyOrWhiteSpace) {
+        country = getCountryFromPhoneNum(widget.initialPhone);
+      }
+      if (country == null && widget.useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
         if (!simCode.isNullOrEmptyOrWhiteSpace) {
           if (widget.enableDebug == true) mPrint('Getting from simCode');
           country ??= getCountryByCountryCode(simCode!);
-          if (widget.enableDebug == true) if (country != null) mPrint('Got from simCode');
+          if (widget.enableDebug == true && country != null) mPrint('Got from simCode');
         }
       }
       if (country == null) {
@@ -85,7 +90,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
         } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
           if (widget.enableDebug == true) mPrint('Getting from initialCountryCode');
           country ??= getCountryByCountryCode(widget.initialCountryCode!);
-          if (widget.enableDebug == true) if (country != null) mPrint('Got from initialCountryCode');
+          if (widget.enableDebug == true && country != null) mPrint('Got from initialCountryCode');
         }
       }
       if (widget.enableDebug == true) mPrint('Selected country: ${country?.toMap()}');
@@ -100,7 +105,8 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
       mPrint('Initial country: ${country?.toMap()}');
     }
     if (country != null) {
-      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: '');
+      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: widget.initialPhone);
+      widget.phoneController.text = widget.initialPhone;
     }
   }
 

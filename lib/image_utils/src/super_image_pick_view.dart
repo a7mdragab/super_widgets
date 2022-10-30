@@ -19,11 +19,22 @@ class SuperImagePickView extends StatefulWidget {
 
   final bool enableChange;
   final BoxShape shape;
+  final Widget? emptyWidget;
+  final IconData? emptyIconData;
   final double? width, height;
   final Function? onChanged, dismissFunction;
 
   const SuperImagePickView(this.imageClass,
-      {super.key, this.width = 200, this.height = 150, this.shape = BoxShape.rectangle, this.pickLabel = 'Pick Photo', this.enableChange = true, this.onChanged, this.dismissFunction});
+      {super.key,
+      this.width = 200,
+      this.height = 150,
+      this.emptyWidget,
+      this.emptyIconData,
+      this.shape = BoxShape.rectangle,
+      this.pickLabel = 'Pick Photo',
+      this.enableChange = true,
+      this.onChanged,
+      this.dismissFunction});
 
   @override
   SuperImagePickViewState createState() => SuperImagePickViewState();
@@ -47,12 +58,12 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
     // return Container();
     // printInfo(info: 'imgString View: ' + widget.imageClass.imgString!);
     return SuperDecoratedContainer(
-      // width: mSize * 1,
-      // height: mSize * 1,
+      width: widget.width,
+      height: widget.height,
       borderColor: Colors.grey[300],
       borderRadius: 16,
       color: Colors.transparent,
-      shape: BoxShape.rectangle,
+      shape: widget.shape,
       child: widget.imageClass.imgList.isNullOrEmpty
           ? InkWell(
               onTap: widget.enableChange
@@ -102,11 +113,12 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
                       children: [
                         Center(
                           child: SuperImageView(
-                            icon: Icon(
-                              Icons.image,
-                              color: Colors.grey[400]!.withOpacity(0.7),
-                              size: widget.height ?? widget.width,
-                            ),
+                            icon: widget.emptyWidget ??
+                                Icon(
+                                  widget.emptyIconData ?? Icons.image,
+                                  color: Colors.grey[400]!.withOpacity(0.7),
+                                  size: widget.height ?? widget.width,
+                                ),
                             width: widget.width,
                             height: widget.height,
                             borderRadius: 16,
