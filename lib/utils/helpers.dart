@@ -14,11 +14,30 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' as foundation;
 
 Future<bool> isRooted() async {
-  return (await Root.isRooted()) ?? false;
+  try {
+    return (await Root.isRooted()) ?? false;
+  } on Exception catch (e) {
+    mPrintError('Exception $e');
+    return false;
+  }
 }
 
 Future<bool> isAndroidRealDevice() async {
-  return ((await getAndroidDeviceInfo()).isPhysicalDevice);
+  if (GetPlatform.isAndroid) {
+    return ((await getAndroidDeviceInfo()).isPhysicalDevice);
+  }
+  return false;
+}
+
+Future<bool> isIosRealDevice() async {
+  if (GetPlatform.isIOS) {
+    return ((await getIOSDeviceInfo()).isPhysicalDevice);
+  }
+  return false;
+}
+
+Future<bool> isRealMobileDevice() async {
+  return ((await isAndroidRealDevice()) || (await isIosRealDevice()));
 }
 
 bool isValidHash(String cryptFormatHash, String enteredPlain) {
@@ -59,8 +78,24 @@ Future<LinuxDeviceInfo> getLinuxInfo() async {
 
 Future<String> getAndroidDeviceID() async {
   String? deviceId = await PlatformDeviceId.getDeviceId;
-  AndroidDeviceInfo androidInfo = await getAndroidDeviceInfo();
-  return ('${androidInfo.id}_${androidInfo.device}_$deviceId');
+  AndroidDeviceInfo info = await getAndroidDeviceInfo();
+  return ('${info.id}_${info.device}_$deviceId');
+}
+
+Future<String> getIOSDeviceID() async {
+  String? deviceId = await PlatformDeviceId.getDeviceId;
+  IosDeviceInfo info = await getIOSDeviceInfo();
+  return ('${info.identifierForVendor}_$deviceId');
+}
+
+Future<String> getMobileDeviceID() async {
+  if (GetPlatform.isAndroid) {
+    return await getAndroidDeviceID();
+  } else if (GetPlatform.isIOS) {
+    return await getIOSDeviceID();
+  }
+  mPrintError('Not a mobile');
+  return 'Not a mobile';
 }
 
 String getYoutubeVideoThumbnail(String videoUrl) {
@@ -68,7 +103,7 @@ String getYoutubeVideoThumbnail(String videoUrl) {
   return 'https://img.youtube.com/vi/$vidID/0.jpg';
 }
 
-launchStringURL(String link) async {
+Future<void> launchStringURL(String link) async {
   if (await canLaunchUrl(Uri.parse(link))) {
     await launchUrl(Uri.parse(link));
   } else {
@@ -76,7 +111,7 @@ launchStringURL(String link) async {
   }
 }
 
-_getWhatsNum(String phone) {
+String _getWhatsNum(String phone) {
   String num = phone.replaceAll('+', '').replaceAll(' ', '');
   for (int I = 0; I < num.length; I++) {
     if (num[0] == '0') {
@@ -86,15 +121,15 @@ _getWhatsNum(String phone) {
   return num;
 }
 
-launchWhatsApp(String phone, [String? msg = 'Hello']) async {
+launchWhatsApp(String phone, [String msg = 'Hello']) async {
   String num = _getWhatsNum(phone);
-  // await MylaunchURL(('whatsapp://send?phone=$num&text=hello'));
-  // await MylaunchURL("https://api.whatsapp.com/send?phone=${num}&text=${AuthService.to.whatsAppMsg.replaceAll(' ', '%20')}");
-  // await MylaunchURL("https://wa.me/$num?text=Hello%2C%20I%20want%20to%20add%20fund%20for%20my%20account%20for%20Dr.%20Hussam%20Abo%20Al-Rob%20Courses");
-  await launchStringURL("whatsapp://send?phone=$num&text=$msg");
-  // await MylaunchURL("whatsapp://send?phone=$num&text=Hi, I need some help");
-  // await MylaunchURL(('https://wa.me/$num'));
-  // await MylaunchURL(('https://wa.me/$num?text=${AuthService.to.whatsAppMsg}'));
+  String url = '';
+  if (GetPlatform.isAndroid) {
+    url = "whatsapp://send?phone=$num&text=$msg";
+  } else {
+    url = "https://api.whatsapp.com/send?phone=$num&text=${msg.replaceAll(' ', '%20')}";
+  }
+  await launchStringURL(url);
 }
 
 launchFacePage(String fbLink) async {
@@ -123,37 +158,77 @@ String getFormattedString(String x, List vals) {
   return temp;
 }
 
-Future<ImageSource> showImagePickerDialog() async {
-  Completer<ImageSource> completer = Completer<ImageSource>();
+Future<ImageSource?> showImagePickerDialog() async {
+  Completer<ImageSource?> completer = Completer<ImageSource?>();
   await SmartDialog.show(
-    clickMaskDismiss: false,
+    clickMaskDismiss: true,
     backDismiss: true,
     alignment: Alignment.center,
     builder: (_) => SuperDecoratedContainer(
+      color: Colors.white,
+      borderRadius: 24,
+      width: Get.context!.responsiveValue<double>(mobile: Get.width, tablet: Get.width * 0.9, desktop: Get.width * 0.7),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          Align(
+            alignment: LanguageService.to.alignment,
+            child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.red),
+                onPressed: () {
+                  completer.complete(null);
+                  mHide();
+                }),
+          ),
           Txt('Pick image'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
-          vSpace32,
+          vSpace24,
           Txt('Choose the image source.'.tr, fontSize: 16),
-          vSpace32,
-          Row(
-            children: [
-              Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        completer.complete(ImageSource.camera);
-                        Get.back();
-                      },
-                      child: Txt('Camera'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-              Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        completer.complete(ImageSource.gallery);
-                        Get.back();
-                      },
-                      child: Txt('Gallery'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-            ],
+          vSpace8,
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Row(
+              textDirection: LanguageService.to.isArabic ? TextDirection.rtl : TextDirection.ltr,
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
+                    label: const Txt('Camera', color: Colors.white),
+                    icon: const Icon(Icons.camera_alt),
+                    onPressed: () {
+                      completer.complete(ImageSource.camera);
+                      mHide();
+                    },
+
+                    // child: InkWell(
+                    //   onTap: () {
+                    //     completer.complete(ImageSource.camera);
+                    //     mHide();
+                    //   },
+                    //   child: const SuperDecoratedContainer(
+                    //     borderRadius: 16,
+                    //     padding: EdgeInsets.all(8),
+                    //     color: Colors.lightGreen,
+                    //     child: Center(child: Txt('Camera', color: Colors.white)),
+                    //   ),
+                    // ),
+                  ),
+                ),
+                hSpace16,
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                    label: const Txt('Gallery', color: Colors.white),
+                    icon: const Icon(Icons.image),
+                    onPressed: () {
+                      completer.complete(ImageSource.gallery);
+                      mHide();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -163,37 +238,63 @@ Future<ImageSource> showImagePickerDialog() async {
   return completer.future;
 }
 
-//Hello
-showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
+void showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
   SmartDialog.show(
     clickMaskDismiss: false,
     backDismiss: true,
     alignment: Alignment.center,
     builder: (_) => SuperDecoratedContainer(
-      width: Get.context!.responsiveValue<double>(mobile: Get.width * 0.7, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
-      height: Get.context!.responsiveValue<double>(mobile: Get.width * 0.8, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
+      color: Colors.white,
+      borderRadius: 24,
+      width: Get.context!.responsiveValue<double>(mobile: Get.width, tablet: Get.width * 0.7, desktop: Get.width * 0.5),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
-          vSpace32,
-          Expanded(child: Txt(msg != null ? 'Are you sure you want to'.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, fontSize: 16)),
-          Row(
-            children: [
-              Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        function.call();
-                        Get.back();
-                      },
-                      child: Txt('Yes'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-              Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Txt('No'.tr, fontWeight: FontWeight.bold, color: Get.theme.primaryColor))),
-            ],
+          Align(
+            alignment: LanguageService.to.alignment,
+            child: const IconButton(icon: Icon(Icons.close, color: Colors.red), onPressed: mHide),
+          ),
+          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 22, color: Get.theme.primaryColor),
+          vSpace24,
+          Center(child: Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, textAlign: TextAlign.center, fontSize: 16)),
+          vSpace8,
+          Padding(
+            padding: const EdgeInsets.all(24),
+            child: Row(
+              textDirection: LanguageService.to.isArabic ? TextDirection.rtl : TextDirection.ltr,
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+                    ),
+                    label: const Txt('Yes', color: Colors.white),
+                    icon: const Icon(Icons.done),
+                    onPressed: () {
+                      mHide();
+                      function();
+                    },
+                  ),
+                ),
+                hSpace16,
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
+                    ),
+                    label: const Txt('No', color: Colors.white),
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      mHide();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -230,18 +331,7 @@ void hideKeyboard(BuildContext context) {
 
 bool isArabic(String text) {
   if (text.isNullOrWhiteSpace) return false;
-  // RegExp regExp = new RegExp("/[\u0600-\u06FF]/");
-  // print('text $text is ${regExp.allMatches(text)}');
-
-  // print('arabicCharacters =${jsonEncode(arabicCharacters)}');
   return text.anyChar((element) => arabicCharacters.contains(element));
-  // print('Result = $x');
-
-  // return regExp.hasMatch(text);
-}
-
-bool isValid(String text, [int n = 10]) {
-  return text.length >= n;
 }
 
 final logger = Logger(
@@ -261,14 +351,85 @@ final logger = Logger(
       ),
 );
 
-const mShowToast = SmartDialog.showToast;
+const mShowToast2 = SmartDialog.showToast;
 const mShowLoading = SmartDialog.showLoading;
 const mShowAttach = SmartDialog.showAttach;
 const mShowDialog = SmartDialog.show;
 const mHide = SmartDialog.dismiss;
+
+class CustomToast extends StatelessWidget {
+  const CustomToast(this.msg,
+      {this.alignment,
+      this.color = Colors.black87,
+      this.txtColor = Colors.white,
+      this.margin = const EdgeInsets.only(bottom: 30, top: 30),
+      this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      Key? key})
+      : super(key: key);
+  final AlignmentGeometry? alignment;
+  final String msg;
+  final Color? color, txtColor;
+  final EdgeInsets? margin, padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: alignment ?? Alignment.center,
+      child: SuperDecoratedContainer(
+        borderRadius: 16,
+        margin: margin,
+        padding: padding,
+        color: color,
+        child: Txt(
+          msg,
+          color: txtColor,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+}
+
+void mShowToast(String msg,
+    {Color? color = Colors.black87,
+    Color? txtColor = Colors.white,
+    EdgeInsets? margin = const EdgeInsets.only(bottom: 30, top: 30),
+    EdgeInsets? padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+    SmartDialogController? controller,
+    Duration? displayTime,
+    AlignmentGeometry? alignment,
+    bool? clickMaskDismiss,
+    SmartAnimationType? animationType,
+    bool? usePenetrate,
+    bool? useAnimation,
+    Duration? animationTime,
+    Color? maskColor,
+    Widget? maskWidget,
+    bool? consumeEvent,
+    bool? debounce,
+    SmartToastType? displayType}) {
+  mShowToast2(msg,
+      alignment: alignment,
+      controller: controller,
+      animationTime: animationTime,
+      animationType: animationType,
+      clickMaskDismiss: clickMaskDismiss,
+      consumeEvent: consumeEvent,
+      debounce: debounce,
+      displayType: displayType,
+      displayTime: displayTime,
+      maskColor: maskColor,
+      maskWidget: maskWidget,
+      useAnimation: useAnimation,
+      usePenetrate: usePenetrate, builder: (context) {
+    return CustomToast(msg, color: color, alignment: alignment, padding: padding, margin: margin, txtColor: txtColor);
+  });
+}
+
 bool get isDialogShown => SmartDialog.config.isExist;
 
 void mPrint(s) {
+  // SmartDialog.showToast('',)
   if (foundation.kDebugMode) {
     logger.i('$s');
   }
@@ -326,7 +487,6 @@ String toSingularLowerName(String s) => toSingularName(s).toLowerCase();
 String toModelName(String? modelName, String definedName) => modelName == null || modelName.isEmpty ? toCamelCase(toSingularName(definedName)) : toCamelCase(modelName);
 
 ///endregion
-///
 
 bool isDateInRange(DateTime start, DateTime end, DateTime date) {
   return ((date == start || date.isAfter(start)) && (date == end || date.isBefore(end)));

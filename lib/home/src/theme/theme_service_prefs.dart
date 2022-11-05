@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:super_widgets/super_widgets.dart';
 
 import 'theme_service_base.dart';
 // ignore_for_file: comment_references
@@ -19,8 +20,9 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<ThemeMode> themeMode() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyThemeMode) ??
-          ThemeServiceBase.defaultThemeMode.index;
+      final int value = _storage.read(ThemeServiceBase.keyThemeMode) ?? ThemeServiceBase.defaultThemeMode.index;
+
+      mPrint('Read ThemeMode $value');
       return ThemeMode.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -36,6 +38,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
     // are changed in any other way than adding more enums to the end.
     try {
       await _storage.write(ThemeServiceBase.keyThemeMode, value.index);
+      // mPrint('Saved ThemeMode ${value.index}');
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -45,8 +48,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> useSubThemes() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyUseSubThemes) ??
-          ThemeServiceBase.defaultUseSubThemes;
+      final bool value = _storage.read(ThemeServiceBase.keyUseSubThemes) ?? ThemeServiceBase.defaultUseSubThemes;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -68,8 +70,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> useTextTheme() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyUseTextTheme) ??
-          ThemeServiceBase.defaultUseTextTheme;
+      final bool value = _storage.read(ThemeServiceBase.keyUseTextTheme) ?? ThemeServiceBase.defaultUseTextTheme;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -91,8 +92,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexScheme> usedScheme() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyUsedScheme) ??
-          ThemeServiceBase.defaultUsedScheme.index;
+      final int value = _storage.read(ThemeServiceBase.keyUsedScheme) ?? ThemeServiceBase.defaultUsedScheme.index;
       return FlexScheme.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -114,8 +114,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<int> schemeIndex() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keySchemeIndex) ??
-          ThemeServiceBase.defaultSchemeIndex;
+      final int value = _storage.read(ThemeServiceBase.keySchemeIndex) ?? ThemeServiceBase.defaultSchemeIndex;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -137,9 +136,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> interactionEffects() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyInteractionEffects) ??
-              ThemeServiceBase.defaultInteractionEffects;
+      final bool value = _storage.read(ThemeServiceBase.keyInteractionEffects) ?? ThemeServiceBase.defaultInteractionEffects;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -161,8 +158,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> useDefaultRadius() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyUseDefaultRadius) ??
-          ThemeServiceBase.defaultUseDefaultRadius;
+      final bool value = _storage.read(ThemeServiceBase.keyUseDefaultRadius) ?? ThemeServiceBase.defaultUseDefaultRadius;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -184,8 +180,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<double> cornerRadius() async {
     try {
-      final double value = _storage.read(ThemeServiceBase.keyCornerRadius) ??
-          ThemeServiceBase.defaultCornerRadius;
+      final double value = _storage.read(ThemeServiceBase.keyCornerRadius) ?? ThemeServiceBase.defaultCornerRadius;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -207,9 +202,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> inputDecoratorIsFilled() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyInputDecoratorIsFilled) ??
-              ThemeServiceBase.defaultInputDecoratorIsFilled;
+      final bool value = _storage.read(ThemeServiceBase.keyInputDecoratorIsFilled) ?? ThemeServiceBase.defaultInputDecoratorIsFilled;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -231,9 +224,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexInputBorderType> inputDecoratorBorderType() async {
     try {
-      final int value =
-          _storage.read(ThemeServiceBase.keyInputDecoratorBorderType) ??
-              ThemeServiceBase.defaultInputDecoratorBorderType.index;
+      final int value = _storage.read(ThemeServiceBase.keyInputDecoratorBorderType) ?? ThemeServiceBase.defaultInputDecoratorBorderType.index;
       return FlexInputBorderType.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -245,8 +236,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> saveInputDecoratorBorderType(FlexInputBorderType value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keyInputDecoratorBorderType, value.index);
+      await _storage.write(ThemeServiceBase.keyInputDecoratorBorderType, value.index);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -256,9 +246,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> inputDecoratorUnfocusedHasBorder() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyInputDecoratorUnfocusedHasBorder) ??
-              ThemeServiceBase.defaultInputDecoratorUnfocusedHasBorder;
+      final bool value = _storage.read(ThemeServiceBase.keyInputDecoratorUnfocusedHasBorder) ?? ThemeServiceBase.defaultInputDecoratorUnfocusedHasBorder;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -270,8 +258,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> saveInputDecoratorUnfocusedHasBorder(bool value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keyInputDecoratorUnfocusedHasBorder, value);
+      await _storage.write(ThemeServiceBase.keyInputDecoratorUnfocusedHasBorder, value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -281,8 +268,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexSurfaceMode> surfaceMode() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keySurfaceMode) ??
-          ThemeServiceBase.defaultSurfaceMode.index;
+      final int value = _storage.read(ThemeServiceBase.keySurfaceMode) ?? ThemeServiceBase.defaultSurfaceMode.index;
       return FlexSurfaceMode.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -305,8 +291,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<int> blendLevel() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyBlendLevel) ??
-          ThemeServiceBase.defaultBlendLevel;
+      final int value = _storage.read(ThemeServiceBase.keyBlendLevel) ?? ThemeServiceBase.defaultBlendLevel;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -328,8 +313,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexAppBarStyle> lightAppBarStyle() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyLightAppBarStyle) ??
-          ThemeServiceBase.defaultLightAppBarStyle.index;
+      final int value = _storage.read(ThemeServiceBase.keyLightAppBarStyle) ?? ThemeServiceBase.defaultLightAppBarStyle.index;
       return FlexAppBarStyle.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -351,8 +335,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexAppBarStyle> darkAppBarStyle() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyDarkAppBarStyle) ??
-          ThemeServiceBase.defaultDarkAppBarStyle.index;
+      final int value = _storage.read(ThemeServiceBase.keyDarkAppBarStyle) ?? ThemeServiceBase.defaultDarkAppBarStyle.index;
       return FlexAppBarStyle.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -374,8 +357,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<double> appBarOpacity() async {
     try {
-      final double value = _storage.read(ThemeServiceBase.keyAppBarOpacity) ??
-          ThemeServiceBase.defaultAppBarOpacity;
+      final double value = _storage.read(ThemeServiceBase.keyAppBarOpacity) ?? ThemeServiceBase.defaultAppBarOpacity;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -397,8 +379,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<double> appBarElevation() async {
     try {
-      final double value = _storage.read(ThemeServiceBase.keyAppBarElevation) ??
-          ThemeServiceBase.defaultAppBarElevation;
+      final double value = _storage.read(ThemeServiceBase.keyAppBarElevation) ?? ThemeServiceBase.defaultAppBarElevation;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -420,9 +401,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> transparentStatusBar() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyTransparentStatusBar) ??
-              ThemeServiceBase.defaultTransparentStatusBar;
+      final bool value = _storage.read(ThemeServiceBase.keyTransparentStatusBar) ?? ThemeServiceBase.defaultTransparentStatusBar;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -444,8 +423,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexTabBarStyle> tabBarStyle() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyTabBarStyle) ??
-          ThemeServiceBase.defaultTabBarStyle.index;
+      final int value = _storage.read(ThemeServiceBase.keyTabBarStyle) ?? ThemeServiceBase.defaultTabBarStyle.index;
       return FlexTabBarStyle.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -467,9 +445,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<double> bottomNavigationBarOpacity() async {
     try {
-      final double value =
-          _storage.read(ThemeServiceBase.keyBottomNavigationBarOpacity) ??
-              ThemeServiceBase.defaultBottomNavigationBarOpacity;
+      final double value = _storage.read(ThemeServiceBase.keyBottomNavigationBarOpacity) ?? ThemeServiceBase.defaultBottomNavigationBarOpacity;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -481,8 +457,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> saveBottomNavigationBarOpacity(double value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keyBottomNavigationBarOpacity, value);
+      await _storage.write(ThemeServiceBase.keyBottomNavigationBarOpacity, value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -492,9 +467,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<double> bottomNavigationBarElevation() async {
     try {
-      final double value =
-          _storage.read(ThemeServiceBase.keyBottomNavigationBarElevation) ??
-              ThemeServiceBase.defaultBottomNavigationBarElevation;
+      final double value = _storage.read(ThemeServiceBase.keyBottomNavigationBarElevation) ?? ThemeServiceBase.defaultBottomNavigationBarElevation;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -506,8 +479,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> saveBottomNavigationBarElevation(double value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keyBottomNavigationBarElevation, value);
+      await _storage.write(ThemeServiceBase.keyBottomNavigationBarElevation, value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -517,8 +489,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<FlexSystemNavBarStyle> navBarStyle() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyNavBarStyle) ??
-          ThemeServiceBase.defaultNavBarStyle.index;
+      final int value = _storage.read(ThemeServiceBase.keyNavBarStyle) ?? ThemeServiceBase.defaultNavBarStyle.index;
       return FlexSystemNavBarStyle.values[value];
     } catch (e) {
       debugPrint(e.toString());
@@ -540,8 +511,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> useNavDivider() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyUseNavDivider) ??
-          ThemeServiceBase.defaultUseNavDivider;
+      final bool value = _storage.read(ThemeServiceBase.keyUseNavDivider) ?? ThemeServiceBase.defaultUseNavDivider;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -563,9 +533,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> tooltipsMatchBackground() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyTooltipsMatchBackground) ??
-              ThemeServiceBase.defaultTooltipsMatchBackground;
+      final bool value = _storage.read(ThemeServiceBase.keyTooltipsMatchBackground) ?? ThemeServiceBase.defaultTooltipsMatchBackground;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -587,8 +555,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> swapLightColors() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keySwapLightColors) ??
-          ThemeServiceBase.defaultSwapLightColors;
+      final bool value = _storage.read(ThemeServiceBase.keySwapLightColors) ?? ThemeServiceBase.defaultSwapLightColors;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -610,8 +577,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> swapDarkColors() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keySwapDarkColors) ??
-          ThemeServiceBase.defaultSwapDarkColors;
+      final bool value = _storage.read(ThemeServiceBase.keySwapDarkColors) ?? ThemeServiceBase.defaultSwapDarkColors;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -633,8 +599,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> lightIsWhite() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyLightIsWhite) ??
-          ThemeServiceBase.defaultLightIsWhite;
+      final bool value = _storage.read(ThemeServiceBase.keyLightIsWhite) ?? ThemeServiceBase.defaultLightIsWhite;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -656,8 +621,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> darkIsTrueBlack() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyDarkIsTrueBlack) ??
-          ThemeServiceBase.defaultDarkIsTrueBlack;
+      final bool value = _storage.read(ThemeServiceBase.keyDarkIsTrueBlack) ?? ThemeServiceBase.defaultDarkIsTrueBlack;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -679,8 +643,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> useToDarkMethod() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyUseToDarkMethod) ??
-          ThemeServiceBase.defaultUseToDarkMethod;
+      final bool value = _storage.read(ThemeServiceBase.keyUseToDarkMethod) ?? ThemeServiceBase.defaultUseToDarkMethod;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -702,8 +665,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<int> darkMethodLevel() async {
     try {
-      final int value = _storage.read(ThemeServiceBase.keyDarkMethodLevel) ??
-          ThemeServiceBase.defaultDarkMethodLevel;
+      final int value = _storage.read(ThemeServiceBase.keyDarkMethodLevel) ?? ThemeServiceBase.defaultDarkMethodLevel;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -725,9 +687,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> useFlexColorScheme() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyUseFlexColorScheme) ??
-              ThemeServiceBase.defaultUseFlexColorScheme;
+      final bool value = _storage.read(ThemeServiceBase.keyUseFlexColorScheme) ?? ThemeServiceBase.defaultUseFlexColorScheme;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -749,9 +709,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> blendLightOnColors() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyBlendLightOnColors) ??
-              ThemeServiceBase.defaultBlendLightOnColors;
+      final bool value = _storage.read(ThemeServiceBase.keyBlendLightOnColors) ?? ThemeServiceBase.defaultBlendLightOnColors;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -773,8 +731,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> blendDarkOnColors() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyBlendDarkOnColors) ??
-          ThemeServiceBase.defaultBlendDarkOnColors;
+      final bool value = _storage.read(ThemeServiceBase.keyBlendDarkOnColors) ?? ThemeServiceBase.defaultBlendDarkOnColors;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -796,9 +753,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> blendLightTextTheme() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyBlendLightTextTheme) ??
-              ThemeServiceBase.defaultBlendLightTextTheme;
+      final bool value = _storage.read(ThemeServiceBase.keyBlendLightTextTheme) ?? ThemeServiceBase.defaultBlendLightTextTheme;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -820,9 +775,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> blendDarkTextTheme() async {
     try {
-      final bool value =
-          _storage.read(ThemeServiceBase.keyBlendDarkTextTheme) ??
-              ThemeServiceBase.defaultBlendDarkTextTheme;
+      final bool value = _storage.read(ThemeServiceBase.keyBlendDarkTextTheme) ?? ThemeServiceBase.defaultBlendDarkTextTheme;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -844,8 +797,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<bool> fabUseShape() async {
     try {
-      final bool value = _storage.read(ThemeServiceBase.keyFabUseShape) ??
-          ThemeServiceBase.defaultFabUseShape;
+      final bool value = _storage.read(ThemeServiceBase.keyFabUseShape) ?? ThemeServiceBase.defaultFabUseShape;
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -867,9 +819,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> primaryLight() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keyPrimaryLight) ??
-              ThemeServiceBase.defaultPrimaryLight.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keyPrimaryLight) ?? ThemeServiceBase.defaultPrimaryLight.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -891,9 +841,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> primaryVariantLight() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keyPrimaryVariantLight) ??
-              ThemeServiceBase.defaultPrimaryVariantLight.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keyPrimaryVariantLight) ?? ThemeServiceBase.defaultPrimaryVariantLight.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -905,8 +853,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> savePrimaryVariantLight(Color value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keyPrimaryVariantLight, value.value);
+      await _storage.write(ThemeServiceBase.keyPrimaryVariantLight, value.value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -916,9 +863,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> secondaryLight() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keySecondaryLight) ??
-              ThemeServiceBase.defaultSecondaryLight.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keySecondaryLight) ?? ThemeServiceBase.defaultSecondaryLight.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -940,9 +885,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> secondaryVariantLight() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keySecondaryVariantLight) ??
-              ThemeServiceBase.defaultSecondaryVariantLight.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keySecondaryVariantLight) ?? ThemeServiceBase.defaultSecondaryVariantLight.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -954,8 +897,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> saveSecondaryVariantLight(Color value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keySecondaryVariantLight, value.value);
+      await _storage.write(ThemeServiceBase.keySecondaryVariantLight, value.value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -965,9 +907,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> primaryDark() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keyPrimaryDark) ??
-              ThemeServiceBase.defaultPrimaryDark.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keyPrimaryDark) ?? ThemeServiceBase.defaultPrimaryDark.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -989,9 +929,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> primaryVariantDark() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keyPrimaryVariantDark) ??
-              ThemeServiceBase.defaultPrimaryVariantDark.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keyPrimaryVariantDark) ?? ThemeServiceBase.defaultPrimaryVariantDark.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -1013,9 +951,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> secondaryDark() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keySecondaryDark) ??
-              ThemeServiceBase.defaultSecondaryDark.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keySecondaryDark) ?? ThemeServiceBase.defaultSecondaryDark.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -1037,9 +973,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<Color> secondaryVariantDark() async {
     try {
-      final Color value = Color(
-          _storage.read(ThemeServiceBase.keySecondaryVariantDark) ??
-              ThemeServiceBase.defaultSecondaryVariantDark.value);
+      final Color value = Color(_storage.read(ThemeServiceBase.keySecondaryVariantDark) ?? ThemeServiceBase.defaultSecondaryVariantDark.value);
       return value;
     } catch (e) {
       debugPrint(e.toString());
@@ -1051,8 +985,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
   @override
   Future<void> saveSecondaryVariantDark(Color value) async {
     try {
-      await _storage.write(
-          ThemeServiceBase.keySecondaryVariantDark, value.value);
+      await _storage.write(ThemeServiceBase.keySecondaryVariantDark, value.value);
     } catch (e) {
       debugPrint(e.toString());
     }

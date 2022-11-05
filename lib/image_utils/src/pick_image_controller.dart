@@ -8,18 +8,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:super_widgets/image_utils/src/super_image_class.dart';
 import 'package:super_widgets/super_widgets.dart';
 
-
 class PickImageController {
   static PickImageController get instance => PickImageController();
 
-  Future<String> pickDirectory({String dialogTitle='Pick a directory',bool lockParentWindow=true,String? initialDirectory}) async {
+  Future<String> pickDirectory({String dialogTitle = 'Pick a directory', bool lockParentWindow = true, String? initialDirectory}) async {
     try {
-      return await FilePicker.platform.getDirectoryPath(dialogTitle: dialogTitle,lockParentWindow: lockParentWindow,initialDirectory: initialDirectory)??'';
+      return await FilePicker.platform.getDirectoryPath(dialogTitle: dialogTitle, lockParentWindow: lockParentWindow, initialDirectory: initialDirectory) ?? '';
     } on Exception catch (e) {
       mPrintError('pickDirectory Exception $e');
       return '';
     }
   }
+
   Future<FilePickerCross?> cropImageFromFileWeb(SuperImageClass imageClass, {String? barTitle}) async {
     // show a dialog to open a file
     FilePickerCross? myFile = await FilePickerCross.importFromStorage(
@@ -81,6 +81,41 @@ class PickImageController {
 
     // Uint8List plainImageList = imageFile.readAsBytesSync();
     // return Uint8List.fromList(plainImageList);
+  }
+
+  Future<File?> pickFile({
+    String? dialogTitle,
+    String? initialDirectory,
+    FileType type = FileType.any,
+    List<String>? allowedExtensions,
+    Function(FilePickerStatus)? onFileLoading,
+    bool allowCompression = false,
+    bool allowMultiple = false,
+    bool withData = false,
+    bool withReadStream = false,
+    bool lockParentWindow = true,
+  }) async {
+    // show a dialog to open a file
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      initialDirectory: initialDirectory,
+      allowCompression: allowCompression,
+      allowedExtensions: allowedExtensions,
+      lockParentWindow: lockParentWindow,
+      onFileLoading: onFileLoading,
+      withReadStream: withReadStream,
+      dialogTitle: dialogTitle,
+      withData: withData,
+      allowMultiple: allowMultiple,
+      type: type,
+    );
+    File? file;
+
+    if (result?.files.single != null) {
+      file = File(result!.files.single.path!);
+    } else {
+      mPrintError('User canceled the picker');
+    }
+    return file;
   }
 
   Future<File?> cropImageFromFile(SuperImageClass imageClass, {String? barTitle}) async {

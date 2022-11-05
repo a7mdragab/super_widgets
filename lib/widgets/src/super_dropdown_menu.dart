@@ -10,25 +10,26 @@ import 'package:get/get.dart';
 import 'txt.dart';
 
 class SuperDropdownMenu extends StatefulWidget {
-  String? name;
-  dynamic selectedItem;
-  List<dynamic> items;
-  late String Function(dynamic) itemAsString;
-  String eHint;
-  IconData? eIcon;
-  String? eAsset;
-  Function(dynamic s)? onChanged;
-  bool Function(dynamic, String)? filterFn;
+  final String? name;
+  final dynamic selectedItem;
+  final List<dynamic> items;
+  String Function(dynamic)? itemAsString;
+  final String eHint;
+  final IconData? eIcon;
+  final String? eAsset;
+  final Function(dynamic s)? onChanged;
+  final bool Function(dynamic, String)? filterFn;
+
   bool Function(dynamic, dynamic)? compareFn;
-  Future<List<dynamic>> Function(String)? asyncItems;
+  final Future<List<dynamic>> Function(String)? asyncItems;
 
-  Function? ontap;
+  final Function? ontap;
 
-  bool enabled;
-  bool enableBorders;
-  bool showSearchBox;
+  final bool enabled;
+  final bool enableBorders;
+  final bool showSearchBox;
 
-  List<String? Function(dynamic)>? validators;
+  final List<String? Function(dynamic)>? validators;
 
   SuperDropdownMenu(
       {super.key,
@@ -59,11 +60,11 @@ class SuperDropdownMenu extends StatefulWidget {
   }
 
   @override
-  SuperDropdownMenuState createState() => SuperDropdownMenuState();
+  State<SuperDropdownMenu> createState() => _SuperDropdownMenuState();
 }
 
 // ignore: camel_case_types
-class SuperDropdownMenuState extends State<SuperDropdownMenu> {
+class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     return DropdownSearch<dynamic>(
@@ -79,6 +80,7 @@ class SuperDropdownMenuState extends State<SuperDropdownMenu> {
       popupProps: PopupPropsMultiSelection.menu(
           isFilterOnline: false,
           showSelectedItems: true,
+          fit: FlexFit.loose,
           showSearchBox: widget.showSearchBox,
           searchFieldProps: TextFieldProps(
             decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
@@ -96,13 +98,10 @@ class SuperDropdownMenuState extends State<SuperDropdownMenu> {
           // ),
           ),
       dropdownDecoratorProps: DropDownDecoratorProps(
-        baseStyle: const TextStyle(fontSize: 12),
+        baseStyle: const TextStyle(fontSize: 16),
         dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
               labelText: widget.eHint,
               hintText: '${widget.eHint}...',
-              border: widget.enableBorders ? null : InputBorder.none,
-              enabledBorder: widget.enableBorders ? null : InputBorder.none,
-              focusedBorder: widget.enableBorders ? null : InputBorder.none,
             ),
         // dropdownSearchDecoration: InputDecoration(
         //   isDense: true,

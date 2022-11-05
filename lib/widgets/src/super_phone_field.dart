@@ -1,5 +1,5 @@
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/functions.dart';
+// import 'package:country_calling_code_picker/country.dart';
+// import 'package:country_calling_code_picker/functions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
@@ -9,6 +9,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:list_ext/list_ext.dart';
 import 'package:ready_extensions/ready_extensions.dart';
+import 'package:super_widgets/utils/country.dart';
 
 import '../../utils/helpers.dart';
 
@@ -21,6 +22,7 @@ class SuperPhoneField extends StatefulWidget {
   final bool readOnly;
   final bool enableValidate;
   final bool enableDebug;
+  final bool useSimIfAvailable;
 
   final InputDecoration? inputDecoration;
   final EdgeInsets? contentPadding;
@@ -30,13 +32,18 @@ class SuperPhoneField extends StatefulWidget {
   final void Function(String?)? onPhoneChanged, onCountryChanged, onFullPhoneChanged;
   final List<String? Function(PhoneNumber?)>? validators;
 
-  final String initialCountryCode;
+  final String initialPhone;
+  final String? initialCountryCode;
+  final String initialDialCode;
   final TextEditingController phoneController;
 
-  const SuperPhoneField(this.phoneController,{
+  const SuperPhoneField(
+    this.phoneController, {
     super.key,
-    this.initialCountryCode = '+20',
-    this.eHint = '',
+    this.initialDialCode = '+20',
+    this.initialCountryCode,
+    this.initialPhone = '',
+    this.eHint = 'Phone number',
     this.eLabel,
     this.fillColor = Colors.white,
     this.onPhoneChanged,
@@ -44,6 +51,7 @@ class SuperPhoneField extends StatefulWidget {
     this.onFullPhoneChanged,
     this.onSubmitted,
     this.onTap,
+    this.useSimIfAvailable = true,
     this.enableDebug = false,
     this.enabled = true,
     this.readOnly = false,
@@ -61,32 +69,54 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   PhoneNumber? phoneNum;
   Country? country;
 
-  void initCountry(context) async {
-    String? simCode = await FlutterSimCountryCode.simCountryCode;
-    String countryCode = simCode ?? widget.initialCountryCode;
-    if (!countryCode.isNullOrEmptyOrWhiteSpace) {
-      mPrint('Country Code = $countryCode');
-      try {
-        country ??= await getCountryByCountryCode(context, countryCode);
-      } on Exception catch (e) {
-        if (widget.enableDebug == true) {
-          mPrintError('Exception getCountryByCountryCode $e');
+  void initCountry() async {
+    String initPhone = widget.initialPhone;
+    try {
+      if (!initPhone.isNullOrEmptyOrWhiteSpace) {
+        country = getCountryFromPhoneNum(initPhone);
+        if (country != null) {
+          initPhone = initPhone.replaceAll('+${country!.dialCode}', '');
         }
       }
-    }
-    country ??= const Country('Egypt', 'flags/eg.png', 'EG', '+20');
+      if (country == null && widget.useSimIfAvailable) {
+        String? simCode = await FlutterSimCountryCode.simCountryCode;
+        if (!simCode.isNullOrEmptyOrWhiteSpace) {
+          if (widget.enableDebug == true) mPrint('Getting from simCode');
+          country ??= getCountryByCountryCode(simCode!);
+          if (widget.enableDebug == true && country != null) mPrint('Got from simCode');
+        }
+      }
+      if (country == null) {
+        if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
+          if (widget.enableDebug == true) mPrint('Getting from initialDialCode');
+          country ??= getCountryByCallingCode(widget.initialDialCode);
+          if (widget.enableDebug == true) if (country != null) mPrint('Got from initialDialCode');
+        } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
+          if (widget.enableDebug == true) mPrint('Getting from initialCountryCode');
+          country ??= getCountryByCountryCode(widget.initialCountryCode!);
+          if (widget.enableDebug == true && country != null) mPrint('Got from initialCountryCode');
+        }
+      }
+      if (widget.enableDebug == true) mPrint('Selected country: ${country?.toMap()}');
+      country ??= egyptCountry;
 
-    if (widget.enableDebug == true) {
-      mPrint('Initial country: ${country?.name}-${country?.flag}-${country?.callingCode}-${country?.countryCode}');
-    }
-    if (country != null) {
-      phoneNum = PhoneNumber(countryISOCode: country!.countryCode, countryCode: country!.callingCode, number: '');
+      if (widget.enableDebug == true) {
+        mPrint('Initial country: ${country?.toMap()}');
+      }
+      if (country != null) {
+        phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: initPhone);
+        widget.phoneController.text = initPhone;
+      }
+    } on Exception catch (e) {
+      if (widget.enableDebug == true) {
+        mPrintError('Exception $e');
+      }
     }
   }
 
   @override
   void initState() {
-    initCountry(context);
+    initCountry();
     super.initState();
   }
 
@@ -94,7 +124,8 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   Widget build(BuildContext context) {
     return IntlPhoneField(
       controller: widget.phoneController,
-      initialCountryCode: country?.countryCode,
+      initialCountryCode: country?.code,
+      flagsButtonMargin: const EdgeInsets.only(left: 12),
       onChanged: (phone) {
         if (widget.enableDebug == true) {
           mPrint('onChanged: $phone');
@@ -131,9 +162,9 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
                 alignLabelWithHint: true,
                 filled: true,
                 contentPadding: widget.contentPadding ?? const EdgeInsets.all(20),
-                hintStyle: Get.textTheme.labelLarge!.copyWith(color: Colors.grey),
+                hintStyle: Get.textTheme.titleSmall!.copyWith(color: Colors.grey),
                 floatingLabelStyle: Get.textTheme.titleSmall!.copyWith(color: Get.theme.primaryColor),
-                labelStyle: Get.textTheme.bodyLarge!.copyWith(color: Get.theme.primaryColor),
+                labelStyle: Get.textTheme.titleSmall!.copyWith(color: Get.theme.primaryColor),
                 fillColor: widget.fillColor,
                 labelText: widget.eLabel ?? widget.eHint,
                 hintText: widget.eHint,

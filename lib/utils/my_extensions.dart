@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
+import 'package:ready_extensions/ready_extensions.dart';
 import 'package:time/time.dart';
+import 'dart:convert';
 
 /// region Dates Formats
 ///
 /// Specify a defaultDateFormat (Optional) default (dd-MM-yyyy)
-DateFormat defaultDateFormat = intl.DateFormat('dd-MMMM-yyyy');
+DateFormat defaultDateFormat = intl.DateFormat('dd-MM-yyyy');
 
 /// Specify a defaultTimeFormat (Optional) default (hh:mm a)
 DateFormat defaultTimeFormat = intl.DateFormat('hh:mm a');
@@ -25,16 +27,11 @@ TimeOfDay toTimeOfDay(DateTime x) {
   return TimeOfDay.fromDateTime(x);
 }
 
-TimeOfDay? tryParseTime(String x) {
-  DateTime? d = tryParseTimeToDate(x);
-  return d == null ? null : TimeOfDay.fromDateTime(d);
-}
-
-DateTime? tryParseTimeToDate(String x) {
+DateTime? tryParseDateTime(String x) {
   try {
-    return int.tryParse(x) != null ? DateTime.fromMillisecondsSinceEpoch(int.tryParse(x)!) : defaultTimeFormat.parse(x);
+    return int.tryParse(x) != null ? DateTime.fromMillisecondsSinceEpoch(int.parse(x)) : defaultDateTimeFormat.parse(x);
   } catch (e) {
-    return tryParseDateTime(x);
+    return DateTime.tryParse(x);
   }
 }
 
@@ -46,12 +43,14 @@ DateTime? tryParseDate(String x) {
   }
 }
 
-DateTime? tryParseDateTime(String x) {
+TimeOfDay? tryParseTime(String x) {
+  DateTime? d;
   try {
-    return defaultDateTimeFormat.parse(x);
+    d = defaultTimeFormat.parse(x);
   } catch (e) {
-    return DateTime.tryParse(x);
+    d = tryParseDateTime(x);
   }
+  return d == null ? null : TimeOfDay.fromDateTime(d);
 }
 
 /// endregion
@@ -91,7 +90,7 @@ extension DateTimeExtension on DateTime {
     return format.format(date);
   }
 
-  String toDateStr([String formatStr = 'dd-MMMM-yyyy']) {
+  String toDateStr([String formatStr = 'dd-MM-yyyy']) {
     var format = intl.DateFormat(formatStr);
     var date = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
     return format.format(date);
@@ -216,7 +215,7 @@ extension GenericListExtension<T extends List> on T? {
   }
 }
 
-extension color on matLib.Color {
+extension ColorExt on matLib.Color {
   MaterialColor get toMaterial {
     Map<int, matLib.Color> colors = {
       50: matLib.Color.fromRGBO(red, green, blue, 0.1),
@@ -243,5 +242,19 @@ extension color on matLib.Color {
       // toMaterial[500]!,
       // toMaterial[400]!,
     ].reversed.toList();
+  }
+}
+
+extension StringNullExtension on String? {
+  bool get isBase64 {
+    if (!isNullOrEmptyOrWhiteSpace) {
+      try {
+        base64Decode(this!);
+        return true;
+      } on Exception catch (_) {
+        return false;
+      }
+    }
+    return false;
   }
 }

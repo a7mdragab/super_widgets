@@ -3,16 +3,31 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
+import 'package:super_widgets/home/src/language_service.dart';
 import 'package:super_widgets/utils/constants.dart';
 import 'package:super_widgets/utils/helpers.dart';
 
 import 'super_decorated_container.dart';
 import 'txt.dart';
 
-final Widget daysOfWeekRowWidget =
-    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: List.generate(7, (index) => Expanded(child: Center(child: Txt(daysNames[index], textAlign: TextAlign.center)))));
+final DateTime date = DateTime(2022, 11, 7);
+Widget get daysOfWeekRowWidget => Row(
+    // textDirection: LanguageService.to.textDirection,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: List.generate(
+        7,
+        (index) => Expanded(
+                child: Center(
+                    child: Txt(
+              // DateFormat.EEEE('en').format(date.add(index.days)),
+              DateFormat('EEE', LanguageService.to.getLocale.languageCode).format(date.add(index.days)),
+              textAlign: TextAlign.center,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Get.theme.colorScheme.secondary,
+            )))));
 
 // ignore: must_be_immutable
 class SuperVerticalPaginatedCalender extends StatelessWidget {
@@ -47,7 +62,7 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 30),
           child: daysOfWeekRowWidget,
         ),
         Expanded(
@@ -56,14 +71,15 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
             maxDate: endDate,
             initialDate: mSelectedDate.value,
             invisibleMonthsThreshold: 1,
-            startWeekWithSunday: false,
+            startWeekWithSunday: true,
             monthBuilder: (BuildContext context, int month, int year) => Align(
-              alignment: Alignment.centerLeft,
+              alignment: LanguageService.to.alignment,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Txt(
-                  '(${monthsFullNames[month - 1 % 12]}) $year',
-                  fontSize: 16,
+                  DateFormat('(MMMM - yyyy)').format(DateTime(year, month)),
+                  // '(${monthsFullNames[month - 1 % 12]}) $year',
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: Get.theme.primaryColor,
                 ),
@@ -77,6 +93,7 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
                   child: Center(
                     child: Txt(
                       DateFormat('dd').format(date),
+                      fontSize: 18,
                       color: isDateInRange(firstDate!, endDate!, date) ? (mSelectedDate.value == date ? Colors.white : Get.theme.primaryColor) : Colors.grey,
                     ),
                   ),
@@ -147,7 +164,7 @@ Future<DateTime?> showFullCalenderBottomSheet({DateTime? firstDate, DateTime? en
   return completer.future;
 }
 
-Future<DateTime?> showFullCalenderDialog({DateTime? firstDate, DateTime? endDate, DateTime? selectedDate, double padding = 8, String locale = 'en'}) async {
+Future<DateTime?> showFullCalenderDialog({DateTime? firstDate, DateTime? endDate, DateTime? selectedDate, double padding = 8, String locale = 'en', String header = "Select the date"}) async {
   final mSelectedDate = DateTime.now().obs;
 
   Completer<DateTime?> completer = Completer<DateTime?>();
@@ -170,7 +187,7 @@ Future<DateTime?> showFullCalenderDialog({DateTime? firstDate, DateTime? endDate
                   icon: const Icon(Icons.close, color: Colors.lightBlue)),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                child: Txt('When are you going?', fontSize: 24, fontWeight: FontWeight.w900, color: Get.theme.primaryColor),
+                child: Txt(header, fontSize: 24, fontWeight: FontWeight.w900, color: Get.theme.primaryColor),
               ),
               Expanded(
                 child: SuperVerticalPaginatedCalender(

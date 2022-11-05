@@ -7,8 +7,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:super_widgets/home/src/language_service.dart';
+import 'package:super_widgets/super_widgets.dart';
 import 'package:super_widgets/utils/http_overrides.dart';
 
 import 'theme/theme_service.dart';
@@ -163,7 +165,7 @@ class MainApp extends StatelessWidget {
     useInheritedMediaQuery = false,
     highContrastTheme,
     highContrastDarkTheme,
-    themeMode = ThemeMode.system,
+    themeMode,
     locale = const Locale('en'),
     localizationsDelegates,
     localeListResolutionCallback,
@@ -214,12 +216,14 @@ class MainApp extends StatelessWidget {
     if (GetPlatform.isMobile) {
       HttpOverrides.global = MyHttpOverrides();
     }
-
-    Get.put<ThemeService>(ThemeService(),permanent: true);
-    Get.put<LanguageService>(LanguageService(),permanent: true);
+    GetStorage.init();
+    Get.put<ThemeService>(ThemeService(), permanent: true);
+    Get.put<LanguageService>(LanguageService(), permanent: true);
 
     if (themeMode != null) {
       ThemeService.to.setThemeMode(themeMode);
+    } else {
+      themeMode = ThemeService.to.themeMode;
     }
     if (locale?.languageCode != null) {
       LanguageService.to.updateLocale(locale.languageCode);
@@ -387,7 +391,7 @@ Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
     defaultScale: true,
     breakpoints: const [
       ResponsiveBreakpoint.resize(480, name: MOBILE),
-      ResponsiveBreakpoint.autoScale(700, name: TABLET),
+      ResponsiveBreakpoint.resize(700, name: TABLET),
       ResponsiveBreakpoint.resize(1000, name: DESKTOP),
     ],
   );
