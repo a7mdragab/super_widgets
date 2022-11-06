@@ -44,6 +44,8 @@ class SuperEditText extends StatefulWidget {
   final TextInputType keyboardType;
   final TextInputAction? textInputAction;
 
+  final EdgeInsets? contentPadding;
+
   final Color fillColor;
 
   const SuperEditText(
@@ -63,6 +65,7 @@ class SuperEditText extends StatefulWidget {
     this.maxLines = 1,
     this.onChanged,
     this.ontap,
+    this.contentPadding,
     this.enabled = true,
     this.onSubmitted,
     this.obscureText = false,
@@ -118,6 +121,7 @@ class SuperEditTextState extends State<SuperEditText> {
         },
 
         decoration: const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
+              contentPadding: widget.contentPadding,
               hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
               floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
               labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),

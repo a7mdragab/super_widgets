@@ -1,5 +1,5 @@
-// import 'package:country_calling_code_picker/country.dart';
-// import 'package:country_calling_code_picker/functions.dart';
+import 'package:country_calling_code_picker/country.dart';
+import 'package:country_calling_code_picker/functions.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
@@ -9,7 +9,6 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:list_ext/list_ext.dart';
 import 'package:ready_extensions/ready_extensions.dart';
-import 'package:super_widgets/utils/country.dart';
 
 import '../../utils/helpers.dart';
 
@@ -22,7 +21,6 @@ class SuperPhoneField extends StatefulWidget {
   final bool readOnly;
   final bool enableValidate;
   final bool enableDebug;
-  final bool useSimIfAvailable;
 
   final InputDecoration? inputDecoration;
   final EdgeInsets? contentPadding;
@@ -32,18 +30,14 @@ class SuperPhoneField extends StatefulWidget {
   final void Function(String?)? onPhoneChanged, onCountryChanged, onFullPhoneChanged;
   final List<String? Function(PhoneNumber?)>? validators;
 
-  final String initialPhone;
-  final String? initialCountryCode;
-  final String initialDialCode;
+  final String initialCountryCode;
   final TextEditingController phoneController;
 //
   const SuperPhoneField(
     this.phoneController, {
     super.key,
-    this.initialDialCode = '+20',
-    this.initialCountryCode,
-    this.initialPhone = '',
-    this.eHint = 'Phone number',
+    this.initialCountryCode = '+20',
+    this.eHint = '',
     this.eLabel,
     this.fillColor = Colors.white,
     this.onPhoneChanged,
@@ -51,7 +45,6 @@ class SuperPhoneField extends StatefulWidget {
     this.onFullPhoneChanged,
     this.onSubmitted,
     this.onTap,
-    this.useSimIfAvailable = true,
     this.enableDebug = false,
     this.enabled = true,
     this.readOnly = false,
@@ -69,50 +62,32 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   PhoneNumber? phoneNum;
   Country? country;
 
-  void initCountry() async {
-    try {
-      if (!widget.initialPhone.isNullOrEmptyOrWhiteSpace) {
-        country = getCountryFromPhoneNum(widget.initialPhone);
-      }
-      if (country == null && widget.useSimIfAvailable) {
-        String? simCode = await FlutterSimCountryCode.simCountryCode;
-        if (!simCode.isNullOrEmptyOrWhiteSpace) {
-          if (widget.enableDebug == true) mPrint('Getting from simCode');
-          country ??= getCountryByCountryCode(simCode!);
-          if (widget.enableDebug == true && country != null) mPrint('Got from simCode');
+  void initCountry(context) async {
+    String? simCode = await FlutterSimCountryCode.simCountryCode;
+    String countryCode = simCode ?? widget.initialCountryCode;
+    if (!countryCode.isNullOrEmptyOrWhiteSpace) {
+      mPrint('Country Code = $countryCode');
+      try {
+        country ??= await getCountryByCountryCode(context, countryCode);
+      } on Exception catch (e) {
+        if (widget.enableDebug == true) {
+          mPrintError('Exception getCountryByCountryCode $e');
         }
-      }
-      if (country == null) {
-        if (!widget.initialDialCode.isNullOrEmptyOrWhiteSpace) {
-          if (widget.enableDebug == true) mPrint('Getting from initialDialCode');
-          country ??= getCountryByCallingCode(widget.initialDialCode);
-          if (widget.enableDebug == true) if (country != null) mPrint('Got from initialDialCode');
-        } else if (!widget.initialCountryCode.isNullOrEmptyOrWhiteSpace) {
-          if (widget.enableDebug == true) mPrint('Getting from initialCountryCode');
-          country ??= getCountryByCountryCode(widget.initialCountryCode!);
-          if (widget.enableDebug == true && country != null) mPrint('Got from initialCountryCode');
-        }
-      }
-      if (widget.enableDebug == true) mPrint('Selected country: ${country?.toMap()}');
-    } on Exception catch (e) {
-      if (widget.enableDebug == true) {
-        mPrintError('Exception $e');
       }
     }
-    country ??= egyptCountry;
+    country ??= const Country('Egypt', 'flags/eg.png', 'EG', '+20');
 
     if (widget.enableDebug == true) {
-      mPrint('Initial country: ${country?.toMap()}');
+      mPrint('Initial country: ${country?.name}-${country?.flag}-${country?.callingCode}-${country?.countryCode}');
     }
     if (country != null) {
-      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: widget.initialPhone);
-      widget.phoneController.text = widget.initialPhone;
+      phoneNum = PhoneNumber(countryISOCode: country!.countryCode, countryCode: country!.callingCode, number: '');
     }
   }
 
   @override
   void initState() {
-    initCountry();
+    initCountry(context);
     super.initState();
   }
 
@@ -120,7 +95,7 @@ class SuperPhoneFieldState extends State<SuperPhoneField> {
   Widget build(BuildContext context) {
     return IntlPhoneField(
       controller: widget.phoneController,
-      initialCountryCode: country?.code,
+      initialCountryCode: country?.countryCode,
       onChanged: (phone) {
         if (widget.enableDebug == true) {
           mPrint('onChanged: $phone');

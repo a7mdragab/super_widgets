@@ -9,6 +9,8 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 
+import 'txt.dart';
+
 // import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SuperRadioGroup extends StatefulWidget {
@@ -21,15 +23,17 @@ class SuperRadioGroup extends StatefulWidget {
   final OptionsOrientation optionsOrientation;
   final List<dynamic> items;
   final void Function(dynamic)? onChanged;
+  String Function(dynamic)? itemAsString;
 
   final List<String? Function(dynamic)>? validators;
 
   final bool enabled;
-  final String? initialValue;
+  final dynamic initialValue;
 
-  const SuperRadioGroup({
+  SuperRadioGroup({
     super.key,
     required this.items,
+    String Function(dynamic)? itemAsString,
     this.optionsOrientation = OptionsOrientation.wrap,
     this.onChanged,
     this.hint = '',
@@ -41,7 +45,9 @@ class SuperRadioGroup extends StatefulWidget {
     this.enabled = true,
     this.enableRTL = false,
     this.validators = const [],
-  });
+  }) {
+    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString());
+  }
 
   @override
   _SuperRadioGroupState createState() => _SuperRadioGroupState();
@@ -71,7 +77,12 @@ class _SuperRadioGroupState extends State<SuperRadioGroup> {
         onChanged: widget.onChanged,
         enabled: widget.enabled,
         validator: FormBuilderValidators.compose(widget.validators!),
-        options: widget.items.map((obj) => FormBuilderFieldOption(value: obj)).toList(growable: false),
+        options: widget.items
+            .map((obj) => FormBuilderFieldOption(
+                  value: obj,
+                  child: Txt(widget.itemAsString!(obj)),
+                ))
+            .toList(growable: false),
       ),
     );
   }

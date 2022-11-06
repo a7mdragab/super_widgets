@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:super_widgets/super_widgets.dart';
 
 class Date {
   /// Creates a date only.
@@ -75,6 +76,71 @@ class Date {
   int get month => _month ?? 1;
 
   int get day => _day ?? 1;
+
+  external int get millisecondsSinceEpoch;
+
+  /// The number of microseconds since
+  /// the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
+  ///
+  /// This value is independent of the time zone.
+  ///
+  /// This value is at most
+  /// 8,640,000,000,000,000,000us (100,000,000 days) from the Unix epoch.
+  /// In other words: `microsecondsSinceEpoch.abs() <= 8640000000000000000`.
+  ///
+  /// Note that this value does not fit into 53 bits (the size of a IEEE double).
+  /// A JavaScript number is not able to hold this value.
+  external int get microsecondsSinceEpoch;
+
+  /// The time zone name.
+  ///
+  /// This value is provided by the operating system and may be an
+  /// abbreviation or a full name.
+  ///
+  /// In the browser or on Unix-like systems commonly returns abbreviations,
+  /// such as "CET" or "CEST". On Windows returns the full name, for example
+  /// "Pacific Standard Time".
+  external String get timeZoneName;
+
+  /// The time zone offset, which
+  /// is the difference between local time and UTC.
+  ///
+  /// The offset is positive for time zones east of UTC.
+  ///
+  /// Note, that JavaScript, Python and C return the difference between UTC and
+  /// local time. Java, C# and Ruby return the difference between local time and
+  /// UTC.
+  ///
+  /// For example, using local time in San Francisco, United States:
+  /// ```dart
+  /// final dateUS = DateTime.parse('2021-11-01 20:18:04Z').toLocal();
+  /// print(dateUS); // 2021-11-01 13:18:04.000
+  /// print(dateUS.timeZoneName); // PDT ( Pacific Daylight Time )
+  /// print(dateUS.timeZoneOffset.inHours); // -7
+  /// print(dateUS.timeZoneOffset.inMinutes); // -420
+  /// ```
+  ///
+  /// For example, using local time in Canberra, Australia:
+  /// ```dart
+  /// final dateAus = DateTime.parse('2021-11-01 20:18:04Z').toLocal();
+  /// print(dateAus); // 2021-11-02 07:18:04.000
+  /// print(dateAus.timeZoneName); // AEDT ( Australian Eastern Daylight Time )
+  /// print(dateAus.timeZoneOffset.inHours); // 11
+  /// print(dateAus.timeZoneOffset.inMinutes); // 660
+  /// ```
+  external Duration get timeZoneOffset;
+
+  /// The day of the week [monday]..[sunday].
+  ///
+  /// In accordance with ISO 8601
+  /// a week starts with Monday, which has the value 1.
+  ///
+  /// ```dart
+  /// final moonLanding = DateTime.parse('1969-07-20 20:18:04Z');
+  /// print(moonLanding.weekday); // 7
+  /// assert(moonLanding.weekday == DateTime.sunday);
+  /// ```
+  external int get weekday;
 
   /// Returns the localized string representation of this time of day.
   ///
@@ -274,3 +340,10 @@ class Date {
 //     return w.add(Duration(days: 7));
 //   }
 // }
+
+void main() {
+  Date mDate = Date.now();
+  mPrint(mDate);
+  mPrint(mDate.millisecondsSinceEpoch);
+  mPrint(mDate.format());
+}
