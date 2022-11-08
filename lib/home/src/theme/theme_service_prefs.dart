@@ -22,7 +22,7 @@ class ThemeServicePrefs implements ThemeServiceBase {
     try {
       final int value = _storage.read(ThemeServiceBase.keyThemeMode) ?? ThemeServiceBase.defaultThemeMode.index;
 
-      mPrint('Read ThemeMode $value');
+      // mPrint('Read ThemeMode $value');
       return ThemeMode.values[value];
     } catch (e) {
       debugPrint(e.toString());

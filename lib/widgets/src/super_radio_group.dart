@@ -21,6 +21,7 @@ class SuperRadioGroup extends StatefulWidget {
   final String? eAsset;
   final bool enableRTL;
   final OptionsOrientation optionsOrientation;
+  final EdgeInsets contentPadding;
   final List<dynamic> items;
   final void Function(dynamic)? onChanged;
   String Function(dynamic)? itemAsString;
@@ -42,6 +43,7 @@ class SuperRadioGroup extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.eAsset,
+    this.contentPadding = const EdgeInsets.all(8),
     this.enabled = true,
     this.enableRTL = false,
     this.validators = const [],
@@ -62,6 +64,7 @@ class _SuperRadioGroupState extends State<SuperRadioGroup> {
       textDirection: widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
       child: FormBuilderRadioGroup(
         decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+              contentPadding: widget.contentPadding,
               labelText: widget.hint,
               hintText: widget.hint,
               suffixIcon: widget.suffixIcon == null ? null : Icon(widget.suffixIcon),

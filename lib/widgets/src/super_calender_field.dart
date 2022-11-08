@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:date_only_field/date_only_field.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -197,6 +198,56 @@ Future<DateTime?> showFullCalenderDialog({DateTime? firstDate, DateTime? endDate
                   padding: padding,
                   locale: locale,
                   onDayPressed: (date) {
+                    mSelectedDate.value = date;
+                    completer.complete(date);
+                    mHide();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+
+  return completer.future;
+}
+
+Future<Date?> showFullDateCalenderDialog({Date? firstDate, Date? endDate, Date? selectedDate, double padding = 8, String locale = 'en', String header = "Select the date"}) async {
+  final mSelectedDate = Date.now().obs;
+
+  Completer<Date?> completer = Completer<Date?>();
+  await mShowDialog(
+    backDismiss: true,
+    maskColor: Colors.white,
+    alignment: Alignment.center,
+    builder: (_) {
+      return SafeArea(
+        child: Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              vSpace8,
+              IconButton(
+                  onPressed: () {
+                    completer.complete(null);
+                    mHide();
+                  },
+                  icon: const Icon(Icons.close, color: Colors.lightBlue)),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                child: Txt(header, fontSize: 24, fontWeight: FontWeight.w900, color: Get.theme.primaryColor),
+              ),
+              Expanded(
+                child: SuperVerticalPaginatedCalender(
+                  firstDate: firstDate?.toDateTime(),
+                  endDate: endDate?.toDateTime(),
+                  selectedDate: selectedDate?.toDateTime(),
+                  padding: padding,
+                  locale: locale,
+                  onDayPressed: (dateTime) {
+                    Date date = Date.fromDateTime(dateTime);
                     mSelectedDate.value = date;
                     completer.complete(date);
                     mHide();

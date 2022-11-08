@@ -272,7 +272,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
                     ),
                     label: const Txt('Yes', color: Colors.white),
-                    icon: const Icon(Icons.done),
+                    icon: const Icon(Icons.done, color: Colors.white),
                     onPressed: () {
                       mHide();
                       function();
@@ -287,7 +287,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
                     ),
                     label: const Txt('No', color: Colors.white),
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.close, color: Colors.white),
                     onPressed: () {
                       mHide();
                     },

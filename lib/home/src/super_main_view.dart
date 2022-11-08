@@ -9,13 +9,9 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:super_widgets/home/src/language_service.dart';
 import 'package:super_widgets/super_widgets.dart';
-import 'package:super_widgets/utils/http_overrides.dart';
 
-import 'theme/theme_service.dart';
-
-class MainApp extends StatelessWidget {
+class SuperMainApp extends StatelessWidget {
   ///region Vars
   final GlobalKey<NavigatorState>? navigatorKey;
   final GlobalKey<ScaffoldMessengerState>? scaffoldMessengerKey;
@@ -78,7 +74,7 @@ class MainApp extends StatelessWidget {
   ///endregion Vars
 
   ///region _internal
-  MainApp._internal(
+  SuperMainApp._internal(
     this.routeInformationProvider,
     RouteInformationParser<Object>? routeInformationParser,
     RouterDelegate<Object>? routerDelegate,
@@ -148,10 +144,10 @@ class MainApp extends StatelessWidget {
 
   ///endregion _internal
 
-  static MainApp? _instance;
+  static SuperMainApp? _instance;
 
   ///region factory
-  factory MainApp({
+  factory SuperMainApp({
     routeInformationProvider,
     RouteInformationParser<Object>? routeInformationParser,
     RouterDelegate<Object>? routerDelegate,
@@ -228,7 +224,7 @@ class MainApp extends StatelessWidget {
     if (locale?.languageCode != null) {
       LanguageService.to.updateLocale(locale.languageCode);
     }
-    _instance ??= MainApp._internal(
+    _instance ??= SuperMainApp._internal(
       routeInformationProvider,
       routeInformationParser,
       routerDelegate,

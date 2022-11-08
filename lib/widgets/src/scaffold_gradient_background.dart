@@ -404,7 +404,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
               body,
               if (showBackBtn!)
                 Positioned(
-                  top: 30,
+                  top: 50,
                   left: 10,
                   child: IconButton(
                     icon: const Icon(
