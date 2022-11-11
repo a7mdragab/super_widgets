@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:super_widgets/super_widgets.dart';
 
 import '../../image_utils/img_utils.dart';
@@ -390,58 +391,69 @@ class ScaffoldGradientBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: key,
-        appBar: appBar,
-        body: SuperDecoratedContainer(
-          gradient: gradient,
-          child: Stack(
-            // fit: StackFit.loose,
-            children: [
-              if (decorationImage != null) decorationImage!,
-              body,
-              if (showBackBtn!)
-                Positioned(
-                  top: 50,
-                  left: 10,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      color: Colors.black,
+    return WillPopScope(
+      onWillPop: () async {
+        mPrint("WillPopScope Dialog");
+        if (isDialogShown) {
+          mHide();
+        } else {
+          Get.back();
+        }
+        return false;
+      },
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          key: key,
+          appBar: appBar,
+          body: SuperDecoratedContainer(
+            gradient: gradient,
+            child: Stack(
+              // fit: StackFit.loose,
+              children: [
+                if (decorationImage != null) decorationImage!,
+                body,
+                if (showBackBtn!)
+                  Positioned(
+                    top: 50,
+                    left: 10,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                      },
                     ),
-                    onPressed: () {
-                      if (Navigator.canPop(context)) {
-                        Navigator.pop(context);
-                      }
-                    },
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
+          floatingActionButton: floatingActionButton,
+          floatingActionButtonLocation: floatingActionButtonLocation,
+          floatingActionButtonAnimator: floatingActionButtonAnimator,
+          persistentFooterButtons: persistentFooterButtons,
+          drawer: drawer,
+          onDrawerChanged: onDrawerChanged,
+          endDrawer: endDrawer,
+          onEndDrawerChanged: onEndDrawerChanged,
+          bottomNavigationBar: bottomNavigationBar,
+          bottomSheet: bottomSheet,
+          backgroundColor: backgroundColor,
+          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+          primary: primary,
+          drawerDragStartBehavior: drawerDragStartBehavior,
+          extendBody: extendBody,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
+          drawerScrimColor: drawerScrimColor,
+          drawerEdgeDragWidth: drawerEdgeDragWidth,
+          drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
+          endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
+          restorationId: restorationId,
         ),
-        floatingActionButton: floatingActionButton,
-        floatingActionButtonLocation: floatingActionButtonLocation,
-        floatingActionButtonAnimator: floatingActionButtonAnimator,
-        persistentFooterButtons: persistentFooterButtons,
-        drawer: drawer,
-        onDrawerChanged: onDrawerChanged,
-        endDrawer: endDrawer,
-        onEndDrawerChanged: onEndDrawerChanged,
-        bottomNavigationBar: bottomNavigationBar,
-        bottomSheet: bottomSheet,
-        backgroundColor: backgroundColor,
-        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-        primary: primary,
-        drawerDragStartBehavior: drawerDragStartBehavior,
-        extendBody: extendBody,
-        extendBodyBehindAppBar: extendBodyBehindAppBar,
-        drawerScrimColor: drawerScrimColor,
-        drawerEdgeDragWidth: drawerEdgeDragWidth,
-        drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
-        endDrawerEnableOpenDragGesture: endDrawerEnableOpenDragGesture,
-        restorationId: restorationId,
       ),
     );
   }

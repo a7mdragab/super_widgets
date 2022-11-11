@@ -391,19 +391,7 @@ class CustomToast extends StatelessWidget {
 }
 
 void mShowDialog2({required Widget Function(BuildContext) builder}) {
-  mShowDialog(
-    builder: (_) => WillPopScope(
-      onWillPop: () async {
-        if (isDialogShown) {
-          mHide();
-        } else {
-          Get.back();
-        }
-        return false;
-      },
-      child: builder(),
-    ),
-  );
+  showDialog(context: Get.context!, builder: builder);
 }
 
 void mShowToast(String msg,

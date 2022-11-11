@@ -114,8 +114,10 @@ class SuperPhoneField extends StatelessWidget {
       mPrint('Initial country: ${country?.toMap()}');
     }
     if (country != null) {
-      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: initialPhone);
-      phoneController.text = initialPhone;
+      String initPhone = '';
+      if (!initialPhone.isNullOrEmptyOrWhiteSpace) initPhone = initialPhone.replaceAll('+${country!.dialCode}', '');
+      phoneNum = PhoneNumber(countryISOCode: country!.code, countryCode: '+${country!.dialCode}', number: initPhone);
+      phoneController.text = initPhone;
     }
   }
 
