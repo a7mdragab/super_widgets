@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:super_widgets/home/home.dart';
 
 //ignore: must_be_immutable
 class SuperPanel extends StatelessWidget {
@@ -39,11 +40,12 @@ class SuperPanel extends StatelessWidget {
                 onTap: focusNode.requestFocus,
                 child: InputDecorator(
                     isFocused: hasFocus,
+                    textAlign: LanguageService.to.textAlign,
                     decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
                           contentPadding: contentPadding,
                           fillColor: fillColor,
                           labelStyle: TextStyle(color: hasError ? Colors.red : (hasFocus ? Colors.blue : Colors.black)),
-                          labelText: title,
+                          labelText: title.tr,
                         ),
                     child: child),
               );

@@ -162,7 +162,7 @@ class SuperMainApp extends StatelessWidget {
     highContrastTheme,
     highContrastDarkTheme,
     themeMode,
-    locale = const Locale('en'),
+    locale,
     localizationsDelegates,
     localeListResolutionCallback,
     localeResolutionCallback,
@@ -221,9 +221,9 @@ class SuperMainApp extends StatelessWidget {
     } else {
       themeMode = ThemeService.to.themeMode;
     }
-    if (locale?.languageCode != null) {
-      LanguageService.to.updateLocale(locale.languageCode);
-    }
+    // if (locale?.languageCode != null) {
+    //   LanguageService.to.updateLocale(locale.languageCode);
+    // }
     _instance ??= SuperMainApp._internal(
       routeInformationProvider,
       routeInformationParser,

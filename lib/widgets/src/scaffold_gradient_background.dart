@@ -359,6 +359,8 @@ class ScaffoldGradientBackground extends StatelessWidget {
 
   final Widget? decorationImage;
 
+  final void Function()? onWillPop;
+
   const ScaffoldGradientBackground({
     this.gradient,
     this.decorationImage,
@@ -370,6 +372,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
     this.floatingActionButtonAnimator,
     this.persistentFooterButtons,
     this.drawer,
+    this.onWillPop,
     this.onDrawerChanged,
     this.endDrawer,
     this.onEndDrawerChanged,
@@ -393,11 +396,15 @@ class ScaffoldGradientBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        mPrint("WillPopScope Dialog");
+        // mPrint("WillPopScope Dialog");
         if (isDialogShown) {
           mHide();
         } else {
-          Get.back();
+          if (onWillPop == null) {
+            Get.back();
+          } else {
+            onWillPop!();
+          }
         }
         return false;
       },
@@ -415,17 +422,15 @@ class ScaffoldGradientBackground extends StatelessWidget {
                 body,
                 if (showBackBtn!)
                   Positioned(
-                    top: 50,
+                    top: 40,
                     left: 10,
                     child: IconButton(
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new_outlined,
-                        color: Colors.black,
-                      ),
+                      icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black),
                       onPressed: () {
                         if (Navigator.canPop(context)) {
                           Navigator.pop(context);
                         }
+                        onWillPop!();
                       },
                     ),
                   ),

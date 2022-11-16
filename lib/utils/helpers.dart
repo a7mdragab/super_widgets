@@ -195,7 +195,7 @@ Future<ImageSource?> showImagePickerDialog() async {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
                     label: const Txt('Camera', color: Colors.white),
-                    icon: const Icon(Icons.camera_alt),
+                    icon: const Icon(Icons.camera_alt,color: Colors.white),
                     onPressed: () {
                       completer.complete(ImageSource.camera);
                       mHide();
@@ -220,7 +220,7 @@ Future<ImageSource?> showImagePickerDialog() async {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
                     label: const Txt('Gallery', color: Colors.white),
-                    icon: const Icon(Icons.image),
+                    icon: const Icon(Icons.image,color: Colors.white),
                     onPressed: () {
                       completer.complete(ImageSource.gallery);
                       mHide();

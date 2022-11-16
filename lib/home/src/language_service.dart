@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ready_extensions/ready_extensions.dart';
+import 'package:super_widgets/utils/helpers.dart';
 
 class LanguageService extends GetxController implements GetxService {
   static LanguageService get to => Get.find();
@@ -14,13 +15,14 @@ class LanguageService extends GetxController implements GetxService {
   set currentLanguage(String val) => _currentLanguage.value = val;
 
   @override
-  void onReady() async {
+  void onInit() async {
     setInitialLocalLanguage();
-    super.onReady();
+    super.onInit();
   }
 
   // Retrieves and Sets language based on device settings
   setInitialLocalLanguage() {
+    currentLanguage = storage.read(keyLanguage) ?? currentLanguage;
     printInfo(info: 'currentLanguage = $currentLanguage');
     updateLocale(currentLanguage);
 
@@ -46,7 +48,8 @@ class LanguageService extends GetxController implements GetxService {
   }
 
   final String keyIsFirst = 'ISFIRSTKEY';
-
+  final String keyLanguage = 'LANGUAGEKEY';
+  final GetStorage storage = GetStorage();
   // updates the language stored
   Future<void> updateLocale(String value) async {
     if (!value.isNullOrEmptyOrWhiteSpace) {
@@ -54,10 +57,15 @@ class LanguageService extends GetxController implements GetxService {
         if (value.isEmpty) value = 'en';
         if (value == "عربى") value = 'ar';
         currentLanguage = value;
-        Get.updateLocale(Locale(value));
+        try {
+          storage.write(keyLanguage, currentLanguage);
+          Get.updateLocale(Locale(value));
+          mPrint('Locale updated to $value');
+        } catch (e) {
+          mPrintError('$e');
+        }
       }
 
-      GetStorage storage = GetStorage();
       bool isFirst = ((storage.read(keyIsFirst)) ?? true);
       if (isFirst) {
         storage.write(keyIsFirst, false);
@@ -72,8 +80,7 @@ class LanguageService extends GetxController implements GetxService {
 
   // updates the language stored
   Future<void> toggleLanguage() async {
-    currentLanguage = currentLanguage != 'ar' ? 'ar' : 'en';
-    Get.updateLocale(Locale(currentLanguage));
+    updateLocale(currentLanguage != 'ar' ? 'ar' : 'en');
   }
 
   // updates the language stored
