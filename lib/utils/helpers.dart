@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:crypt/crypt.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -12,6 +13,23 @@ import 'package:super_widgets/super_widgets.dart';
 import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/foundation.dart' as foundation;
+
+Future<String> getPlatformVersion() async {
+  if (Platform.isAndroid) {
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var sdkInt = androidInfo.version.sdkInt;
+    return 'Android-$sdkInt';
+  }
+
+  if (Platform.isIOS) {
+    var iosInfo = await DeviceInfoPlugin().iosInfo;
+    var systemName = iosInfo.systemName;
+    var version = iosInfo.systemVersion;
+    return '$systemName-$version';
+  }
+
+  return 'Unknown';
+}
 
 Future<bool> isRooted() async {
   try {
@@ -195,7 +213,7 @@ Future<ImageSource?> showImagePickerDialog() async {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
                     label: const Txt('Camera', color: Colors.white),
-                    icon: const Icon(Icons.camera_alt,color: Colors.white),
+                    icon: const Icon(Icons.camera_alt, color: Colors.white),
                     onPressed: () {
                       completer.complete(ImageSource.camera);
                       mHide();
@@ -220,7 +238,7 @@ Future<ImageSource?> showImagePickerDialog() async {
                   child: ElevatedButton.icon(
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
                     label: const Txt('Gallery', color: Colors.white),
-                    icon: const Icon(Icons.image,color: Colors.white),
+                    icon: const Icon(Icons.image, color: Colors.white),
                     onPressed: () {
                       completer.complete(ImageSource.gallery);
                       mHide();
@@ -337,7 +355,7 @@ bool isArabic(String text) {
 final logger = Logger(
   printer: PrettyPrinter(
       noBoxingByDefault: true,
-      methodCount: 2,
+      methodCount: 1,
       // number of method calls to be displayed
       errorMethodCount: 8,
       // number of method calls if stacktrace is provided

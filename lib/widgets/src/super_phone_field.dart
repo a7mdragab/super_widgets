@@ -124,58 +124,63 @@ class SuperPhoneField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return country == null
-          ? const SizedBox()
-          : IntlPhoneField(
-              controller: phoneController,
-              initialCountryCode: country?.code,
-              // initialCountryCode: country?.code,
-              onChanged: (phone) {
-                if (enableDebug == true) {
-                  mPrint('onChanged: $phone');
-                }
-                phoneNum = phone;
-                onPhoneChanged?.call(phoneNum!.number);
-                onFullPhoneChanged?.call(phoneNum!.completeNumber);
-              },
-              onCountryChanged: (country) {
-                if (enableDebug == true) {
-                  mPrint('onCountryChanged: ${country.name}-${country.flag}-${country.dialCode}-${country.code}');
-                }
-                phoneNum?.countryCode = '+${country.dialCode}';
-                onCountryChanged?.call(phoneNum!.countryCode);
-                onFullPhoneChanged?.call(phoneNum!.completeNumber);
-              },
-              readOnly: readOnly,
-              enabled: enabled,
-              onTap: onTap,
-              onSubmitted: onSubmitted == null
-                  ? null
-                  : (s) {
-                      onSubmitted?.call(s);
-                    },
-              textAlign: TextAlign.left,
-              validator: !enableValidate || validators.isNullOrEmpty ? null : FormBuilderValidators.compose(validators ?? []),
-              keyboardType: TextInputType.phone,
+      if (country == null) {
+        return const SizedBox();
+      } else {
+        return Directionality(
+          textDirection: TextDirection.ltr,
+          child: IntlPhoneField(
+            controller: phoneController,
+            initialCountryCode: country?.code,
+            // initialCountryCode: country?.code,
+            onChanged: (phone) {
+              if (enableDebug == true) {
+                mPrint('onChanged: $phone');
+              }
+              phoneNum = phone;
+              onPhoneChanged?.call(phoneNum!.number);
+              onFullPhoneChanged?.call(phoneNum!.completeNumber);
+            },
+            onCountryChanged: (country) {
+              if (enableDebug == true) {
+                mPrint('onCountryChanged: ${country.name}-${country.flag}-${country.dialCode}-${country.code}');
+              }
+              phoneNum?.countryCode = '+${country.dialCode}';
+              onCountryChanged?.call(phoneNum!.countryCode);
+              onFullPhoneChanged?.call(phoneNum!.completeNumber);
+            },
+            readOnly: readOnly,
+            enabled: enabled,
+            onTap: onTap,
+            onSubmitted: onSubmitted == null
+                ? null
+                : (s) {
+                    onSubmitted?.call(s);
+                  },
+            textAlign: TextAlign.left,
+            validator: !enableValidate || validators.isNullOrEmpty ? null : FormBuilderValidators.compose(validators ?? []),
+            keyboardType: TextInputType.phone,
 
-              ///region Decoration
-              decoration: inputDecoration ??
-                  const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
-                        isDense: true,
-                        isCollapsed: true,
-                        alignLabelWithHint: true,
-                        filled: true,
-                        contentPadding: contentPadding ?? const EdgeInsets.all(20),
-                        hintStyle: Get.textTheme.labelLarge!.copyWith(color: Colors.grey),
-                        floatingLabelStyle: Get.textTheme.titleSmall!.copyWith(color: Get.theme.primaryColor),
-                        labelStyle: Get.textTheme.bodyLarge!.copyWith(color: Get.theme.primaryColor),
-                        fillColor: fillColor,
-                        labelText: eLabel ?? eHint,
-                        hintText: eHint,
-                      ),
+            ///region Decoration
+            decoration: inputDecoration ??
+                const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
+                      isDense: true,
+                      isCollapsed: true,
+                      alignLabelWithHint: true,
+                      filled: true,
+                      contentPadding: contentPadding ?? const EdgeInsets.all(20),
+                      hintStyle: Get.textTheme.labelLarge!.copyWith(color: Colors.grey),
+                      floatingLabelStyle: Get.textTheme.titleSmall!.copyWith(color: Get.theme.primaryColor),
+                      labelStyle: Get.textTheme.bodyLarge!.copyWith(color: Get.theme.primaryColor),
+                      fillColor: fillColor,
+                      labelText: eLabel ?? eHint,
+                      hintText: eHint,
+                    ),
 
-              ///endregion Decoration
-            );
+            ///endregion Decoration
+          ),
+        );
+      }
     });
   }
 }

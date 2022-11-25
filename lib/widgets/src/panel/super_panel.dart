@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:super_widgets/home/home.dart';
+import 'package:super_widgets/utils/helpers.dart';
 
 //ignore: must_be_immutable
 class SuperPanel extends StatelessWidget {
