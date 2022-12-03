@@ -339,11 +339,15 @@ void showPopupMenu(BuildContext context, Map<String, Function> items) async {
   );
 }
 
-void hideKeyboard(BuildContext context) {
+void hideKeyboard(BuildContext? context) {
   FocusManager.instance.primaryFocus?.unfocus();
-  FocusScopeNode currentFocus = FocusScope.of(context);
-  if (!currentFocus.hasPrimaryFocus) {
-    currentFocus.unfocus();
+  if(context!=null)
+  {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+    currentFocus.requestFocus(FocusNode());
   }
 }
 

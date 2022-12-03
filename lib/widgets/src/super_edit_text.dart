@@ -130,6 +130,7 @@ class SuperEditTextState extends State<SuperEditText> {
 
         decoration: const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
               contentPadding: widget.contentPadding,
+              
               hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
               floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
               labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
