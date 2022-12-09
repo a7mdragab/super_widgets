@@ -274,7 +274,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
             alignment: LanguageService.to.alignment,
             child: const IconButton(icon: Icon(Icons.close, color: Colors.red), onPressed: mHide),
           ),
-          Txt('Caution'.tr, fontWeight: FontWeight.w800, fontSize: 22, color: Get.theme.primaryColor),
+          Txt('Note'.tr, fontWeight: FontWeight.w800, fontSize: 22, color: Get.theme.primaryColor),
           vSpace24,
           Center(child: Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, textAlign: TextAlign.center, fontSize: 16)),
           vSpace8,

@@ -38,6 +38,7 @@ class SuperEditText extends StatefulWidget {
   final List<String? Function(String?)>? validators;
 
   final bool enabled;
+  final AutovalidateMode autovalidateMode;
 
   final int? maxLines;
 
@@ -74,6 +75,7 @@ class SuperEditText extends StatefulWidget {
     this.onChanged,
     this.ontap,
     this.contentPadding,
+    this.autovalidateMode=AutovalidateMode.disabled,
     this.enabled = true,
     this.onSubmitted,
     this.obscureText = false,
@@ -104,7 +106,7 @@ class SuperEditTextState extends State<SuperEditText> {
         name: widget.eHint,
         enabled: widget.enabled,
         maxLines: widget.maxLines,
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: widget.autovalidateMode,
         controller: widget.eController,
         obscureText: isObscured,
         textInputAction: widget.textInputAction,
