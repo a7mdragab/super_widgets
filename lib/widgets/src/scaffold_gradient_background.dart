@@ -425,12 +425,18 @@ class ScaffoldGradientBackground extends StatelessWidget {
                     top: 40,
                     left: 10,
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black),
+                      color: Colors.white70,
+                      icon: const SuperDecoratedContainer(
+                        shape: BoxShape.circle,
+                        color: Colors.white70,
+                        padding: EdgeInsets.all(0),
+                        child: Center(child: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black)),
+                      ),
                       onPressed: () {
                         if (Navigator.canPop(context)) {
                           Navigator.pop(context);
                         }
-                        onWillPop!();
+                        onWillPop?.call();
                       },
                     ),
                   ),
