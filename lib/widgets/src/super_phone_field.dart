@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:list_ext/list_ext.dart';
-import 'package:ready_extensions/ready_extensions.dart';
+import 'package:ready_extensions/ready_extensions.dart' hide ContextExtensions;
 import 'package:super_widgets/utils/country.dart';
 
 import '../../utils/helpers.dart';
@@ -161,6 +161,10 @@ class SuperPhoneField extends StatelessWidget {
             validator: !enableValidate || validators.isNullOrEmpty ? null : FormBuilderValidators.compose(validators ?? []),
             keyboardType: TextInputType.phone,
 
+            style: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
+            dropdownTextStyle: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
+            dropdownIcon: Icon(Icons.arrow_drop_down, color: Get.theme.primaryColor),
+
             ///region Decoration
             decoration: inputDecoration ??
                 const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
@@ -169,9 +173,9 @@ class SuperPhoneField extends StatelessWidget {
                       alignLabelWithHint: true,
                       filled: true,
                       contentPadding: contentPadding ?? const EdgeInsets.all(20),
-                      hintStyle: Get.textTheme.labelLarge!.copyWith(color: Colors.grey),
-                      floatingLabelStyle: Get.textTheme.titleSmall!.copyWith(color: Get.theme.primaryColor),
-                      labelStyle: Get.textTheme.bodyLarge!.copyWith(color: Get.theme.primaryColor),
+                      hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
+                      floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
+                      labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
                       fillColor: fillColor,
                       labelText: eLabel ?? eHint,
                       hintText: eHint,

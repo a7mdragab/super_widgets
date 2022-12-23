@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 
 import '../../utils/helpers.dart';
 
+class TxtManager {
+  static Color defaultColor = Get.theme.primaryColorLight;
+}
+
 class Txt extends StatelessWidget {
   final FontStyle? fontStyle;
   final FontWeight? fontWeight;
@@ -110,7 +114,7 @@ class Txt extends StatelessWidget {
         decorationStyle: decorationStyle,
         decorationColor: decorationColor,
         decorationThickness: decorationThikness,
-        color: underlined ? Colors.transparent : color,
+        color: underlined ? Colors.transparent : (color ?? TxtManager.defaultColor),
         fontSize: fontSize,
         fontWeight: fontWeight,
         fontStyle: fontStyle,

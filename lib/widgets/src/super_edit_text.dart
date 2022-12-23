@@ -75,7 +75,7 @@ class SuperEditText extends StatefulWidget {
     this.onChanged,
     this.ontap,
     this.contentPadding,
-    this.autovalidateMode=AutovalidateMode.disabled,
+    this.autovalidateMode = AutovalidateMode.disabled,
     this.enabled = true,
     this.onSubmitted,
     this.obscureText = false,
@@ -129,13 +129,14 @@ class SuperEditTextState extends State<SuperEditText> {
             });
           }
         },
+        style: context.textTheme.bodyMedium!.copyWith(color: context.theme.primaryColor),
 
-        decoration: const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
+        decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
               contentPadding: widget.contentPadding,
-              
-              hintStyle: context.textTheme.labelLarge!.copyWith(color: Colors.grey),
+
+              hintStyle: context.textTheme.bodyMedium!.copyWith(color: Colors.grey),
               floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
-              labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
+              labelStyle: context.textTheme.bodyMedium!.copyWith(color: context.theme.primaryColor),
               fillColor: widget.fillColor,
               suffixText: widget.suffixText,
               labelText: (widget.eLabel ?? widget.eHint).tr,
@@ -156,7 +157,7 @@ class SuperEditTextState extends State<SuperEditText> {
                             setState(() {});
                           },
                           // icon: Icon(isObscured ? Icons.remove_red_eye : Icons.remove_red_eye_outlined),
-                          icon: Icon(isObscured ? Icons.lock_open_rounded : Icons.lock_rounded),
+                          icon: Icon(isObscured ? Icons.lock_open_rounded : Icons.lock_rounded, color: context.theme.primaryColor),
                         ))
                       : (widget.suffixText == null
                           ? widget.eController!.text.isNullOrWhiteSpace || !widget.enabled
