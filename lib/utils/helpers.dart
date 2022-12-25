@@ -33,6 +33,7 @@ Future<String> getPlatformVersion() async {
 
 Future<bool> isRooted() async {
   try {
+    if (GetPlatform.isIOS) return false;
     return (await Root.isRooted()) ?? false;
   } on Exception catch (e) {
     mPrintError('Exception $e');
@@ -341,8 +342,7 @@ void showPopupMenu(BuildContext context, Map<String, Function> items) async {
 
 void hideKeyboard(BuildContext? context) {
   FocusManager.instance.primaryFocus?.unfocus();
-  if(context!=null)
-  {
+  if (context != null) {
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
@@ -359,7 +359,7 @@ bool isArabic(String text) {
 final logger = Logger(
   printer: PrettyPrinter(
       noBoxingByDefault: true,
-      methodCount: 1,
+      methodCount: 2,
       // number of method calls to be displayed
       errorMethodCount: 8,
       // number of method calls if stacktrace is provided
