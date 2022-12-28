@@ -45,14 +45,14 @@ Future<bool> isAndroidRealDevice() async {
   if (GetPlatform.isAndroid) {
     return ((await getAndroidDeviceInfo()).isPhysicalDevice);
   }
-  return false;
+  return true;
 }
 
 Future<bool> isIosRealDevice() async {
   if (GetPlatform.isIOS) {
     return ((await getIOSDeviceInfo()).isPhysicalDevice);
   }
-  return false;
+  return true;
 }
 
 Future<bool> isRealMobileDevice() async {
