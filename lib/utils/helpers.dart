@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:crypt/crypt.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -42,20 +43,20 @@ Future<bool> isRooted() async {
 }
 
 Future<bool> isAndroidRealDevice() async {
-  if (GetPlatform.isAndroid) {
-    return ((await getAndroidDeviceInfo()).isPhysicalDevice);
-  }
+  if (GetPlatform.isAndroid) return ((await getAndroidDeviceInfo()).isPhysicalDevice);
   return false;
 }
 
 Future<bool> isIosRealDevice() async {
-  if (GetPlatform.isIOS) {
-    return ((await getIOSDeviceInfo()).isPhysicalDevice);
-  }
+  if (GetPlatform.isIOS) return ((await getIOSDeviceInfo()).isPhysicalDevice);
   return false;
 }
 
 Future<bool> isRealMobileDevice() async {
+  return (kDebugMode || (await isRealMobileDeviceOnly()));
+}
+
+Future<bool> isRealMobileDeviceOnly() async {
   return ((await isAndroidRealDevice()) || (await isIosRealDevice()));
 }
 
@@ -70,30 +71,15 @@ bool isValidHash(String cryptFormatHash, String enteredPlain) {
 
 String computeHash(String input) => Crypt.sha256(input).toString();
 
-Future<AndroidDeviceInfo> getAndroidDeviceInfo() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  return await deviceInfo.androidInfo;
-}
+Future<AndroidDeviceInfo> getAndroidDeviceInfo() async => await DeviceInfoPlugin().androidInfo;
 
-Future<IosDeviceInfo> getIOSDeviceInfo() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  return await deviceInfo.iosInfo;
-}
+Future<IosDeviceInfo> getIOSDeviceInfo() async => await DeviceInfoPlugin().iosInfo;
 
-Future<WebBrowserInfo> getWebBrowserInfo() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  return await deviceInfo.webBrowserInfo;
-}
+Future<WebBrowserInfo> getWebBrowserInfo() async => await DeviceInfoPlugin().webBrowserInfo;
 
-Future<WindowsDeviceInfo> getWindowsBrowserInfo() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  return await deviceInfo.windowsInfo;
-}
+Future<WindowsDeviceInfo> getWindowsBrowserInfo() async => await DeviceInfoPlugin().windowsInfo;
 
-Future<LinuxDeviceInfo> getLinuxInfo() async {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-  return await deviceInfo.linuxInfo;
-}
+Future<LinuxDeviceInfo> getLinuxInfo() async => await DeviceInfoPlugin().linuxInfo;
 
 Future<String> getAndroidDeviceID() async {
   String? deviceId = await PlatformDeviceId.getDeviceId;
