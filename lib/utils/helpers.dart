@@ -108,11 +108,13 @@ String getYoutubeVideoThumbnail(String videoUrl) {
   return 'https://img.youtube.com/vi/$vidID/0.jpg';
 }
 
-Future<void> launchStringURL(String link) async {
+Future<bool> launchStringURL(String link) async {
   if (await canLaunchUrl(Uri.parse(link))) {
     await launchUrl(Uri.parse(link));
+    return true;
   } else {
     mPrintError('Could not launch $link');
+    return false;
   }
 }
 
@@ -126,7 +128,7 @@ String _getWhatsNum(String phone) {
   return num;
 }
 
-launchWhatsApp(String phone, [String msg = 'Hello']) async {
+Future<bool> launchWhatsApp(String phone, [String msg = 'Hello']) async {
   String num = _getWhatsNum(phone);
   String url = '';
   if (GetPlatform.isAndroid) {
@@ -134,7 +136,7 @@ launchWhatsApp(String phone, [String msg = 'Hello']) async {
   } else {
     url = "https://api.whatsapp.com/send?phone=$num&text=${msg.replaceAll(' ', '%20')}";
   }
-  await launchStringURL(url);
+  return await launchStringURL(url);
 }
 
 launchFacePage(String fbLink) async {
