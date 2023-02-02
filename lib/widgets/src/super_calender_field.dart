@@ -235,6 +235,7 @@ Future<Date?> showFullDateCalenderDialog({Date? firstDate, Date? endDate, Date? 
                     mHide();
                   },
                   icon: const Icon(Icons.close, color: Colors.lightBlue)),
+              if(header.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
                 child: Txt(header, fontSize: 24, fontWeight: FontWeight.w900, color: Get.theme.primaryColor),

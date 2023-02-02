@@ -30,7 +30,7 @@ class SuperEditText extends StatefulWidget {
   final bool enableRTL;
   final bool obscureText;
 
-  final Function? ontap;
+  final void Function()? ontap;
 
   final bool enableValidate = true;
 
@@ -122,7 +122,7 @@ class SuperEditTextState extends State<SuperEditText> {
             : (s) {
                 widget.onSubmitted?.call();
               },
-        onTap: () {
+        onTap: widget.ontap??() {
           if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
             setState(() {
               widget.eController!.selection = TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length));

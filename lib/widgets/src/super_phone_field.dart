@@ -177,8 +177,8 @@ class SuperPhoneField extends StatelessWidget {
                       floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
                       labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
                       fillColor: fillColor,
-                      labelText: eLabel ?? eHint,
-                      hintText: eHint,
+                      labelText: (eLabel ?? eHint).tr,
+                      hintText: eHint.tr,
                     ),
 
             ///endregion Decoration
