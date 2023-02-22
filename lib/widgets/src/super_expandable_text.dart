@@ -86,7 +86,7 @@ class _SuperExpandableTextState extends State<SuperExpandableText> {
     final locale = Localizations.localeOf(context);
 
     final linkText = _expanded ? ' ${widget.collapseText}' : '\u2026 ${widget.expandText}';
-    final linkColor = widget.linkColor ?? context.theme.accentColor;
+    final linkColor = widget.linkColor ?? context.theme.colorScheme.secondary;
 
     final link = TextSpan(
       text: linkText,

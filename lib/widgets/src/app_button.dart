@@ -34,6 +34,7 @@ class AppButton extends StatelessWidget {
         },
         child: Txt(
           txt,
+          textAlign: TextAlign.center,
           color: txtColor ?? Get.theme.primaryColor,
           fontWeight: FontWeight.w600,
           fontSize: fontSize,
