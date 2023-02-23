@@ -8,6 +8,7 @@ class SuperPanel extends StatelessWidget {
   final String title;
   final Widget child;
   final bool enableRTL;
+  final double bottomMargin;
   late EdgeInsets contentPadding;
   bool hasError;
   Color fillColor = Colors.transparent;
@@ -17,6 +18,7 @@ class SuperPanel extends StatelessWidget {
     this.title = '',
     this.fillColor = Colors.transparent,
     this.hasError = false,
+    this.bottomMargin = 8,
     contentPadding,
     this.enableRTL = false,
     super.key,
@@ -29,7 +31,7 @@ class SuperPanel extends StatelessWidget {
     return Directionality(
       textDirection: enableRTL ? TextDirection.rtl : TextDirection.ltr,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
+        margin:  EdgeInsets.only(bottom: bottomMargin),
         child: FocusScope(
           debugLabel: 'Scope',
           autofocus: true,

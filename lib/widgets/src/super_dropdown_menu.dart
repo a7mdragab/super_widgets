@@ -30,13 +30,15 @@ class SuperDropdownMenu extends StatefulWidget {
   final bool showSearchBox;
 
   final List<String? Function(dynamic)>? validators;
+  final EdgeInsetsGeometry? contentPadding;
 
   SuperDropdownMenu(
       {super.key,
       required this.items,
-      itemAsString,
+        String Function(dynamic)? itemAsString,
       this.showSearchBox = true,
       this.name,
+      this.contentPadding,
       this.validators = const [],
       this.onChanged,
       this.filterFn,
@@ -49,7 +51,7 @@ class SuperDropdownMenu extends StatefulWidget {
       this.eAsset,
       this.ontap,
       this.selectedItem}) {
-    this.itemAsString = itemAsString ?? (dynamic s) => s.toString();
+    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString());
     // onChanged?.call(selectedItem);
     compareFn ??= (dynamic a, dynamic b) {
       return a == b;
@@ -84,6 +86,7 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           showSearchBox: widget.showSearchBox,
           searchFieldProps: TextFieldProps(
             decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+              contentPadding: widget.contentPadding,
                   labelText: widget.eHint,
                   hintText: '${widget.eHint}...',
                 ),
@@ -100,6 +103,7 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
       dropdownDecoratorProps: DropDownDecoratorProps(
         baseStyle: const TextStyle(fontSize: 16),
         dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+          contentPadding: widget.contentPadding,
               labelText: widget.eHint,
               hintText: '${widget.eHint}...',
             ),
