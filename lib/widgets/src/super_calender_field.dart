@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dart_extensions/dart_extensions.dart';
 import 'package:date_only_field/date_only_field.dart';
 import 'package:flutter/material.dart';
 
@@ -13,22 +14,24 @@ import 'package:super_widgets/utils/helpers.dart';
 import 'super_decorated_container.dart';
 import 'txt.dart';
 
-final DateTime date = DateTime(2022, 11, 7);
+final DateTime date = DateTime(2022, 11, 6);
+
 Widget get daysOfWeekRowWidget => Row(
-    // textDirection: LanguageService.to.textDirection,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: List.generate(
-        7,
-        (index) => Expanded(
-                child: Center(
-                    child: Txt(
-              // DateFormat.EEEE('en').format(date.add(index.days)),
-              DateFormat('EEE', LanguageService.to.getLocale.languageCode).format(date.add(index.days)),
-              textAlign: TextAlign.center,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Get.theme.colorScheme.secondary,
-            )))));
+      // textDirection: LanguageService.to.textDirection,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(
+          7,
+          (index) => Expanded(
+                  child: Center(
+                      child: Txt(
+                // DateFormat.EEEE('en').format(date.add(index.days)),
+                DateFormat('EEE', LanguageService.to.getLocale.languageCode).format(date.add(index.days)),
+                textAlign: TextAlign.center,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Get.theme.colorScheme.secondary,
+              )))),
+    );
 
 // ignore: must_be_immutable
 class SuperVerticalPaginatedCalender extends StatelessWidget {
@@ -42,7 +45,7 @@ class SuperVerticalPaginatedCalender extends StatelessWidget {
       selectedDate = firstDate!;
     }
 
-    endDate ??= firstDate!.add(365.days);
+    endDate ??= firstDate!.addOrRemoveYears(1);
 
     mSelectedDate.value = selectedDate!;
   }
@@ -235,11 +238,11 @@ Future<Date?> showFullDateCalenderDialog({Date? firstDate, Date? endDate, Date? 
                     mHide();
                   },
                   icon: const Icon(Icons.close, color: Colors.lightBlue)),
-              if(header.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
-                child: Txt(header, fontSize: 24, fontWeight: FontWeight.w900, color: Get.theme.primaryColor),
-              ),
+              if (header.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
+                  child: Txt(header, fontSize: 24, fontWeight: FontWeight.w900, color: Get.theme.primaryColor),
+                ),
               Expanded(
                 child: SuperVerticalPaginatedCalender(
                   firstDate: firstDate?.toDateTime(),

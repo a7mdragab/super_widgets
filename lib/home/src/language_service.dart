@@ -86,13 +86,13 @@ class LanguageService extends GetxController implements GetxService {
   // updates the language stored
   Future<void> updateLanguageToArabic() async {
     currentLanguage = 'ar';
-    Get.updateLocale(Locale(currentLanguage));
+    updateLocale((currentLanguage));
   }
 
   // updates the language stored
   Future<void> updateLanguageToEnglish() async {
     currentLanguage = 'en';
-    Get.updateLocale(Locale(currentLanguage));
+    updateLocale((currentLanguage));
   }
 
   bool get isArabic => currentLanguage == 'ar';

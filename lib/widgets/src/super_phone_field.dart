@@ -165,6 +165,7 @@ class SuperPhoneField extends StatelessWidget {
             dropdownTextStyle: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
             dropdownIcon: Icon(Icons.arrow_drop_down, color: Get.theme.primaryColor),
 
+            flagsButtonPadding: EdgeInsets.only(left: 16),
             ///region Decoration
             decoration: inputDecoration ??
                 const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
