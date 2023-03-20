@@ -108,9 +108,9 @@ String getYoutubeVideoThumbnail(String videoUrl) {
   return 'https://img.youtube.com/vi/$vidID/0.jpg';
 }
 
-Future<bool> launchStringURL(String link) async {
+Future<bool> launchStringURL(String link,{LaunchMode mode=LaunchMode.platformDefault}) async {
   if (await canLaunchUrl(Uri.parse(link))) {
-    await launchUrl(Uri.parse(link));
+    await launchUrl(Uri.parse(link),mode: mode);
     return true;
   } else {
     mPrintError('Could not launch $link');

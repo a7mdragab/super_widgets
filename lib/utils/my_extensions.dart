@@ -1,6 +1,7 @@
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:flutter/material.dart' as matLib;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
@@ -257,4 +258,10 @@ extension StringNullExtension on String? {
     }
     return false;
   }
+}
+
+extension AllNumExtension on num {
+  double get h => Get.mediaQuery.size.height * this;
+  double get w => Get.mediaQuery.size.width * this;
+  String get formatWithCommas => toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (match) => '${match[1]},');
 }
