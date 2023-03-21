@@ -116,6 +116,7 @@ class SuperImageClass {
   void clean() {
     imgString = null;
     imgList = null;
+    file = null;
     filePickerCross = null;
     tempName = null;
     uploaded = false;
