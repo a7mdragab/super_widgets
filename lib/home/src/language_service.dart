@@ -6,7 +6,12 @@ import 'package:ready_extensions/ready_extensions.dart';
 import 'package:super_widgets/utils/helpers.dart';
 
 class LanguageService extends GetxController implements GetxService {
-  static LanguageService get to => Get.find();
+  static LanguageService get to {
+    if(!Get.isRegistered<LanguageService>()){
+      Get.put(LanguageService(),permanent: true);
+    }
+    return Get.find();
+  }
 
   final _currentLanguage = 'en'.obs;
 
