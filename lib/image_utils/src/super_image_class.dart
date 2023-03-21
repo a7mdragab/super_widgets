@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker_cross/file_picker_cross.dart';
+import 'package:list_ext/list_ext.dart';
 import 'package:ready_extensions/ready_extensions.dart';
 
 import '../../utils/constants.dart';
-
 
 class FileModel {
   String title = '';
@@ -37,11 +38,11 @@ class FileModel {
 }
 
 class SuperImageClass {
-
   Uint8List? imgList;
   String? imgString;
   String? tempName;
-  FilePickerCross? file;
+  FilePickerCross? filePickerCross;
+  File? file;
   bool uploaded = false;
   bool changed = false;
 
@@ -49,9 +50,14 @@ class SuperImageClass {
     clean();
   }
 
+  SuperImageClass.fromPickerCrossFile(this.filePickerCross) {
+    imgList = filePickerCross!.toUint8List();
+    imgString = filePickerCross!.toBase64();
+  }
+
   SuperImageClass.fromFile(this.file) {
-    imgList = file!.toUint8List();
-    imgString = file!.toBase64();
+    imgList = file!.readAsBytesSync();
+    if (imgList.isNotNullOrEmpty) imgString = base64Encode(imgList!);
   }
 
   SuperImageClass.fromBytes(this.imgList) {
@@ -64,7 +70,7 @@ class SuperImageClass {
   }
 
   FileModel? get generateFileModel {
-    if (file != null) {
+    if (filePickerCross != null) {
       return FileModel(fileTitle, imgString ?? '');
     }
     return null;
@@ -73,18 +79,25 @@ class SuperImageClass {
   bool get isServerUploaded => !imgString.isNullOrEmptyOrWhiteSpace && imgString!.contains(appUploadCenter);
 
   String get fileTitle {
-    if (file?.fileName != null) {
-      return file!.fileName!;
+    if (filePickerCross?.fileName != null) {
+      return filePickerCross!.fileName!;
     } else if (isServerUploaded) {
       return imgString!;
     }
     return 'File';
   }
 
-  setFile(FilePickerCross fil) {
+  setFile(File fil) {
     file = fil;
-    imgList = file!.toUint8List();
-    imgString = file!.toBase64();
+    imgList = file!.readAsBytesSync();
+    if (imgList.isNotNullOrEmpty) imgString = base64Encode(imgList!);
+    changed = true;
+  }
+
+  setFilePickerCross(FilePickerCross fil) {
+    filePickerCross = fil;
+    imgList = filePickerCross!.toUint8List();
+    imgString = filePickerCross!.toBase64();
     changed = true;
   }
 
@@ -103,11 +116,11 @@ class SuperImageClass {
   void clean() {
     imgString = null;
     imgList = null;
-    file = null;
+    filePickerCross = null;
     tempName = null;
     uploaded = false;
     changed = false;
   }
 
-  bool get hasFile => file != null;
+  bool get hasFile => filePickerCross != null;
 }

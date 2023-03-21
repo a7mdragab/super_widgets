@@ -155,7 +155,8 @@ class PickImageController {
 
     if (image != null) {
       file = File(image.path);
-      imageClass.setImgList(await file.readAsBytes());
+      imageClass.setFile(file);
+      // imageClass.setFile(file);
     } else {
       // User canceled the picker
       mPrintError('User canceled the picker');
