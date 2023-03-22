@@ -191,7 +191,7 @@ Future<ImageSource?> showImagePickerDialog() async {
           ),
           Txt('Pick image'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
           vSpace24,
-          Txt('Choose the image source.'.tr, fontSize: 16),
+          Txt('Choose the image source'.tr, fontSize: 16),
           vSpace8,
           Padding(
             padding: const EdgeInsets.all(24),

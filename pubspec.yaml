@@ -22,7 +22,7 @@ dependencies:
   image_picker: ^0.8.7
   photo_view: ^0.14.0
   cached_network_image: ^3.2.3
-  flutter_svg: ^2.0.4
+  flutter_svg: ^1.0.1
   flutter_svg_provider: ^1.0.3
   jovial_svg: ^1.1.12
   shape_of_view_null_safe: ^2.0.0
@@ -67,8 +67,8 @@ dependency_overrides:
   intl: ^0.18.0
   device_info_plus: ^8.1.0
   permission_handler: ^10.2.0
-  flutter_svg: ^2.0.4
-#  flutter_svg: ^1.0.1
+#  flutter_svg: ^2.0.4
+  flutter_svg: ^1.0.1
 
 dev_dependencies:
   flutter_test:
