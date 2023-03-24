@@ -19,11 +19,11 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
         style: ButtonStyle(
             shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius))),
             elevation: MaterialStateProperty.all(elevation),
-            shadowColor: MaterialStateProperty.all(shadowColor ?? Colors.grey[400]),
+            shadowColor: MaterialStateProperty.all(shadowColor ?? Colors.grey[900]),
             backgroundColor: MaterialStateProperty.all(fillColor),
             padding: MaterialStateProperty.all(
               EdgeInsets.symmetric(vertical: verPadding, horizontal: verPadding * 4),

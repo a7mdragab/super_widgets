@@ -21,6 +21,8 @@ class SuperRadioGroup extends StatefulWidget {
   final bool enableRTL;
   final OptionsOrientation optionsOrientation;
   final EdgeInsets contentPadding;
+  final bool isHorizontal;
+  final Color? optionColor;
   final List<dynamic> items;
   final void Function(dynamic)? onChanged;
   String Function(dynamic)? itemAsString;
@@ -42,7 +44,9 @@ class SuperRadioGroup extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.eAsset,
+    this.optionColor,
     this.contentPadding = const EdgeInsets.all(8),
+    this.isHorizontal=true,
     this.enabled = true,
     this.enableRTL = false,
     this.validators = const [],
@@ -65,6 +69,8 @@ class _SuperRadioGroupState extends State<SuperRadioGroup> {
         decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
               contentPadding: widget.contentPadding,
               labelText: (widget.label ?? widget.hint).tr,
+              // labelStyle: (context.theme.inputDecorationTheme.labelStyle??TextStyle()).copyWith(color: Get.theme.colorScheme.primary),
+              // hintStyle: (context.theme.inputDecorationTheme.labelStyle??TextStyle()).copyWith(color: Get.theme.colorScheme.primary),
               hintText: widget.hint.tr,
               suffixIcon: widget.suffixIcon == null ? null : Icon(widget.suffixIcon),
               prefixIcon: widget.prefixIcon == null
@@ -75,14 +81,15 @@ class _SuperRadioGroupState extends State<SuperRadioGroup> {
             ),
         name: widget.hint,
         initialValue: widget.initialValue!,
-        orientation: OptionsOrientation.horizontal,
+        orientation:widget.isHorizontal?OptionsOrientation.horizontal:OptionsOrientation.vertical,
         onChanged: widget.onChanged,
         enabled: widget.enabled,
         validator: FormBuilderValidators.compose(widget.validators!),
         options: widget.items
             .map((obj) => FormBuilderFieldOption(
                   value: obj,
-                  child: Txt(widget.itemAsString!(obj)),
+                  child: Txt(widget.itemAsString!(obj),color: widget.optionColor??
+                      (Get.isDarkMode?Colors.white:Colors.black),fontSize: 16),
                 ))
             .toList(growable: false),
       ),
