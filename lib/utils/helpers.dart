@@ -191,7 +191,7 @@ Future<ImageSource?> showImagePickerDialog() async {
           ),
           Txt('Pick image'.tr, fontWeight: FontWeight.w800, fontSize: 18, color: Get.theme.primaryColor),
           vSpace24,
-          Txt('Choose the image source.'.tr, fontSize: 16),
+          Txt('Choose the image source'.tr, fontSize: 16),
           vSpace8,
           Padding(
             padding: const EdgeInsets.all(24),
@@ -344,22 +344,7 @@ bool isArabic(String text) {
   return text.anyChar((element) => arabicCharacters.contains(element));
 }
 
-final logger = Logger(
-  printer: PrettyPrinter(
-      noBoxingByDefault: true,
-      methodCount: 2,
-      // number of method calls to be displayed
-      errorMethodCount: 8,
-      // number of method calls if stacktrace is provided
-      lineLength: 1000,
-      // width of the output
-      colors: true,
-      // Colorful log messages
-      printEmojis: true,
-      // Print an emoji for each log message
-      printTime: false // Should each log print contain a timestamp
-      ),
-);
+
 
 const mShowToast2 = SmartDialog.showToast;
 const mShowLoading = SmartDialog.showLoading;
@@ -399,6 +384,8 @@ class CustomToast extends StatelessWidget {
     );
   }
 }
+
+bool get isDialogShown => SmartDialog.config.isExist;
 
 void mShowDialog2({required Widget Function(BuildContext) builder}) {
   showDialog(context: Get.context!, builder: builder);
@@ -440,7 +427,22 @@ void mShowToast(String msg,
   });
 }
 
-bool get isDialogShown => SmartDialog.config.isExist;
+final logger = Logger(
+  printer: PrettyPrinter(
+      noBoxingByDefault: true,
+      methodCount: 2,
+      // number of method calls to be displayed
+      errorMethodCount: 8,
+      // number of method calls if stacktrace is provided
+      lineLength: 1000,
+      // width of the output
+      colors: true,
+      // Colorful log messages
+      printEmojis: true,
+      // Print an emoji for each log message
+      printTime: false // Should each log print contain a timestamp
+  ),
+);
 
 void mPrint(s) {
   // SmartDialog.showToast('',)
