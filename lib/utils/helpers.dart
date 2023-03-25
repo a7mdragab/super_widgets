@@ -245,7 +245,7 @@ Future<ImageSource?> showImagePickerDialog() async {
   return completer.future;
 }
 
-void showConfirmationDialog({String? msg, String? fullMsg, required Function function}) {
+void showConfirmationDialog({String? msg, String? fullMsg, TextDirection? textDirection, required Function function}) {
   SmartDialog.show(
     clickMaskDismiss: false,
     backDismiss: true,
@@ -265,7 +265,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, required Function fun
           ),
           Txt('Note'.tr, fontWeight: FontWeight.w800, fontSize: 22, color: Get.theme.primaryColor),
           vSpace24,
-          Center(child: Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, textAlign: TextAlign.center, fontSize: 16)),
+          Center(child: Txt(msg != null ? 'Are you sure you want to '.tr + msg.tr : fullMsg ?? 'Are you sure?'.tr, textDirection: textDirection, textAlign: TextAlign.center, fontSize: 16)),
           vSpace8,
           Padding(
             padding: const EdgeInsets.all(24),
@@ -344,10 +344,8 @@ bool isArabic(String text) {
   return text.anyChar((element) => arabicCharacters.contains(element));
 }
 
-
-
 const mShowToast2 = SmartDialog.showToast;
-const mShowLoading = SmartDialog.showLoading;
+const mShowLoading2 = SmartDialog.showLoading;
 const mShowAttach = SmartDialog.showAttach;
 const mShowDialog = SmartDialog.show;
 const mHide = SmartDialog.dismiss;
@@ -391,6 +389,44 @@ void mShowDialog2({required Widget Function(BuildContext) builder}) {
   showDialog(context: Get.context!, builder: builder);
 }
 
+void mShowLoading(
+    {String msg = 'loading...',
+    SmartDialogController? controller,
+    AlignmentGeometry? alignment,
+    bool? clickMaskDismiss,
+    SmartAnimationType? animationType,
+    List<SmartNonAnimationType>? nonAnimationTypes,
+    Widget Function(AnimationController, Widget, AnimationParam)? animationBuilder,
+    bool? usePenetrate,
+    bool? useAnimation,
+    Duration? animationTime,
+    Color? maskColor,
+    Widget? maskWidget,
+    VoidCallback? onDismiss,
+    VoidCallback? onMask,
+    Duration? displayTime,
+    bool? backDismiss,
+    WidgetBuilder? builder}) {
+  SmartDialog.showLoading(
+      msg: msg.tr,
+      alignment: alignment,
+      animationBuilder: animationBuilder,
+      animationTime: animationTime,
+      animationType: animationType,
+      backDismiss: backDismiss,
+      builder: builder,
+      clickMaskDismiss: clickMaskDismiss,
+      controller: controller,
+      displayTime: displayTime,
+      maskColor: maskColor,
+      maskWidget: maskWidget,
+      nonAnimationTypes: nonAnimationTypes,
+      onDismiss: onDismiss,
+      onMask: onMask,
+      useAnimation: useAnimation,
+      usePenetrate: usePenetrate);
+}
+
 void mShowToast(String msg,
     {Color? color = Colors.black87,
     Color? txtColor = Colors.white,
@@ -409,7 +445,7 @@ void mShowToast(String msg,
     bool? consumeEvent,
     bool? debounce,
     SmartToastType? displayType}) {
-  mShowToast2(msg,
+  mShowToast2(msg.tr,
       alignment: alignment,
       controller: controller,
       animationTime: animationTime,
@@ -441,7 +477,7 @@ final logger = Logger(
       printEmojis: true,
       // Print an emoji for each log message
       printTime: false // Should each log print contain a timestamp
-  ),
+      ),
 );
 
 void mPrint(s) {
