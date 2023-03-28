@@ -15,7 +15,12 @@ import 'theme_service_prefs.dart';
 ///
 // ignore:prefer_mixin
 class ThemeService extends GetxController implements GetxService {
-  static ThemeService get to => Get.find();
+  static ThemeService get to {
+    if(!Get.isRegistered<ThemeService>()){
+      Get.put(ThemeService(),permanent: true);
+    }
+    return Get.find();
+  }
 
   @override
   void onInit() {

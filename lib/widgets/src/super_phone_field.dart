@@ -131,6 +131,7 @@ class SuperPhoneField extends StatelessWidget {
           textDirection: TextDirection.ltr,
           child: IntlPhoneField(
             controller: phoneController,
+            invalidNumberMessage: 'Invalid Mobile Number'.tr,
             initialCountryCode: country?.code,
             // initialCountryCode: country?.code,
             onChanged: (phone) {
