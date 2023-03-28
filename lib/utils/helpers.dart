@@ -119,7 +119,8 @@ Future<bool> launchStringURL(String link, {LaunchMode mode = LaunchMode.platform
 }
 
 String _getWhatsNum(String phone) {
-  String num = phone.replaceAll('+', '').replaceAll(' ', '');
+  String num = phone.replaceAll(' ', '');
+  // String num = phone.replaceAll('+', '').replaceAll(' ', '');
   for (int I = 0; I < num.length; I++) {
     if (num[0] == '0') {
       num = num.substring(1);
@@ -133,9 +134,11 @@ Future<bool> launchWhatsApp(String phone, [String msg = 'Hello']) async {
   String url = '';
   if (GetPlatform.isAndroid) {
     url = "whatsapp://send?phone=$num&text=$msg";
+    // url = Uri.encodeFull("https://wa.me/${num}?text=${(msg)}");
   } else {
-    url = "https://api.whatsapp.com/send?phone=$num&text=${msg.replaceAll(' ', '%20')}";
+    url = "https://api.whatsapp.com/send?phone=$num&text=${Uri.encodeFull(msg)}";
   }
+  // url="https://api.whatsapp.com/send/?phone=Uri.encodeComponent(phone)&text=Hello&type=phone_number&app_absent=0";
   return await launchStringURL(url);
 }
 

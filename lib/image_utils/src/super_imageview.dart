@@ -14,6 +14,7 @@ import 'full_photo.dart';
 // ignore: must_be_immutable
 class SuperImageView extends StatelessWidget {
   final String? imgUrl;
+  final Map<String, String>? headers;
   final String? imgAssetPath;
 
   final File? imgFile;
@@ -47,6 +48,7 @@ class SuperImageView extends StatelessWidget {
   const SuperImageView(
       {super.key,
       this.imgUrl,
+      this.headers,
       this.imgAssetPath,
       this.svgUrl,
       this.svgAssetPath,
@@ -176,7 +178,7 @@ class SuperImageView extends StatelessWidget {
         source: svgAssetPath == null ? svg_p.SvgSource.network : svg_p.SvgSource.asset,
       );
     } else if (imgUrl != null) {
-      return CachedNetworkImageProvider(imgUrl!);
+      return CachedNetworkImageProvider(imgUrl!,headers: headers);
     } else if (imgAssetPath != null) {
       return AssetImage(imgAssetPath!);
     } else if (uint8list != null) {
