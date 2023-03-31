@@ -134,6 +134,8 @@ extension DateExtension on DateTime? {
 }
 
 extension StringExtension on String {
+  String get correctPhoneDir => '${replaceAll('+', '')}+';
+
   String toTimeDateStr() {
     if (length < 11) return "2000-01-01 ${this}";
     return this;
@@ -154,11 +156,7 @@ extension StringExtension on String {
 
 extension DoubleExtension on double {
   String toDoubleStr() {
-    return this == null
-        ? "0"
-        : ((this - (toInt())) > 0.000001)
-            ? toString()
-            : toInt().toString();
+    return ((this - (toInt())) > 0.000001) ? toString() : toInt().toString();
   }
 }
 

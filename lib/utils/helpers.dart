@@ -548,3 +548,10 @@ DateTime getDateOnly(DateTime dateTime) {
   List<String> partsStart = dateTime.toString().split(" ").first.split("-");
   return DateTime.parse("${partsStart.first}-${partsStart[1].padLeft(2, '0')}-${partsStart[2].padLeft(2, '0')} 00:00:00.000");
 }
+
+String formatDurationTime(Duration duration) {
+  String hours = duration.inHours.toString().padLeft(0, '2');
+  String minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+  String seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
+  return "$hours:$minutes:$seconds";
+}
