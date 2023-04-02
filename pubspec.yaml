@@ -19,7 +19,7 @@ dependencies:
   dotted_line: ^3.1.0
   dropdown_search: ^5.0.6
   file_picker_cross: ^4.6.0
-  image_picker: ^0.8.7
+  image_picker: ^0.8.7+1
   photo_view: ^0.14.0
   cached_network_image: ^3.2.3
   flutter_svg: ^1.0.3
@@ -57,9 +57,9 @@ dependencies:
   flutter_sim_country_code: ^0.1.2
   internet_file: ^1.2.0
 
-  paged_vertical_calendar: ^1.1.5
+  paged_vertical_calendar: ^1.1.6
 
-  flutter_animate: ^4.1.0
+  flutter_animate: ^4.1.1+1
   date_only_field: ^0.0.13
 
 dependency_overrides:
