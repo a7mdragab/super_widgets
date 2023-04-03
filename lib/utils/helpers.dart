@@ -1,19 +1,20 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:crypt/crypt.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:logger/logger.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:root/root.dart';
 import 'package:super_widgets/super_widgets.dart';
-import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/foundation.dart' as foundation;
 
 Future<String> getPlatformVersion() async {
   if (Platform.isAndroid) {
@@ -469,11 +470,12 @@ void mShowToast(String msg,
 final logger = Logger(
   printer: PrettyPrinter(
       noBoxingByDefault: true,
-      methodCount: 2,
+      stackTraceBeginIndex: 1,
+      methodCount: 3,
       // number of method calls to be displayed
       errorMethodCount: 8,
       // number of method calls if stacktrace is provided
-      lineLength: 1000,
+      lineLength: 3000,
       // width of the output
       colors: true,
       // Colorful log messages

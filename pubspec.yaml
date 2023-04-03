@@ -42,7 +42,7 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.1.1
   responsive_framework: ^0.2.0
-  flex_color_scheme: ^7.0.0-dev.3
+  flex_color_scheme: ^7.0.0
 
 #  Security
   uuid: ^3.0.7
