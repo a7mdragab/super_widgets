@@ -11,6 +11,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:root/root.dart';
 import 'package:super_widgets/super_widgets.dart';
@@ -559,4 +560,16 @@ String formatDurationTime(Duration duration) {
   String minutes = duration.inMinutes.remainder(60).toString().padLeft(2, '0');
   String seconds = duration.inSeconds.remainder(60).toString().padLeft(2, '0');
   return "$hours:$minutes:$seconds";
+}
+
+PackageInfo? packageInfo;
+
+Future<String?> getAppVersionNum() async {
+  packageInfo ??= await PackageInfo.fromPlatform();
+  return packageInfo?.version;
+}
+
+Future<String?> getAppBuildNum() async {
+  packageInfo ??= await PackageInfo.fromPlatform();
+  return packageInfo?.buildNumber;
 }
