@@ -57,6 +57,8 @@ class SuperDecoratedContainer extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
+  final double elevation;
+
   const SuperDecoratedContainer(
       {Key? key,
       this.color,
@@ -74,35 +76,43 @@ class SuperDecoratedContainer extends StatelessWidget {
       this.border,
       this.borderWidth,
       this.borderColor,
+      this.elevation = 0,
       this.child})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bool hasBorder = border != null || borderColor != null || borderWidth != null;
-    return Container(
-      height: height,
-      width: width,
-      margin: margin,
-      padding: padding,
-      decoration: BoxDecoration(
-        color: color,
-        shape: shape,
-        boxShadow: boxShadow,
-        image: decorationImage,
-        gradient: gradient,
-        backgroundBlendMode: backgroundBlendMode,
+    return Material(
+      elevation: elevation,
+      borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+      child: ClipRRect(
         borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-        border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
+        child: Container(
+          height: height,
+          width: width,
+          margin: margin,
+          padding: padding,
+          decoration: BoxDecoration(
+            color: color,
+            shape: shape,
+            boxShadow: boxShadow,
+            image: decorationImage,
+            gradient: gradient,
+            backgroundBlendMode: backgroundBlendMode,
+            borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+            border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
+          ),
+          child: child == null
+              ? null
+              : shape == BoxShape.circle
+                  ? ClipOval(child: child)
+                  : ClipRRect(
+                      borderRadius: shape == BoxShape.circle ? null : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+                      child: child,
+                    ),
+        ),
       ),
-      child: child == null
-          ? null
-          : shape == BoxShape.circle
-              ? ClipOval(child: child)
-              : ClipRRect(
-                  borderRadius: shape == BoxShape.circle ? null : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-                  child: child,
-                ),
     );
   }
 }
