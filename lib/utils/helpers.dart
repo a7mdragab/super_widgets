@@ -373,15 +373,18 @@ class CustomToast extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: alignment ?? Alignment.center,
-      child: SuperDecoratedContainer(
-        borderRadius: 16,
-        margin: margin,
-        padding: padding,
-        color: color,
-        child: Txt(
-          msg,
-          color: txtColor,
-          fontSize: 18,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 0.9.w),
+        child: SuperDecoratedContainer(
+          borderRadius: 16,
+          // margin: margin,
+          padding: padding,
+          color: color,
+          child: Txt(
+            msg,
+            color: txtColor,
+            fontSize: 18,
+          ),
         ),
       ),
     );
@@ -474,7 +477,7 @@ final logger = Logger(
       stackTraceBeginIndex: 0,
       methodCount: 3,
       // number of method calls to be displayed
-      errorMethodCount: 8,
+      errorMethodCount: 5,
       // number of method calls if stacktrace is provided
       lineLength: 3000,
       // width of the output

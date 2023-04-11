@@ -84,10 +84,11 @@ class SuperDecoratedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool hasBorder = border != null || borderColor != null || borderWidth != null;
     return Material(
+      color: color,
       elevation: elevation,
       borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
       child: ClipRRect(
-        borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+        borderRadius: shape == BoxShape.circle ? BorderRadius.zero : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
         child: Container(
           height: height,
           width: width,
