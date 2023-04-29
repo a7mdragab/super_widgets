@@ -8,6 +8,9 @@ import 'package:super_widgets/super_widgets.dart';
 import '../../image_utils/img_utils.dart';
 
 class ScaffoldGradientBackground extends StatelessWidget {
+  static Color defaultBackBtnBgColor = Colors.transparent;
+  static Color defaultBackBtnIconColor = Colors.black;
+
   /// The gradient that you wanna put as the background color of scaffold
   final Gradient? gradient;
   final Color? backBtnBgColor;
@@ -374,8 +377,8 @@ class ScaffoldGradientBackground extends StatelessWidget {
     this.floatingActionButtonAnimator,
     this.persistentFooterButtons,
     this.drawer,
-    this.backBtnBgColor = Colors.amber,
-    this.backBtnIconColor = Colors.black,
+    this.backBtnBgColor,
+    this.backBtnIconColor,
     this.onWillPop,
     this.onDrawerChanged,
     this.endDrawer,
@@ -431,8 +434,8 @@ class ScaffoldGradientBackground extends StatelessWidget {
                     child: IconButton(
                       icon: SuperDecoratedContainer(
                         shape: BoxShape.circle,
-                        color: backBtnBgColor,
-                        child: Center(child: Icon(Icons.arrow_back_ios_new_outlined, color: backBtnIconColor)),
+                        color: backBtnBgColor ?? defaultBackBtnBgColor,
+                        child: Center(child: Icon(Icons.arrow_back_ios_new_outlined, color: backBtnIconColor ?? defaultBackBtnIconColor)),
                       ),
                       onPressed: () {
                         if (Navigator.canPop(context)) {

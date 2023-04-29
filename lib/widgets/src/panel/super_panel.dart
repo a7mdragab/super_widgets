@@ -1,5 +1,7 @@
+import 'package:dart_extensions/dart_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ready_extensions/ready_extensions.dart';
 import 'package:super_widgets/home/home.dart';
 import 'package:super_widgets/utils/helpers.dart';
 
@@ -29,9 +31,9 @@ class SuperPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: enableRTL ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: ((title.isNullOrEmptyOrWhiteSpace ? false : isArabic(title)) && LanguageService.to.isArabic) || enableRTL ? TextDirection.rtl : TextDirection.ltr,
       child: Container(
-        margin:  EdgeInsets.only(bottom: bottomMargin),
+        margin: EdgeInsets.only(bottom: bottomMargin),
         child: FocusScope(
           debugLabel: 'Scope',
           autofocus: true,
