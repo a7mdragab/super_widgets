@@ -357,7 +357,7 @@ class SuperMainApp extends StatelessWidget {
                 ///region Locales
                 supportedLocales: supportedLocales,
                 locale: languageController.getLocale,
-                localizationsDelegates: localizationDelegates,
+                localizationsDelegates: [...localizationDelegatesList, ...(localizationsDelegates?.toList() ?? <LocalizationsDelegate>[])],
 
                 ///endregion Locales
 
@@ -394,7 +394,7 @@ Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
   return child;
 }
 
-const localizationDelegates = [
+const localizationDelegatesList = [
   DefaultWidgetsLocalizations.delegate,
   DefaultMaterialLocalizations.delegate,
   GlobalMaterialLocalizations.delegate,

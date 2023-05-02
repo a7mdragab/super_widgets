@@ -1,68 +1,54 @@
-import 'package:form_builder_validators/form_builder_validators.dart';
-
-import 'package:flutter/material.dart';
-
-import 'package:dart_extensions/dart_extensions.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:super_widgets/utils/my_extensions.dart';
+import 'package:super_widgets/home/home.dart';
 
 class SuperDateField extends StatefulWidget {
   final String? label, hint;
+  final String dateFormat;
   final bool enabled;
+  final DateTime? initialDate, firstDate, lastDate;
   final void Function(dynamic)? onChanged;
-
-  final ValueNotifier<DateTime?> _curValue = ValueNotifier(null);
-  DateTime? get curValue => _curValue.value;
-  set curValue(DateTime? val) => _curValue.value = val;
-
-  final TextEditingController mController = TextEditingController();
-
-  setValue(DateTime? val) {
-    curValue = val;
-  }
 
   final List<String? Function(dynamic)>? validators;
 
-  SuperDateField({super.key, this.label = 'From', this.hint = 'To', this.enabled = true, this.onChanged, this.validators = const [], value}) {
-    curValue = value;
-    if (curValue != null) {
-      mController.text = curValue!.toDateStr();
-      // mController.text = curValue!.dateTime.toTimeStr();
-    }
-    _curValue.addListener(() {
-      if (curValue == null) {
-        mController.clear();
-      } else {
-        mController.text = curValue!.toDateStr();
-      }
-      onChanged?.call(curValue);
-    });
-  }
+  const SuperDateField(
+      {super.key,
+      this.initialDate,
+      this.firstDate,
+      this.lastDate,
+      this.dateFormat = 'dd-MMMM-yyyy',
+      this.label = 'From',
+      this.hint = 'From',
+      this.enabled = true,
+      this.onChanged,
+      this.validators = const []});
 
   @override
   State<SuperDateField> createState() => _SuperDateFieldState();
 }
 
 class _SuperDateFieldState extends State<SuperDateField> {
+  final TextEditingController mController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return DateTimeField(
       enabled: widget.enabled,
-      format: DateFormat("dd-MMMM-yyyy"),
+      format: DateFormat(widget.dateFormat, LanguageService.to.getLocale.languageCode),
       decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
             isDense: true,
             isCollapsed: true,
             alignLabelWithHint: true,
-            contentPadding: const EdgeInsets.all(4),
+            contentPadding: const EdgeInsets.all(16),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             filled: true,
             fillColor: Colors.white,
             suffixIcon: InkWell(
                 onTap: () {
-                  widget.mController.clear();
-                  widget.setValue(null);
+                  mController.clear();
                   setState(() {});
                 },
                 child: const Icon(Icons.close, size: 16)),
@@ -71,31 +57,22 @@ class _SuperDateFieldState extends State<SuperDateField> {
             labelText: widget.hint,
             hintText: widget.hint,
             hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
-            // prefixIconConstraints: BoxConstraints.tightForFinite(width: 30),
-            // prefixIcon: widget.eIcon == null
-            //     ? widget.eAsset == null
-            //         ? null
-            //         : Image.asset('assets/images/${widget.eAsset}.svg')
-            //     : Icon(widget.eIcon),
-            border: OutlineInputBorder(borderSide: const BorderSide(color: Colors.blue), borderRadius: BorderRadius.circular(1)),
-            enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.blue), borderRadius: BorderRadius.circular(1)),
-            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(2), borderSide: const BorderSide(color: Colors.green)),
           ),
-      initialValue: widget.curValue,
-      controller: widget.mController,
+      initialValue: widget.initialDate,
+      controller: mController,
       validator: FormBuilderValidators.compose(widget.validators!),
       onShowPicker: (BuildContext context, DateTime? currentValue) async {
         var res = await showDatePicker(
           context: context,
-          firstDate: DateTime(1900),
-          lastDate: DateTime(2050),
-          initialDate: currentValue ?? widget.curValue ?? DateTime.now(),
+          firstDate: widget.firstDate ?? DateTime(1900),
+          lastDate: widget.lastDate ?? DateTime(2050),
+          initialDate: currentValue ?? widget.initialDate ?? DateTime.now(),
         );
-        if (res != null) {
-          widget.setValue(res);
-        }
+        // mController.text = res == null ? '' : res.toDateStr(widget.dateFormat);
+        mController.text = res == null ? '' : 'res.toDateStr(widget.dateFormat)';
+
         setState(() {});
-        return widget.curValue;
+        return res;
       },
     );
   }

@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:super_widgets/super_widgets.dart';
 
 // import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -46,28 +47,25 @@ class SuperCheckBoxGroup extends StatefulWidget {
 class SuperCheckBoxGroupState extends State<SuperCheckBoxGroup> {
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
-      child: FormBuilderCheckboxGroup(
-        name: widget.hint!,
-        initialValue: widget.initialValue!,
-        decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-              labelText: widget.label,
-              hintText: widget.hint,
+    return SuperPanel(
+        title: (widget.hint ?? widget.label ?? '').tr,
+        child: FormBuilderCheckboxGroup(
+          name: widget.hint!,
+          initialValue: widget.initialValue!,
+          decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+              labelText: (widget.label ?? widget.hint ?? '').tr,
+              hintText: (widget.hint ?? widget.label ?? '').tr,
               suffixIcon: widget.suffixIcon == null ? null : Icon(widget.suffixIcon),
               prefixIcon: widget.prefixIcon == null
                   ? widget.eAsset == null
                       ? null
                       : Image.asset(widget.eAsset!)
-                  : Icon(widget.prefixIcon),
-            ),
-
-        orientation: OptionsOrientation.horizontal,
-        onChanged: widget.onChanged,
-        enabled: widget.enabled,
-        validator: FormBuilderValidators.compose(widget.validators!),
-        options: widget.items.map((obj) => FormBuilderFieldOption(value: obj)).toList(growable: false),
-      ),
-    );
+                  : Icon(widget.prefixIcon)),
+          orientation: widget.optionsOrientation,
+          onChanged: widget.onChanged,
+          enabled: widget.enabled,
+          validator: FormBuilderValidators.compose(widget.validators!),
+          options: widget.items.map((obj) => FormBuilderFieldOption(value: obj)).toList(growable: false),
+        ));
   }
 }

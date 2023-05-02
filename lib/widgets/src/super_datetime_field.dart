@@ -1,36 +1,37 @@
-import 'package:form_builder_validators/form_builder_validators.dart';
-
 import 'package:flutter/material.dart';
-
-import 'package:dart_extensions/dart_extensions.dart';
-import 'package:intl/intl.dart';
-import 'panel/super_panel.dart';
 import 'package:time/time.dart';
+
+import 'panel/super_panel.dart';
 import 'super_datefield.dart';
 import 'super_timefield.dart';
 
 class SuperDateTimeField extends StatefulWidget {
   final String hint;
-  final  bool enabled;
+  final bool enabled;
   void Function(dynamic, dynamic)? onChanged;
   void Function(dynamic)? onChangedAll;
 
   final ValueNotifier<TimeOfDay?> _curTime = ValueNotifier(null);
+
   TimeOfDay? get curTime => _curTime.value;
+
   set curTime(TimeOfDay? val) => _curTime.value = val;
 
   final ValueNotifier<DateTime?> _curDate = ValueNotifier(null);
+
   DateTime? get curDate => _curDate.value;
+
   set curDate(DateTime? val) => _curDate.value = val;
 
   DateTime? curValue;
-  final  List<String? Function(dynamic?)>? validators;
+  final List<String? Function(dynamic?)>? validators;
 
   SuperDateTimeField({super.key, this.hint = '', this.curValue, this.enabled = true, this.onChanged, this.onChangedAll, this.validators = const [], date, time}) {
     curDate = date;
     curTime = time;
     updateFullDateTime();
   }
+
   updateFullDateTime() {
     if (curValue != null) {
       curTime = TimeOfDay.fromDateTime(curValue!);
@@ -80,7 +81,7 @@ class SuperDateTimeFieldState extends State<SuperDateTimeField> {
                   },
                   label: 'Date',
                   hint: 'Date',
-                  value: widget.curDate)),
+                  initialDate: widget.curDate)),
           const SizedBox(width: 16),
           Expanded(
               child: SuperTimeField(
