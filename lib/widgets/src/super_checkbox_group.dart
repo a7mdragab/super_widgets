@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:dart_extensions/dart_extensions.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
@@ -18,6 +14,7 @@ class SuperCheckBoxGroup extends StatefulWidget {
   final String? eAsset;
   final bool enableRTL;
   final bool enabled;
+  final WrapAlignment wrapAlignment;
   final OptionsOrientation optionsOrientation;
   final List<dynamic> items;
   final List<String? Function(dynamic)>? validators;
@@ -32,6 +29,7 @@ class SuperCheckBoxGroup extends StatefulWidget {
       this.onChanged,
       this.hint = '',
       this.label = '',
+      this.wrapAlignment = WrapAlignment.start,
       this.prefixIcon,
       this.suffixIcon,
       this.eAsset,
@@ -52,6 +50,7 @@ class SuperCheckBoxGroupState extends State<SuperCheckBoxGroup> {
         child: FormBuilderCheckboxGroup(
           name: widget.hint!,
           initialValue: widget.initialValue!,
+          wrapAlignment: widget.wrapAlignment,
           decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
               labelText: (widget.label ?? widget.hint ?? '').tr,
               hintText: (widget.hint ?? widget.label ?? '').tr,
