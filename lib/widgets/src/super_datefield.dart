@@ -15,16 +15,17 @@ class SuperDateField extends StatefulWidget {
 
   final List<String? Function(dynamic)>? validators;
 
-  const SuperDateField({super.key,
-    this.initialDate,
-    this.firstDate,
-    this.lastDate,
-    this.dateFormat = 'dd-MMMM-yyyy',
-    this.label = 'From',
-    this.hint = 'From',
-    this.enabled = true,
-    this.onChanged,
-    this.validators = const []});
+  const SuperDateField(
+      {super.key,
+      this.initialDate,
+      this.firstDate,
+      this.lastDate,
+      this.dateFormat = 'dd-MMMM-yyyy',
+      this.label = 'From',
+      this.hint = 'From',
+      this.enabled = true,
+      this.onChanged,
+      this.validators = const []});
 
   @override
   State<SuperDateField> createState() => _SuperDateFieldState();
@@ -39,28 +40,28 @@ class _SuperDateFieldState extends State<SuperDateField> {
       enabled: widget.enabled,
       format: DateFormat(widget.dateFormat, LanguageService.to.getLocale.languageCode),
       decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-        isDense: true,
-        isCollapsed: true,
-        alignLabelWithHint: true,
-        contentPadding: const EdgeInsets.all(16),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        filled: true,
-        fillColor: Colors.white,
-        suffixIcon: mController.text.isNullOrWhiteSpace || !widget.enabled
-            ? null
-            : IconButton(
-          onPressed: () {
-            mController.clear();
-            setState(() {});
-          },
-          icon: const Icon(Icons.close),
-        ),
-        suffixIconConstraints: const BoxConstraints(maxWidth: 40),
-        labelStyle: TextStyle(fontSize: 16, color: context.theme.primaryColor),
-        labelText: widget.hint,
-        hintText: widget.hint,
-        hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
-      ),
+            isDense: true,
+            isCollapsed: true,
+            alignLabelWithHint: true,
+            contentPadding: const EdgeInsets.all(16),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            filled: true,
+            fillColor: Colors.white,
+            suffixIcon: mController.text.isNullOrWhiteSpace || !widget.enabled
+                ? null
+                : IconButton(
+                    onPressed: () {
+                      mController.clear();
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+            suffixIconConstraints: const BoxConstraints(maxWidth: 40),
+            labelStyle: TextStyle(fontSize: 16, color: context.theme.primaryColor),
+            labelText: widget.hint,
+            hintText: widget.hint,
+            hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          ),
       initialValue: widget.initialDate,
       controller: mController,
       validator: FormBuilderValidators.compose(widget.validators!),
