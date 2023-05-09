@@ -5,6 +5,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:super_widgets/home/home.dart';
+import 'package:super_widgets/utils/my_extensions.dart';
 
 class SuperDateField extends StatefulWidget {
   final String? label, hint;
@@ -72,8 +73,8 @@ class _SuperDateFieldState extends State<SuperDateField> {
           lastDate: widget.lastDate ?? DateTime(2050),
           initialDate: currentValue ?? widget.initialDate ?? DateTime.now(),
         );
-        // mController.text = res == null ? '' : res.toDateStr(widget.dateFormat);
-        mController.text = res == null ? '' : 'res.toDateStr(widget.dateFormat)';
+        mController.text = res == null ? '' : res.toDateStr(widget.dateFormat);
+        // mController.text = res == null ? '' : 'res.toDateStr(widget.dateFormat)';
 
         setState(() {});
         return res;

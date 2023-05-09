@@ -35,7 +35,7 @@ class SuperDropdownMenu extends StatefulWidget {
   SuperDropdownMenu(
       {super.key,
       required this.items,
-        String Function(dynamic)? itemAsString,
+      String Function(dynamic)? itemAsString,
       this.showSearchBox = true,
       this.name,
       this.contentPadding,
@@ -85,8 +85,9 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           fit: FlexFit.loose,
           showSearchBox: widget.showSearchBox,
           searchFieldProps: TextFieldProps(
+            textAlign: TextAlign.center,
             decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-              contentPadding: widget.contentPadding,
+                  contentPadding: widget.contentPadding,
                   labelText: widget.eHint,
                   hintText: '${widget.eHint}...',
                 ),

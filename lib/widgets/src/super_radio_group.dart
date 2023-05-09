@@ -6,6 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:super_widgets/utils/helpers.dart';
 
+import '../../home/src/language_service.dart';
 import 'txt.dart';
 
 // import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -64,7 +65,7 @@ class _SuperRadioGroupState extends State<SuperRadioGroup> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: isArabic((widget.label ?? widget.hint).tr) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: isArabic((widget.label ?? widget.hint).tr) || widget.enableRTL || LanguageService.to.isArabic ? TextDirection.rtl : TextDirection.ltr,
       child: FormBuilderRadioGroup(
         wrapAlignment: widget.wrapAlignment,
         decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
