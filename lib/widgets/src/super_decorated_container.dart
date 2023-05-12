@@ -109,7 +109,7 @@ class SuperDecoratedContainer extends StatelessWidget {
               : shape == BoxShape.circle
                   ? ClipOval(child: child)
                   : ClipRRect(
-                      borderRadius: shape == BoxShape.circle ? null : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+                      borderRadius: shape == BoxShape.circle ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
                       child: child,
                     ),
         ),

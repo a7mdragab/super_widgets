@@ -453,22 +453,24 @@ void mShowToast(String msg,
     bool? consumeEvent,
     bool? debounce,
     SmartToastType? displayType}) {
-  mShowToast2(msg.tr,
-      alignment: alignment,
-      controller: controller,
-      animationTime: animationTime,
-      animationType: animationType,
-      clickMaskDismiss: clickMaskDismiss,
-      consumeEvent: consumeEvent,
-      debounce: debounce,
-      displayType: displayType,
-      displayTime: displayTime,
-      maskColor: maskColor,
-      maskWidget: maskWidget,
-      useAnimation: useAnimation,
-      usePenetrate: usePenetrate, builder: (context) {
-    return CustomToast(msg, color: color, alignment: alignment, padding: padding, margin: margin, txtColor: txtColor);
-  });
+  try {
+    mShowToast2(msg.tr,
+        alignment: alignment,
+        controller: controller,
+        animationTime: animationTime,
+        animationType: animationType,
+        clickMaskDismiss: clickMaskDismiss,
+        consumeEvent: consumeEvent,
+        debounce: debounce,
+        displayType: displayType,
+        displayTime: displayTime,
+        maskColor: maskColor,
+        maskWidget: maskWidget,
+        useAnimation: useAnimation,
+        usePenetrate: usePenetrate, builder: (context) {
+      return CustomToast(msg, color: color, alignment: alignment, padding: padding, margin: margin, txtColor: txtColor);
+    });
+  } catch (_) {}
 }
 
 final logger = Logger(

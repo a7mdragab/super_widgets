@@ -1,8 +1,9 @@
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:time/time.dart';
 import 'package:list_ext/list_ext.dart';
+import 'package:time/time.dart';
+
 import '../../utils/constants.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/src/super_decorated_container.dart';
@@ -86,7 +87,7 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
                       }
                     }
                   : null,
-              child: !widget.imageClass.imgString.isNullOrWhiteSpace && widget.imageClass.imgString!.contains(appUploadCenter)
+        child: !widget.imageClass.imgString.isNullOrWhiteSpace && (widget.imageClass.imgString!.contains(appUploadCenter) || widget.imageClass.imgString!.length < 500)
                   ? Stack(
                       children: [
                         SuperDecoratedContainer(
@@ -182,7 +183,7 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
     return Positioned(
       top: 0,
       left: 0,
-      right : 0,
+      right: 0,
       // alignment: Alignment.topLeft,
       child: SuperImageView(
         color: Colors.black54,

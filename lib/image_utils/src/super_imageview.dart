@@ -90,7 +90,7 @@ class SuperImageView extends StatelessWidget {
       child: shape == BoxShape.circle
           ? ClipOval(child: _getBorderedImageWidget())
           : ClipRRect(
-              borderRadius: shape == BoxShape.circle ? null : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+              borderRadius: shape == BoxShape.circle ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
               child: _getBorderedImageWidget(),
             ),
     );
@@ -178,7 +178,7 @@ class SuperImageView extends StatelessWidget {
         source: svgAssetPath == null ? svg_p.SvgSource.network : svg_p.SvgSource.asset,
       );
     } else if (imgUrl != null) {
-      return CachedNetworkImageProvider(imgUrl!,headers: headers);
+      return CachedNetworkImageProvider(imgUrl!, headers: headers);
     } else if (imgAssetPath != null) {
       return AssetImage(imgAssetPath!);
     } else if (uint8list != null) {

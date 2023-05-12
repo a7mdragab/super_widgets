@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-String appUploadCenter = 'UploadCenter';
+const String appUploadCenter = 'UploadCenter';
 
 const hSpace4 = SizedBox(width: 4);
 const hSpace8 = SizedBox(width: 8);
@@ -22,24 +20,25 @@ const vSpace96 = SizedBox(height: 96);
 
 class hSpace extends StatelessWidget {
   final double? x;
-  const hSpace(this.x,{Key? key}) : super(key: key);
+
+  const hSpace(this.x, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(width: x??8);
+    return SizedBox(width: x ?? 8);
   }
 }
+
 class vSpace extends StatelessWidget {
   final double? x;
-  const vSpace(this.x,{Key? key}) : super(key: key);
+
+  const vSpace(this.x, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: x??8);
+    return SizedBox(height: x ?? 8);
   }
 }
-
-
 
 const List<String> arabicCharacters = ["أ", "ؤ", "إ", "ئ", "ا", "ب", "ة", "ت", "ث", "ج", "ح", "خ", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ػ", "ؼ", "ؽ", "ؾ", "ؿ"];
 

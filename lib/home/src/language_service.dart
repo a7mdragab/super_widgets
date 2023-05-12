@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ready_extensions/ready_extensions.dart';
@@ -7,8 +6,8 @@ import 'package:super_widgets/utils/helpers.dart';
 
 class LanguageService extends GetxController implements GetxService {
   static LanguageService get to {
-    if(!Get.isRegistered<LanguageService>()){
-      Get.put(LanguageService(),permanent: true);
+    if (!Get.isRegistered<LanguageService>()) {
+      Get.put(LanguageService(), permanent: true);
     }
     return Get.find();
   }
@@ -55,31 +54,30 @@ class LanguageService extends GetxController implements GetxService {
   final String keyIsFirst = 'ISFIRSTKEY';
   final String keyLanguage = 'LANGUAGEKEY';
   final GetStorage storage = GetStorage();
+
   // updates the language stored
+  _upLocale(String value) {
+    if (value.isEmpty) value = 'en';
+    if (value == "عربى") value = 'ar';
+    currentLanguage = value;
+    try {
+      storage.write(keyLanguage, currentLanguage);
+      Get.updateLocale(Locale(value));
+      mPrint('Locale updated to $value');
+    } catch (e) {
+      mPrintError('$e');
+    }
+  }
+
   Future<void> updateLocale(String value) async {
     if (!value.isNullOrEmptyOrWhiteSpace) {
-      upLocale() {
-        if (value.isEmpty) value = 'en';
-        if (value == "عربى") value = 'ar';
-        currentLanguage = value;
-        try {
-          storage.write(keyLanguage, currentLanguage);
-          Get.updateLocale(Locale(value));
-          mPrint('Locale updated to $value');
-        } catch (e) {
-          mPrintError('$e');
-        }
-      }
-
+      mPrint('currentLanguage = $currentLanguage');
+      mPrint('value = $value');
       bool isFirst = ((storage.read(keyIsFirst)) ?? true);
       if (isFirst) {
         storage.write(keyIsFirst, false);
-        upLocale();
-      } else {
-        if (value != currentLanguage) {
-          upLocale();
-        }
       }
+      _upLocale(value);
     }
   }
 
