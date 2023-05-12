@@ -87,7 +87,7 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
                       }
                     }
                   : null,
-        child: !widget.imageClass.imgString.isNullOrWhiteSpace && (widget.imageClass.imgString!.contains(appUploadCenter) || widget.imageClass.imgString!.length < 500)
+              child: !widget.imageClass.imgString.isNullOrWhiteSpace && (widget.imageClass.imgString!.contains(appUploadCenter) || widget.imageClass.imgString!.length < 500)
                   ? Stack(
                       children: [
                         SuperDecoratedContainer(
