@@ -81,7 +81,7 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           searchFieldProps: TextFieldProps(
             textAlign: TextAlign.center,
             decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-              contentPadding: widget.contentPadding,
+                  contentPadding: widget.contentPadding,
                   labelText: widget.eHint.tr,
                   hintText: '${widget.eHint.tr}...',
                 ),
