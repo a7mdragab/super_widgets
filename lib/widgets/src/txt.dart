@@ -1,4 +1,3 @@
-import 'package:dart_extensions/dart_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -94,20 +93,16 @@ class Txt extends StatelessWidget {
       finalText = finalText.replaceAll("*", "").replaceAll("_", "").replaceAll("-", "").replaceAll("#", "").replaceAll("\n", "").replaceAll("!", "").replaceAll('[', '').replaceAll(']', '');
     }
 
+    finalText = finalText.tr;
+
     return Text(
-      finalText == 'null'
-          ? 'N/A'
-          : isArabic(finalText)
-              ? finalText.tr
-              : isArabic(finalText.removeAllWhitespace.tr)
-                  ? finalText.removeAllWhitespace.tr
-                  : finalText.tr,
+      finalText == 'null' ? 'N/A' : finalText.tr,
       overflow: useOverflow ? TextOverflow.ellipsis : null,
       textAlign: textAlign,
       maxLines: maxLines,
       softWrap: true,
       textScaleFactor: 1,
-      textDirection: textDirection ?? (isArabic(finalText) ? TextDirection.rtl : TextDirection.ltr),
+      textDirection: textDirection ?? ((isArabic(finalText) ? TextDirection.rtl : TextDirection.ltr)),
       // style: (textStyle ?? context.textTheme.bodyLarge ?? const TextStyle()).copyWith(
       style: (textStyle ?? const TextStyle()).copyWith(
         decoration: decoration ?? (underlined ? TextDecoration.underline : null),

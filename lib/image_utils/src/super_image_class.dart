@@ -104,13 +104,19 @@ class SuperImageClass {
   setImgList(Uint8List list) {
     imgList = list;
     imgString = const Base64Encoder().convert(imgList!);
-    changed = true;
+
+    if (!imgString.isNullOrEmptyOrWhiteSpace && !imgString!.contains(appUploadCenter) && imgString!.length > 200) {
+      changed = true;
+    }
   }
 
   setImgString(String? str) {
     imgString = str;
-    changed = true;
-    if (!imgString.isNullOrEmptyOrWhiteSpace && !imgString!.contains(appUploadCenter) && imgString!.length > 200) imgList = base64Decode(imgString!);
+
+    if (!imgString.isNullOrEmptyOrWhiteSpace && !imgString!.contains(appUploadCenter) && imgString!.length > 200) {
+      imgList = base64Decode(imgString!);
+      changed = true;
+    }
   }
 
   void clean() {

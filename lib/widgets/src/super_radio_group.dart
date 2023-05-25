@@ -52,7 +52,7 @@ class SuperRadioGroup extends StatefulWidget {
     this.enableRTL = false,
     this.validators = const [],
   }) {
-    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString());
+    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
   }
 
   @override

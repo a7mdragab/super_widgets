@@ -19,12 +19,14 @@ class SuperCheckBoxGroup extends StatefulWidget {
   final List<dynamic> items;
   final List<String? Function(dynamic)>? validators;
   final void Function(dynamic)? onChanged;
+  String Function(dynamic)? itemAsString;
 
   final dynamic initialValue;
 
-  const SuperCheckBoxGroup(
+  SuperCheckBoxGroup(
       {super.key,
       required this.items,
+      this.itemAsString,
       this.optionsOrientation = OptionsOrientation.wrap,
       this.onChanged,
       this.hint = '',
@@ -36,7 +38,9 @@ class SuperCheckBoxGroup extends StatefulWidget {
       this.initialValue = const [],
       this.enabled = true,
       this.enableRTL = false,
-      this.validators = const []});
+      this.validators = const []}) {
+    itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
+  }
 
   @override
   SuperCheckBoxGroupState createState() => SuperCheckBoxGroupState();
@@ -64,7 +68,12 @@ class SuperCheckBoxGroupState extends State<SuperCheckBoxGroup> {
           onChanged: widget.onChanged,
           enabled: widget.enabled,
           validator: FormBuilderValidators.compose(widget.validators!),
-          options: widget.items.map((obj) => FormBuilderFieldOption(value: obj)).toList(growable: false),
+          options: widget.items
+              .map((obj) => FormBuilderFieldOption(
+                    value: obj,
+                    child: Txt(widget.itemAsString!(obj), color: (Get.isDarkMode ? Colors.white : Colors.black), fontSize: 16),
+                  ))
+              .toList(growable: false),
         ));
   }
 }

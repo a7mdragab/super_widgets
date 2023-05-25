@@ -45,7 +45,7 @@ class SuperDropdownMenu extends StatefulWidget {
       this.eAsset,
       this.ontap,
       this.selectedItem}) {
-    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString());
+    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
     // onChanged?.call(selectedItem);
     compareFn ??= (dynamic a, dynamic b) {
       return a == b;
@@ -81,9 +81,9 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           searchFieldProps: TextFieldProps(
             textAlign: TextAlign.center,
             decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-                  contentPadding: widget.contentPadding,
-                  labelText: widget.eHint,
-                  hintText: '${widget.eHint}...',
+              contentPadding: widget.contentPadding,
+                  labelText: widget.eHint.tr,
+                  hintText: '${widget.eHint.tr}...',
                 ),
           )
           // favoriteItemProps: FavoriteItemProps(
@@ -98,9 +98,9 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
       dropdownDecoratorProps: DropDownDecoratorProps(
         baseStyle: const TextStyle(fontSize: 16),
         dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-              contentPadding: widget.contentPadding,
-              labelText: widget.eHint,
-              hintText: '${widget.eHint}...',
+          contentPadding: widget.contentPadding,
+              labelText: widget.eHint.tr,
+              hintText: '${widget.eHint.tr}...',
             ),
         // dropdownSearchDecoration: InputDecoration(
         //   isDense: true,
