@@ -82,6 +82,7 @@ class SuperDecoratedContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = this.color ?? Colors.transparent;
     final bool hasBorder = border != null || borderColor != null || borderWidth != null;
     return Material(
       color: color,
