@@ -24,7 +24,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_svg: ^2.0.6
   flutter_svg_provider: ^1.0.3
-  jovial_svg: ^1.1.14
+  jovial_svg: ^1.1.15
   shape_of_view_null_safe: ^2.0.0
   curved_progress_bar: ^1.0.2
   progress_indicator: ^0.2.2
@@ -48,8 +48,8 @@ dependencies:
 #  Security
   uuid: ^3.0.7
   platform_device_id: ^1.0.1
-  device_info_plus: ^9.0.1
-  crypt: ^4.2.1
+  device_info_plus: ^9.0.2
+  crypt: ^4.3.0
   root: ^2.0.4
 
   country_calling_code_picker: ^2.0.1
@@ -62,16 +62,16 @@ dependencies:
 
   flutter_animate: ^4.1.1+1
   date_only_field: ^0.0.13
-  package_info_plus: ^4.0.1
+  package_info_plus: ^4.0.2
 
 dependency_overrides:
   ffi: ^2.0.2
-  intl: ^0.18.0
-  device_info_plus: ^8.1.0
+  intl: ^0.18.1
+  device_info_plus: ^9.0.2
   permission_handler: ^10.2.0
 #  flutter_svg: ^2.0.4
   flutter_svg: ^1.0.5
-  package_info_plus: ^3.0.3
+  package_info_plus: ^4.0.2
 
 dev_dependencies:
   flutter_test:
