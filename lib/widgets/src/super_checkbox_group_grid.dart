@@ -58,7 +58,7 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderField<List<dynamic>>(
-      name: "DMYPicker_${label}_$hint",
+      name: "SuperCheckBoxGroupGrid_${label}_$hint",
       enabled: enabled,
       validator: FormBuilderValidators.compose(validators),
       onChanged: onChanged,
