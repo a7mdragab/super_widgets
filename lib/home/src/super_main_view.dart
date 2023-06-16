@@ -9,6 +9,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_framework/responsive_framework.dart' as rsp;
 import 'package:super_widgets/super_widgets.dart';
 
 class SuperMainApp extends StatelessWidget {
@@ -320,7 +321,7 @@ class SuperMainApp extends StatelessWidget {
                 logWriterCallback: logWriterCallback,
                 onDispose: onDispose,
                 onGenerateInitialRoutes: onGenerateInitialRoutes,
-                onGenerateRoute: onGenerateRoute,
+                // onGenerateRoute: onGenerateRoute,
                 onGenerateTitle: onGenerateTitle,
                 onInit: onInit,
                 onReady: onReady,
@@ -364,6 +365,35 @@ class SuperMainApp extends StatelessWidget {
                 ///region UI
                 navigatorObservers: [FlutterSmartDialog.observer],
                 builder: mainResponsiveBuilder,
+                // onGenerateRoute: (RouteSettings settings) {
+                //   // A custom `fadeThrough` route transition animation.
+                //   return MaterialPageRoute(builder: (context) {
+                //     // The following code implements the legacy ResponsiveWrapper AutoScale functionality
+                //     // using the new ResponsiveScaledBox. The ResponsiveScaledBox widget preserves
+                //     // the legacy ResponsiveWrapper behavior, scaling the UI instead of resizing.
+                //     //
+                //     // **MaxWidthBox** - A widget that limits the maximum width.
+                //     // This is used to create a gutter area on either side of the content.
+                //     //
+                //     // **ResponsiveScaledBox** - A widget that  renders its child
+                //     // with a FittedBox set to the `width` value. Set the fixed width value
+                //     // based on the active breakpoint.
+                //     return MaxWidthBox(
+                //       maxWidth: 1200,
+                //       background: Container(color: const Color(0xFFF5F5F5)),
+                //       child: ResponsiveScaledBox(
+                //         width: ResponsiveValue<double>(context, conditionalValues: [
+                //           const rsp.Condition.equals(name: MOBILE, value: 450),
+                //           const rsp.Condition.between(start: 800, end: 1100, value: 800),
+                //           const rsp.Condition.between(start: 1000, end: 1200, value: 1000),
+                //           // There are no conditions for width over 1200
+                //           // because the `maxWidth` is set to 1200 via the MaxWidthBox.
+                //         ]).value,
+                //         child: BouncingScrollWrapper.builder(context, PageRedirect(settings: settings).page(), dragWithMouse: true),
+                //       ),
+                //     );
+                //   });
+                // },
                 scrollBehavior: scrollBehavior,
                 defaultTransition: Transition.fade,
                 transitionDuration: const Duration(milliseconds: 50),
@@ -379,16 +409,13 @@ class SuperMainApp extends StatelessWidget {
 Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
   final smartDialog = FlutterSmartDialog.init();
   child = smartDialog(context, child);
-  child = ResponsiveWrapper.builder(
-    ClampingScrollWrapper(child: child),
-    minWidth: 480,
-    maxWidth: 1980,
-    mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
-    defaultScale: true,
+  child = ResponsiveBreakpoints.builder(
+    child: ClampingScrollWrapper(child: child),
     breakpoints: const [
-      ResponsiveBreakpoint.resize(480, name: MOBILE),
-      ResponsiveBreakpoint.resize(700, name: TABLET),
-      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+      Breakpoint(start: 0, end: 450, name: MOBILE),
+      Breakpoint(start: 451, end: 800, name: TABLET),
+      Breakpoint(start: 801, end: 1920, name: DESKTOP),
+      Breakpoint(start: 1921, end: double.infinity, name: '4K'),
     ],
   );
   return child;

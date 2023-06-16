@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:super_widgets/home/home.dart';
 
 class SuperDropdownMenu extends StatefulWidget {
   final String? name;
@@ -81,6 +82,7 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           searchFieldProps: TextFieldProps(
             textAlign: TextAlign.center,
             decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+                  isDense: true,
                   contentPadding: widget.contentPadding,
                   labelText: widget.eHint.tr,
                   hintText: '${widget.eHint.tr}...',
@@ -96,46 +98,14 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           // ),
           ),
       dropdownDecoratorProps: DropDownDecoratorProps(
+        textAlign: LanguageService.to.textAlign,
         baseStyle: const TextStyle(fontSize: 16),
         dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+              isDense: true,
               contentPadding: widget.contentPadding,
               labelText: widget.eHint.tr,
               hintText: '${widget.eHint.tr}...',
             ),
-        // dropdownSearchDecoration: InputDecoration(
-        //   isDense: true,
-        //   alignLabelWithHint: true,
-        //   suffixIconConstraints: const BoxConstraints(maxHeight: 30),
-        //   contentPadding: const EdgeInsets.all(4),
-        //   floatingLabelBehavior: FloatingLabelBehavior.always,
-        //   filled: true,
-        //   fillColor: Colors.white,
-        //   labelStyle: TextStyle(
-        //       fontFamily: GoogleFonts.notoSansBhaiksuki().fontFamily!,
-        //       fontSize: 16,
-        //       color: context.theme.primaryColor),
-        //   labelText: widget.eHint,
-        //   hintText: widget.eHint,
-        //   hintStyle: TextStyle(
-        //       fontFamily: GoogleFonts.notoSansBhaiksuki().fontFamily!,
-        //       fontSize: 12,
-        //       color: Colors.grey),
-        //   // prefixIconConstraints: BoxConstraints.tightForFinite(width: 30),
-        //   // prefixIcon: widget.eIcon == null
-        //   //     ? widget.eAsset == null
-        //   //         ? null
-        //   //         : Image.asset('assets/images/${widget.eAsset}.svg')
-        //   //     : Icon(widget.eIcon),
-        //   border: OutlineInputBorder(
-        //       borderSide: const BorderSide(color: Colors.blue),
-        //       borderRadius: BorderRadius.circular(1)),
-        //   enabledBorder: OutlineInputBorder(
-        //       borderSide: const BorderSide(color: Colors.blue),
-        //       borderRadius: BorderRadius.circular(1)),
-        //   focusedBorder: OutlineInputBorder(
-        //       borderRadius: BorderRadius.circular(2),
-        //       borderSide: const BorderSide(color: Colors.green)),
-        // ),
       ),
     );
   }

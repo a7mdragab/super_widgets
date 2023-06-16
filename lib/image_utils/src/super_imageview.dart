@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg_p;
+// import 'package:flutter_svg_provider/flutter_svg_provider.dart' as svg_p;
 
 import '../../utils/utils.dart';
 import '../../widgets/widgets.dart';
@@ -78,8 +78,8 @@ class SuperImageView extends StatelessWidget {
     return GestureDetector(
       onTap: onPress ??
           (enableFullShow!
-              ? () {
-                  ImageProvider? imageProvider = getImageProvider();
+              ? () async {
+                  ImageProvider? imageProvider = await getImageProvider();
                   if (imageProvider != null) {
                     FullPhoto.showFullPhotoDialog(imageProvider: imageProvider);
                   } else {
@@ -171,12 +171,16 @@ class SuperImageView extends StatelessWidget {
     return icon ?? const Icon(Icons.image);
   }
 
-  ImageProvider? getImageProvider() {
+  Future<ImageProvider<Object>?> getImageProvider() async {
     if (svgAssetPath != null || svgUrl != null) {
-      return svg_p.Svg(
-        (svgAssetPath ?? svgUrl)!,
-        source: svgAssetPath == null ? svg_p.SvgSource.network : svg_p.SvgSource.asset,
-      );
+      return null;
+      // PictureInfo pictureInfo;
+      // if (svgUrl != null) {
+      //   pictureInfo = await vg.loadPicture(SvgNetworkLoader(svgUrl!), null);
+      // } else {
+      //   pictureInfo = await vg.loadPicture(SvgAssetLoader(svgAssetPath!), null);
+      // }
+      // return UiImage(pictureInfo.picture.toImageSync(pictureInfo.size.width.toInt(), pictureInfo.size.height.toInt()));
     } else if (imgUrl != null) {
       return CachedNetworkImageProvider(imgUrl!, headers: headers);
     } else if (imgAssetPath != null) {

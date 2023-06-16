@@ -65,8 +65,8 @@ extension DateTimeExtension on DateTime {
     return format.format(date);
   }
 
-  String toTimeStrQuery() {
-    var format = intl.DateFormat('hh:mm:ss', 'en');
+  String toTimeStrQuery([String fmt = 'HH:mm:ss']) {
+    var format = intl.DateFormat(fmt, 'en');
     var date = DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
     return format.format(date);
   }
