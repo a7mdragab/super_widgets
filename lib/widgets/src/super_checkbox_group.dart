@@ -31,7 +31,7 @@ class SuperCheckBoxGroup extends StatefulWidget {
       this.onChanged,
       this.hint = '',
       this.label = '',
-      this.wrapAlignment = WrapAlignment.start,
+      this.wrapAlignment = WrapAlignment.spaceBetween,
       this.prefixIcon,
       this.suffixIcon,
       this.eAsset,

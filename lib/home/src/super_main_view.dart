@@ -409,17 +409,35 @@ class SuperMainApp extends StatelessWidget {
 Widget mainResponsiveBuilder(BuildContext context, Widget? child) {
   final smartDialog = FlutterSmartDialog.init();
   child = smartDialog(context, child);
-  child = ResponsiveBreakpoints.builder(
-    child: ClampingScrollWrapper(child: child),
+  child = ResponsiveWrapper.builder(
+    ClampingScrollWrapper(child: child),
+    minWidth: 450,
+    maxWidth: 1980,
+    mediaQueryData: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+    defaultScale: true,
     breakpoints: const [
-      Breakpoint(start: 0, end: 450, name: MOBILE),
-      Breakpoint(start: 451, end: 800, name: TABLET),
-      Breakpoint(start: 801, end: 1920, name: DESKTOP),
-      Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+      ResponsiveBreakpoint.resize(450, name: MOBILE),
+      ResponsiveBreakpoint.resize(700, name: TABLET),
+      ResponsiveBreakpoint.resize(1000, name: DESKTOP),
     ],
   );
   return child;
 }
+
+// Widget mainResponsiveBuilder2(BuildContext context, Widget? child) {
+//   final smartDialog = FlutterSmartDialog.init();
+//   child = smartDialog(context, child);
+//   child = ResponsiveBreakpoints.builder(
+//     child: ClampingScrollWrapper(child: child),
+//     breakpoints: const [
+//       Breakpoint(start: 0, end: 450, name: MOBILE),
+//       Breakpoint(start: 451, end: 800, name: TABLET),
+//       Breakpoint(start: 801, end: 1920, name: DESKTOP),
+//       Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+//     ],
+//   );
+//   return child;
+// }
 
 const localizationDelegatesList = [
   DefaultWidgetsLocalizations.delegate,

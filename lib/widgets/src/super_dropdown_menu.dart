@@ -6,10 +6,10 @@ import 'package:super_widgets/home/home.dart';
 
 class SuperDropdownMenu extends StatefulWidget {
   final String? name;
-  final dynamic selectedItem;
   final List<dynamic> items;
   String Function(dynamic)? itemAsString;
   final String eHint;
+  final dynamic initialValue;
   final IconData? eIcon;
   final String? eAsset;
   final Function(dynamic s)? onChanged;
@@ -24,8 +24,12 @@ class SuperDropdownMenu extends StatefulWidget {
   final bool enableBorders;
   final bool showSearchBox;
 
-  final List<String? Function(dynamic)>? validators;
+  final List<String? Function(dynamic)> validators;
   final EdgeInsetsGeometry? contentPadding;
+
+  // final Rxn<dynamic> _selectedItem = Rxn<dynamic>();
+  // dynamic get selectedItem => _selectedItem.value;
+  // set selectedItem(dynamic val) => {_selectedItem.value = val, _selectedItem.refresh()};
 
   SuperDropdownMenu(
       {super.key,
@@ -45,67 +49,64 @@ class SuperDropdownMenu extends StatefulWidget {
       this.eIcon,
       this.eAsset,
       this.ontap,
-      this.selectedItem}) {
+      this.initialValue}) {
+    // this.selectedItem = selectedItem;
     this.itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
-    // onChanged?.call(selectedItem);
-    compareFn ??= (dynamic a, dynamic b) {
-      return a == b;
-    };
-//    if (selectedVal == null) {
-//      selectedVal = list[0];
-//    }
+    compareFn ??= (dynamic a, dynamic b) => a == b;
   }
 
   @override
   State<SuperDropdownMenu> createState() => _SuperDropdownMenuState();
 }
 
-// ignore: camel_case_types
 class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
   @override
   Widget build(BuildContext context) {
-    return DropdownSearch<dynamic>(
-      items: widget.items,
-      enabled: widget.enabled,
-      itemAsString: widget.itemAsString,
-      selectedItem: widget.selectedItem,
-      filterFn: widget.filterFn,
-      compareFn: widget.compareFn,
-      asyncItems: widget.asyncItems,
-      validator: FormBuilderValidators.compose(widget.validators ?? []),
-      onChanged: widget.onChanged,
-      popupProps: PopupPropsMultiSelection.menu(
-          isFilterOnline: false,
-          showSelectedItems: true,
-          fit: FlexFit.loose,
-          showSearchBox: widget.showSearchBox,
-          searchFieldProps: TextFieldProps(
-            textAlign: TextAlign.center,
-            decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-                  isDense: true,
-                  contentPadding: widget.contentPadding,
-                  labelText: widget.eHint.tr,
-                  hintText: '${widget.eHint.tr}...',
-                ),
-          )
-          // favoriteItemProps: FavoriteItemProps(
-          //   showFavoriteItems: true,
-          //   favoriteItems: (us) {
-          //     return us
-          //         .where((e) => e.name.contains("Mrs"))
-          //         .toList();
-          //   },
-          // ),
-          ),
-      dropdownDecoratorProps: DropDownDecoratorProps(
-        textAlign: LanguageService.to.textAlign,
-        baseStyle: const TextStyle(fontSize: 16),
-        dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
-              isDense: true,
-              contentPadding: widget.contentPadding,
-              labelText: widget.eHint.tr,
-              hintText: '${widget.eHint.tr}...',
+    return Directionality(
+      textDirection: LanguageService.to.textDirection,
+      child: DropdownSearch<dynamic>(
+        items: widget.items,
+        enabled: widget.enabled,
+        itemAsString: widget.itemAsString,
+        selectedItem: widget.initialValue,
+        filterFn: widget.filterFn,
+        compareFn: widget.compareFn,
+        asyncItems: widget.asyncItems,
+        validator: FormBuilderValidators.compose(widget.validators),
+        onChanged: widget.onChanged,
+        popupProps: PopupPropsMultiSelection.menu(
+            isFilterOnline: false,
+            showSelectedItems: true,
+            fit: FlexFit.loose,
+            showSearchBox: widget.showSearchBox,
+            searchFieldProps: TextFieldProps(
+              textAlign: TextAlign.center,
+              decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+                    isDense: true,
+                    contentPadding: widget.contentPadding,
+                    labelText: widget.eHint.tr,
+                    hintText: '${widget.eHint.tr}...',
+                  ),
+            )
+            // favoriteItemProps: FavoriteItemProps(
+            //   showFavoriteItems: true,
+            //   favoriteItems: (us) {
+            //     return us
+            //         .where((e) => e.name.contains("Mrs"))
+            //         .toList();
+            //   },
+            // ),
             ),
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          textAlign: LanguageService.to.textAlign,
+          baseStyle: const TextStyle(fontSize: 16),
+          dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
+                isDense: true,
+                contentPadding: widget.contentPadding,
+                labelText: widget.eHint.tr,
+                hintText: '${widget.eHint.tr}...',
+              ),
+        ),
       ),
     );
   }

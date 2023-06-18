@@ -250,7 +250,7 @@ Future<ImageSource?> showImagePickerDialog() async {
   return completer.future;
 }
 
-void showConfirmationDialog({String? msg, String? fullMsg, TextDirection? textDirection, required Function function}) {
+void showConfirmationDialog({String? msg, String? fullMsg, TextDirection? textDirection, required Function function, Function? noFunction}) {
   SmartDialog.show(
     clickMaskDismiss: false,
     backDismiss: true,
@@ -301,6 +301,7 @@ void showConfirmationDialog({String? msg, String? fullMsg, TextDirection? textDi
                     label: const Txt('No', color: Colors.white),
                     icon: const Icon(Icons.close, color: Colors.white),
                     onPressed: () {
+                      noFunction?.call();
                       mHide();
                     },
                   ),

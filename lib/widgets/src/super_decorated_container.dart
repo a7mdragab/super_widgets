@@ -7,6 +7,7 @@ class SuperDecoratedContainer extends StatelessWidget {
   final double? borderRadius;
   final double? borderWidth;
   final Color? borderColor;
+  final BoxBorder? border;
   final Color? color;
 
   /// An image to paint above the background [color] or [gradient].
@@ -26,7 +27,6 @@ class SuperDecoratedContainer extends StatelessWidget {
   /// Use [BoxBorder] objects to describe borders that should flip their left
   /// and right edges based on whether the text is being read left-to-right or
   /// right-to-left.
-  final BoxBorder? border;
 
   /// If non-null, the corners of this box are rounded by this [BorderRadius].
   ///

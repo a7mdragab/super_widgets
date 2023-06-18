@@ -11,7 +11,7 @@ class SuperPanel extends StatelessWidget {
   final Widget child;
   final bool enableRTL;
   final double bottomMargin;
-  late EdgeInsets contentPadding;
+  late final EdgeInsets contentPadding;
   bool hasError;
   Color fillColor = Colors.transparent;
 
@@ -31,7 +31,7 @@ class SuperPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: ((title.isNullOrEmptyOrWhiteSpace ? false : isArabic(title)) && LanguageService.to.isArabic) || enableRTL ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: (((title.isNullOrEmptyOrWhiteSpace ? false : isArabic(title.tr)) && LanguageService.to.isArabic) || enableRTL) ? TextDirection.rtl : TextDirection.ltr,
       child: Container(
         margin: EdgeInsets.only(bottom: bottomMargin),
         child: FocusScope(

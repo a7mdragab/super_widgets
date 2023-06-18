@@ -35,7 +35,7 @@ class SuperDMYPicker extends StatelessWidget {
       validator: FormBuilderValidators.compose(validators),
       builder: (FormFieldState<dynamic> field) {
         return SuperPanel(
-          title: label ?? '',
+          title: (label ?? '').tr,
           child: Row(
             // runAlignment: WrapAlignment.spaceEvenly,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -45,7 +45,7 @@ class SuperDMYPicker extends StatelessWidget {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   eHint: 'Day',
                   showSearchBox: false,
-                  selectedItem: initialDate?.day,
+                  initialValue: initialDate?.day ?? initialDateTime?.day,
                   items: List.generate(31, (index) => index + 1),
                   enabled: enabled,
                   // selectedItem: day,
@@ -58,9 +58,9 @@ class SuperDMYPicker extends StatelessWidget {
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   eHint: 'Month',
                   showSearchBox: false, enabled: enabled,
-                  selectedItem: initialDate?.month,
+                  initialValue: initialDate?.month ?? initialDateTime?.month,
                   items: List.generate(12, (index) => index + 1),
-                  itemAsString: (s) => '($s) ${monthsNames[s - 1].tr}',
+                  itemAsString: (s) => monthsNames[s - 1].tr,
                   // selectedItem: month,
                   onChanged: (s) => {month = s, upDate(field)},
                 ),
@@ -72,7 +72,7 @@ class SuperDMYPicker extends StatelessWidget {
                   eHint: 'Year',
                   showSearchBox: false,
                   enabled: enabled,
-                  selectedItem: initialDate?.year,
+                  initialValue: initialDate?.year ?? initialDateTime?.year,
                   items: List.generate(100, (index) => Date.now().year - index),
                   onChanged: (s) => {year = s, upDate(field)},
                 ),

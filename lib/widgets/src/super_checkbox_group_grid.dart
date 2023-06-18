@@ -4,6 +4,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:super_widgets/super_widgets.dart';
 
+import 'super_labeled_check_box.dart';
+
 // import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SuperCheckBoxGroupGrid extends StatelessWidget {
@@ -21,7 +23,9 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
   final void Function(List<dynamic>?)? onChanged;
   String Function(dynamic)? itemAsString;
 
+  late final EdgeInsets? contentPadding;
   final int crossAxisCount;
+  final double? childAspectRatio;
   final double crossAxisSpacing;
   final double mainAxisSpacing;
 
@@ -33,6 +37,8 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       this.itemAsString,
       this.optionsOrientation = OptionsOrientation.wrap,
       this.onChanged,
+      contentPadding,
+      this.childAspectRatio,
       this.crossAxisCount = 2,
       this.crossAxisSpacing = 10.0,
       this.mainAxisSpacing = 10.0,
@@ -47,6 +53,8 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       this.enableRTL = false,
       this.validators = const []}) {
     itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
+    selectedItems = [...initialValue];
+    this.contentPadding = contentPadding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
   }
 
   final _selectedItems = <dynamic>[].obs;
@@ -62,27 +70,33 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       enabled: enabled,
       validator: FormBuilderValidators.compose(validators),
       onChanged: onChanged,
+      initialValue: initialValue,
       builder: (FormFieldState<dynamic> field) {
         return SuperPanel(
           title: (hint ?? label ?? '').tr,
+          contentPadding: contentPadding,
           child: GridView.count(
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: crossAxisCount,
+            childAspectRatio: childAspectRatio ?? (1 / (0.12 * crossAxisCount)),
             crossAxisSpacing: crossAxisSpacing,
             mainAxisSpacing: mainAxisSpacing,
             shrinkWrap: true,
             children: items
-                .map((obj) => GestureDetector(
-                      onTap: () {
-                        selectedItems.contains(obj) ? selectedItems.remove(obj) : selectedItems.add(obj);
+                .map((obj) => SuperLabeledCheckbox(
+                      enabled: enabled,
+                      contentPadding: EdgeInsets.zero,
+                      value: selectedItems.contains(obj),
+                      onChanged: (b) {
+                        if (b == true) {
+                          if (!selectedItems.contains(obj)) selectedItems.add(obj);
+                        } else {
+                          selectedItems.remove(obj);
+                        }
                         field.didChange(selectedItems);
                       },
-                      child: Obx(() {
-                        return FormBuilderFieldOption(
-                          value: obj,
-                          child: Txt(itemAsString!(obj), color: (Get.isDarkMode ? Colors.white : Colors.black), fontSize: 16),
-                        );
-                      }),
+                      title: itemAsString!(obj),
+                      txtColor: (Get.isDarkMode ? Colors.white : Colors.black),
                     ))
                 .toList(growable: false),
           ),

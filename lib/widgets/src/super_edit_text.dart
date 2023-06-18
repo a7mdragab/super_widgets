@@ -100,7 +100,7 @@ class SuperEditTextState extends State<SuperEditText> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr,
+      textDirection: widget.textDirection ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr),
       child: FormBuilderTextField(
         // showCursor: true,
         name: widget.eHint,
@@ -122,13 +122,14 @@ class SuperEditTextState extends State<SuperEditText> {
             : (s) {
                 widget.onSubmitted?.call();
               },
-        onTap: widget.ontap??() {
-          if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
-            setState(() {
-              widget.eController!.selection = TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length));
-            });
-          }
-        },
+        onTap: widget.ontap ??
+            () {
+              if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
+                setState(() {
+                  widget.eController!.selection = TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length));
+                });
+              }
+            },
         style: context.textTheme.bodyMedium!.copyWith(color: context.theme.primaryColor),
 
         decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
