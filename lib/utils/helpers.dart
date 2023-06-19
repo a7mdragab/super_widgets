@@ -362,7 +362,7 @@ class CustomToast extends StatelessWidget {
       this.color = Colors.black87,
       this.txtColor = Colors.white,
       this.margin = const EdgeInsets.only(bottom: 30, top: 30),
-      this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       Key? key})
       : super(key: key);
   final AlignmentGeometry? alignment;
@@ -377,14 +377,17 @@ class CustomToast extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 0.9.w),
         child: SuperDecoratedContainer(
-          borderRadius: 16,
+          borderRadius: 12,
           // margin: margin,
           padding: padding,
           color: color,
-          child: Txt(
-            msg,
-            color: txtColor,
-            fontSize: 18,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Txt(
+              msg,
+              color: txtColor,
+              fontSize: 18,
+            ),
           ),
         ),
       ),
@@ -480,7 +483,7 @@ final logger = Logger(
       stackTraceBeginIndex: 0,
       methodCount: 3,
       // number of method calls to be displayed
-      errorMethodCount: 5,
+      errorMethodCount: 3,
       // number of method calls if stacktrace is provided
       lineLength: 3000,
       // width of the output
