@@ -158,7 +158,7 @@ class SuperEditTextState extends State<SuperEditText> {
                             setState(() {});
                           },
                           // icon: Icon(isObscured ? Icons.remove_red_eye : Icons.remove_red_eye_outlined),
-                          icon: Icon(isObscured ? Icons.lock_open_rounded : Icons.lock_rounded, color: context.theme.primaryColor),
+                          icon: Icon(isObscured ? Icons.lock_rounded : Icons.lock_open_rounded, color: context.theme.primaryColor),
                         ))
                       : (widget.suffixText == null
                           ? widget.eController!.text.isNullOrWhiteSpace || !widget.enabled
