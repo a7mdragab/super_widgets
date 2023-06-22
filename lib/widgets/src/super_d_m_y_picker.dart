@@ -43,7 +43,7 @@ class SuperDMYPicker extends StatelessWidget {
               Expanded(
                 child: SuperDropdownMenu(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  eHint: 'Day',
+                  hint: 'Day',
                   showSearchBox: false,
                   initialValue: initialDate?.day ?? initialDateTime?.day,
                   items: List.generate(31, (index) => index + 1),
@@ -56,7 +56,7 @@ class SuperDMYPicker extends StatelessWidget {
               Expanded(
                 child: SuperDropdownMenu(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  eHint: 'Month',
+                  hint: 'Month',
                   showSearchBox: false, enabled: enabled,
                   initialValue: initialDate?.month ?? initialDateTime?.month,
                   items: List.generate(12, (index) => index + 1),
@@ -69,7 +69,7 @@ class SuperDMYPicker extends StatelessWidget {
               Expanded(
                 child: SuperDropdownMenu(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  eHint: 'Year',
+                  hint: 'Year',
                   showSearchBox: false,
                   enabled: enabled,
                   initialValue: initialDate?.year ?? initialDateTime?.year,

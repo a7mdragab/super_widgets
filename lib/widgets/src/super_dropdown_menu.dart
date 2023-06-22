@@ -8,7 +8,7 @@ class SuperDropdownMenu extends StatefulWidget {
   final String? name;
   final List<dynamic> items;
   String Function(dynamic)? itemAsString;
-  final String eHint;
+  final String hint;
   final dynamic initialValue;
   final IconData? eIcon;
   final String? eAsset;
@@ -45,7 +45,7 @@ class SuperDropdownMenu extends StatefulWidget {
       this.enableBorders = true,
       this.enabled = true,
       this.asyncItems,
-      this.eHint = '',
+      this.hint = '',
       this.eIcon,
       this.eAsset,
       this.ontap,
@@ -84,8 +84,8 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
               decoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
                     isDense: true,
                     contentPadding: widget.contentPadding,
-                    labelText: widget.eHint.tr,
-                    hintText: '${widget.eHint.tr}...',
+                    labelText: widget.hint.tr,
+                    hintText: '${widget.hint.tr}...',
                   ),
             )
             // favoriteItemProps: FavoriteItemProps(
@@ -103,8 +103,8 @@ class _SuperDropdownMenuState extends State<SuperDropdownMenu> {
           dropdownSearchDecoration: const InputDecoration().applyDefaults(context.theme.inputDecorationTheme).copyWith(
                 isDense: true,
                 contentPadding: widget.contentPadding,
-                labelText: widget.eHint.tr,
-                hintText: '${widget.eHint.tr}...',
+                labelText: widget.hint.tr,
+                hintText: '${widget.hint.tr}...',
               ),
         ),
       ),

@@ -15,7 +15,7 @@ import '../../utils/helpers.dart';
 
 class SuperPhoneField extends StatelessWidget {
   final String? eLabel;
-  final String eHint;
+  final String hint;
   final Color fillColor;
 
   final bool enabled;
@@ -43,7 +43,7 @@ class SuperPhoneField extends StatelessWidget {
     this.initialDialCode = '+20',
     this.initialCountryCode,
     this.initialPhone = '',
-    this.eHint = 'Phone number',
+    this.hint = 'Phone number',
     this.eLabel,
     this.fillColor = Colors.white,
     this.onPhoneChanged,
@@ -167,6 +167,7 @@ class SuperPhoneField extends StatelessWidget {
             dropdownIcon: Icon(Icons.arrow_drop_down, color: Get.theme.primaryColor),
 
             flagsButtonPadding: EdgeInsets.only(left: 16),
+
             ///region Decoration
             decoration: inputDecoration ??
                 const InputDecoration().applyDefaults(Get.theme.inputDecorationTheme).copyWith(
@@ -179,8 +180,8 @@ class SuperPhoneField extends StatelessWidget {
                       floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
                       labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
                       fillColor: fillColor,
-                      labelText: (eLabel ?? eHint).tr,
-                      hintText: eHint.tr,
+                      labelText: (eLabel ?? hint).tr,
+                      hintText: hint.tr,
                     ),
 
             ///endregion Decoration

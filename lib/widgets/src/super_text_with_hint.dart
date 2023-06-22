@@ -4,13 +4,12 @@ import 'package:dart_extensions/dart_extensions.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-
 class SuperTextWithHint extends StatelessWidget {
-  final String eHint;
+  final String hint;
   final String eText;
   final Color? color;
 
-  const SuperTextWithHint(this.eText, this.eHint, {super.key, this.color});
+  const SuperTextWithHint(this.eText, this.hint, {super.key, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class SuperTextWithHint extends StatelessWidget {
           text: eText,
           style: context.textTheme.displayMedium,
         ),
-        TextSpan(text: eHint, style: context.textTheme.bodyMedium),
+        TextSpan(text: hint, style: context.textTheme.bodyMedium),
       ])),
     );
   }

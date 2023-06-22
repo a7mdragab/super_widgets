@@ -16,7 +16,7 @@ import '../../utils/helpers.dart';
 
 class SuperEditText extends StatefulWidget {
   final TextEditingController? eController;
-  final String eHint;
+  final String hint;
   final String? eLabel;
   final String? eAsset;
 
@@ -57,7 +57,7 @@ class SuperEditText extends StatefulWidget {
   const SuperEditText(
     this.eController, {
     super.key,
-    this.eHint = '',
+    this.hint = '',
     this.eLabel,
     this.eAsset,
     this.fillColor = Colors.white,
@@ -103,7 +103,7 @@ class SuperEditTextState extends State<SuperEditText> {
       textDirection: widget.textDirection ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr),
       child: FormBuilderTextField(
         // showCursor: true,
-        name: widget.eHint,
+        name: widget.hint,
         enabled: widget.enabled,
         maxLines: widget.maxLines,
         autovalidateMode: widget.autovalidateMode,
@@ -140,8 +140,8 @@ class SuperEditTextState extends State<SuperEditText> {
               labelStyle: context.textTheme.bodyMedium!.copyWith(color: context.theme.primaryColor),
               fillColor: widget.fillColor,
               suffixText: widget.suffixText,
-              labelText: (widget.eLabel ?? widget.eHint).tr,
-              hintText: widget.eHint.tr,
+              labelText: (widget.eLabel ?? widget.hint).tr,
+              hintText: widget.hint.tr,
               // prefixIconConstraints: BoxConstraints.tightForFinite(width: 30),
               prefixIcon: widget.prefixIconData == null
                   ? widget.prefixWidget
