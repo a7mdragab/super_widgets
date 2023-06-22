@@ -180,7 +180,7 @@ class SuperEditTextState extends State<SuperEditText> {
         textDirection: widget.textDirection ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr),
         textAlign: widget.textAlign ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left),
         validator: FormBuilderValidators.compose(widget.validators ?? []),
-        textInputType: widget.textInputType,
+        keyboardType: widget.textInputType,
       ),
     );
   }
