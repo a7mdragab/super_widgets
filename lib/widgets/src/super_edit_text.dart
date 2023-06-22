@@ -17,7 +17,7 @@ import '../../utils/helpers.dart';
 class SuperEditText extends StatefulWidget {
   final TextEditingController? eController;
   final String hint;
-  final String? eLabel;
+  final String? label;
   final String? eAsset;
 
   final Widget? suffixWidget;
@@ -58,7 +58,7 @@ class SuperEditText extends StatefulWidget {
     this.eController, {
     super.key,
     this.hint = '',
-    this.eLabel,
+    this.label,
     this.eAsset,
     this.fillColor = Colors.white,
     this.keyboardType = TextInputType.text,
@@ -140,7 +140,7 @@ class SuperEditTextState extends State<SuperEditText> {
               labelStyle: context.textTheme.bodyMedium!.copyWith(color: context.theme.primaryColor),
               fillColor: widget.fillColor,
               suffixText: widget.suffixText,
-              labelText: (widget.eLabel ?? widget.hint).tr,
+              labelText: (widget.label ?? widget.hint).tr,
               hintText: widget.hint.tr,
               // prefixIconConstraints: BoxConstraints.tightForFinite(width: 30),
               prefixIcon: widget.prefixIconData == null

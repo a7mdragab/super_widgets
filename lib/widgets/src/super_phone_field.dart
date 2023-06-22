@@ -14,7 +14,7 @@ import 'package:super_widgets/utils/country.dart';
 import '../../utils/helpers.dart';
 
 class SuperPhoneField extends StatelessWidget {
-  final String? eLabel;
+  final String? label;
   final String hint;
   final Color fillColor;
 
@@ -44,7 +44,7 @@ class SuperPhoneField extends StatelessWidget {
     this.initialCountryCode,
     this.initialPhone = '',
     this.hint = 'Phone number',
-    this.eLabel,
+    this.label,
     this.fillColor = Colors.white,
     this.onPhoneChanged,
     this.onCountryChanged,
@@ -180,7 +180,7 @@ class SuperPhoneField extends StatelessWidget {
                       floatingLabelStyle: context.textTheme.titleSmall!.copyWith(color: context.theme.primaryColor),
                       labelStyle: context.textTheme.bodyLarge!.copyWith(color: context.theme.primaryColor),
                       fillColor: fillColor,
-                      labelText: (eLabel ?? hint).tr,
+                      labelText: (label ?? hint).tr,
                       hintText: hint.tr,
                     ),
 
