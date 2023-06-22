@@ -44,7 +44,7 @@ class SuperEditText extends StatefulWidget {
 
   final void Function(String?)? onChanged;
 
-  final TextInputType keyboardType;
+  final TextInputType textInputType;
   final TextInputAction? textInputAction;
 
   final EdgeInsets? contentPadding;
@@ -61,7 +61,7 @@ class SuperEditText extends StatefulWidget {
     this.label,
     this.eAsset,
     this.fillColor = Colors.white,
-    this.keyboardType = TextInputType.text,
+    this.textInputType = TextInputType.text,
     this.textAlign,
     this.textDirection,
     this.textInputAction,
@@ -180,7 +180,7 @@ class SuperEditTextState extends State<SuperEditText> {
         textDirection: widget.textDirection ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr),
         textAlign: widget.textAlign ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left),
         validator: FormBuilderValidators.compose(widget.validators ?? []),
-        keyboardType: widget.keyboardType,
+        textInputType: widget.textInputType,
       ),
     );
   }

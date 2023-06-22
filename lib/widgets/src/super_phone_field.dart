@@ -160,7 +160,7 @@ class SuperPhoneField extends StatelessWidget {
                   },
             textAlign: TextAlign.left,
             validator: !enableValidate || validators.isNullOrEmpty ? null : FormBuilderValidators.compose(validators ?? []),
-            keyboardType: TextInputType.phone,
+            textInputType: TextInputType.phone,
 
             style: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
             dropdownTextStyle: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
