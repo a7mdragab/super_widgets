@@ -160,13 +160,13 @@ class SuperPhoneField extends StatelessWidget {
                   },
             textAlign: TextAlign.left,
             validator: !enableValidate || validators.isNullOrEmpty ? null : FormBuilderValidators.compose(validators ?? []),
-            textInputType: TextInputType.phone,
+            keyboardType: TextInputType.phone,
 
             style: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
             dropdownTextStyle: Get.textTheme.bodyMedium!.copyWith(color: Get.theme.primaryColor),
             dropdownIcon: Icon(Icons.arrow_drop_down, color: Get.theme.primaryColor),
 
-            flagsButtonPadding: EdgeInsets.only(left: 16),
+            flagsButtonPadding: const EdgeInsets.only(left: 16),
 
             ///region Decoration
             decoration: inputDecoration ??
