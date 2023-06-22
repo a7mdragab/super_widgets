@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:list_ext/list_ext.dart';
+import 'package:ready_extensions/ready_extensions.dart';
 import 'package:super_widgets/super_widgets.dart';
 
 import 'super_labeled_check_box.dart';
@@ -29,7 +31,7 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
   final double crossAxisSpacing;
   final double mainAxisSpacing;
 
-  final dynamic initialValue;
+  final List<dynamic> initialValue;
 
   SuperCheckBoxGroupGrid(
       {super.key,
@@ -53,7 +55,10 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       this.enableRTL = false,
       this.validators = const []}) {
     itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
-    selectedItems = [...initialValue];
+    if (initialValue.isNotNullOrEmpty) {
+      selectedItems = [...initialValue];
+    }
+    // mPrint('initialValue = $initialValue');
     this.contentPadding = contentPadding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
   }
 
@@ -89,6 +94,11 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
                       value: selectedItems.contains(obj),
                       onChanged: (b) {
                         if (b == true) {
+                          if (obj is String && obj.isNullOrEmptyOrWhiteSpace) {
+                            mPrint('obj = $obj isNullOrEmptyOrWhiteSpace');
+                            selectedItems.remove(obj);
+                            return;
+                          }
                           if (!selectedItems.contains(obj)) selectedItems.add(obj);
                         } else {
                           selectedItems.remove(obj);

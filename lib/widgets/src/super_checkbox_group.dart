@@ -39,6 +39,7 @@ class SuperCheckBoxGroup extends StatefulWidget {
       this.enabled = true,
       this.enableRTL = false,
       this.validators = const []}) {
+    // mPrint('initialValue = $initialValue');
     itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
   }
 

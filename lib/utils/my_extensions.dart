@@ -261,5 +261,14 @@ extension StringNullExtension on String? {
 extension AllNumExtension on num {
   double get h => Get.mediaQuery.size.height * this;
   double get w => Get.mediaQuery.size.width * this;
+  Widget get hs => SizedBox(width: toDouble());
+  Widget get vs => SizedBox(height: toDouble());
+
+  EdgeInsets get allPadding => EdgeInsets.all(toDouble());
+  EdgeInsets get hPadding => EdgeInsets.symmetric(horizontal: toDouble());
+  EdgeInsets get vPadding => EdgeInsets.symmetric(vertical: toDouble());
+
+  BorderRadius get borderRadius => BorderRadius.circular(toDouble());
+
   String get formatWithCommas => toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (match) => '${match[1]},');
 }
