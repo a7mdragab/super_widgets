@@ -2,6 +2,7 @@ import 'package:dart_extensions/dart_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:list_ext/list_ext.dart';
+import 'package:super_widgets/home/home.dart';
 import 'package:time/time.dart';
 
 import '../../utils/constants.dart';
@@ -180,24 +181,27 @@ class SuperImagePickViewState extends State<SuperImagePickView> {
     //           },
     //   ),
     // );
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
+    return Align(
+      alignment: LanguageService.to.alignmentReverseTop,
+      // top: 0,
+      // left: 0,
+      // right: 0,
       // alignment: Alignment.topLeft,
       child: SuperImageView(
         color: Colors.black54,
-        shape: widget.shape,
+        shape: BoxShape.circle,
         icon: IconButton(
           icon: const Icon(Icons.close, color: Colors.white),
-          onPressed: widget.dismissFunction != null
-              ? widget.dismissFunction!()
-              : () {
-                  setState(() {
-                    widget.imageClass.clean();
-                    widget.onChanged?.call();
-                  });
-                },
+          onPressed: !widget.enableChange
+              ? null
+              : widget.dismissFunction != null
+                  ? widget.dismissFunction!()
+                  : () {
+                      setState(() {
+                        widget.imageClass.clean();
+                        widget.onChanged?.call();
+                      });
+                    },
         ),
       ),
     );

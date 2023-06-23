@@ -23,7 +23,7 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
   final List<dynamic> items;
   final List<String? Function(dynamic)> validators;
   final void Function(List<dynamic>?)? onChanged;
-  String Function(dynamic)? itemAsString;
+  late final String Function(dynamic)? itemAsString;
 
   late final EdgeInsets? contentPadding;
   final int crossAxisCount;
@@ -39,7 +39,7 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       this.itemAsString,
       this.optionsOrientation = OptionsOrientation.wrap,
       this.onChanged,
-      contentPadding,
+      this.contentPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       this.childAspectRatio,
       this.crossAxisCount = 2,
       this.crossAxisSpacing = 10.0,
@@ -59,7 +59,6 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       selectedItems = [...initialValue];
     }
     // mPrint('initialValue = $initialValue');
-    this.contentPadding = contentPadding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8);
   }
 
   final _selectedItems = <dynamic>[].obs;

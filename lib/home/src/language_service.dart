@@ -40,6 +40,8 @@ class LanguageService extends GetxController implements GetxService {
   //Updates
   Alignment get alignment => isArabic ? Alignment.centerRight : Alignment.centerLeft;
   Alignment get alignmentReverse => !isArabic ? Alignment.centerRight : Alignment.centerLeft;
+  Alignment get alignmentReverseTop => !isArabic ? Alignment.topRight : Alignment.topLeft;
+  Alignment get alignmentReverseBottom => !isArabic ? Alignment.bottomRight : Alignment.bottomLeft;
   TextDirection get textDirection => isArabic ? TextDirection.rtl : TextDirection.ltr;
   TextDirection get textDirectionReverse => !isArabic ? TextDirection.rtl : TextDirection.ltr;
   TextAlign get textAlign => isArabic ? TextAlign.right : TextAlign.left;
