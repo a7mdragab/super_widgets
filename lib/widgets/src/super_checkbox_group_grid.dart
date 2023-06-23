@@ -36,7 +36,7 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
   SuperCheckBoxGroupGrid(
       {super.key,
       required this.items,
-      this.itemAsString,
+      itemAsString,
       this.optionsOrientation = OptionsOrientation.wrap,
       this.onChanged,
       this.contentPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -54,7 +54,7 @@ class SuperCheckBoxGroupGrid extends StatelessWidget {
       this.enabled = true,
       this.enableRTL = false,
       this.validators = const []}) {
-    itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
+    this.itemAsString = itemAsString ?? ((dynamic s) => s.toString().tr);
     if (initialValue.isNotNullOrEmpty) {
       selectedItems = [...initialValue];
     }
