@@ -5,7 +5,7 @@ export 'src/dashboard/super_infocard.dart';
 export 'src/super_decorated_container.dart';
 export 'src/fade_animator.dart';
 export 'src/labeled_circular_card.dart';
-export 'src/dir_manager.dart';
+export '../utils/dir_manager.dart';
 export 'src/navigation_actions.dart';
 export 'src/network_image.dart';
 export 'src/no_items_view.dart';

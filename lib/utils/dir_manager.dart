@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import '../../utils/helpers.dart';
+import 'helpers.dart';
 
-main() {
-  DirManage.renameDirContents(dirPath: '');
-}
+// main() {
+//   DirManage.renameDirContents(dirPath: '');
+// }
 
 class DirManage {
   static Future<List<FileSystemEntity>> renameDirContents({required String dirPath, String from = 'elshab7', String to = 'super'}) {

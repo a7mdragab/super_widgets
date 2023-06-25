@@ -498,7 +498,7 @@ final logger = Logger(
 void mPrint(s) {
   // SmartDialog.showToast('',)
   if (foundation.kDebugMode) {
-    logger.i('$s');
+    logger.i('$s\n');
   }
 }
 
