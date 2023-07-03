@@ -78,7 +78,9 @@ class SuperPhoneField extends StatelessWidget {
   void initCountry() async {
     try {
       if (!initialPhone.isNullOrEmptyOrWhiteSpace) {
-        country = getCountryFromPhoneNum(initialPhone);
+        String phone = initialPhone;
+        if (!initialPhone.startsWith('+')) phone = '+$initialPhone';
+        country = getCountryFromPhoneNum(phone);
       }
       if (country == null && useSimIfAvailable) {
         String? simCode = await FlutterSimCountryCode.simCountryCode;
