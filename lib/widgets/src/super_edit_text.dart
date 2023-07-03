@@ -16,6 +16,9 @@ import '../../utils/helpers.dart';
 
 class SuperEditText extends StatefulWidget {
   final TextEditingController? eController;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocus;
+
   final String hint;
   final String? label;
   final String? eAsset;
@@ -34,7 +37,7 @@ class SuperEditText extends StatefulWidget {
 
   final bool enableValidate = true;
 
-  final void Function()? onSubmitted;
+  final void Function(String?)? onSubmitted;
   final List<String? Function(String?)>? validators;
 
   final bool enabled;
@@ -57,6 +60,8 @@ class SuperEditText extends StatefulWidget {
   const SuperEditText(
     this.eController, {
     super.key,
+    this.focusNode,
+    this.nextFocus,
     this.hint = '',
     this.label,
     this.eAsset,
@@ -103,6 +108,7 @@ class SuperEditTextState extends State<SuperEditText> {
       textDirection: widget.textDirection ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextDirection.rtl : TextDirection.ltr),
       child: FormBuilderTextField(
         // showCursor: true,
+        focusNode: widget.focusNode,
         name: widget.hint,
         enabled: widget.enabled,
         maxLines: widget.maxLines,
@@ -117,11 +123,7 @@ class SuperEditTextState extends State<SuperEditText> {
         },
         // style: const TextStyle(fontSize: 14),
         readOnly: widget.ontap != null,
-        onSubmitted: widget.onSubmitted == null
-            ? null
-            : (s) {
-                widget.onSubmitted?.call();
-              },
+
         onTap: widget.ontap ??
             () {
               if (widget.eController!.selection == TextSelection.fromPosition(TextPosition(offset: widget.eController!.text.length - 1))) {
@@ -181,6 +183,11 @@ class SuperEditTextState extends State<SuperEditText> {
         textAlign: widget.textAlign ?? (LanguageService.to.isArabic || isArabic(widget.eController!.text) || widget.enableRTL ? TextAlign.right : TextAlign.left),
         validator: FormBuilderValidators.compose(widget.validators ?? []),
         keyboardType: widget.keyboardType,
+        onSubmitted: (text) => widget.nextFocus != null
+            ? FocusScope.of(context).requestFocus(widget.nextFocus)
+            : widget.onSubmitted != null
+                ? widget.onSubmitted!(text)
+                : null,
       ),
     );
   }
