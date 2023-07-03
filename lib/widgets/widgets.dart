@@ -23,6 +23,7 @@ export 'src/super_datefield.dart';
 export 'src/super_datetime_field.dart';
 export 'src/super_dotted_line.dart';
 export 'src/super_dropdown_menu.dart';
+export 'src/super_country_picker.dart';
 export 'src/super_edit_text.dart';
 export 'src/super_expandable_text.dart';
 export 'src/super_radio_group.dart';
