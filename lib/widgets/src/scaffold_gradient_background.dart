@@ -409,6 +409,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
         } else {
           if (onWillPop == null) {
             Get.back();
+            return true;
           } else {
             return onWillPop!();
           }

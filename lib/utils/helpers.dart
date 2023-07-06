@@ -481,7 +481,14 @@ final logger = Logger(
   printer: PrettyPrinter(
       noBoxingByDefault: false,
       stackTraceBeginIndex: 1,
-      methodCount: 5,
+      methodCount: 4,
+      excludePaths: [
+        '<asynchronous suspension>',
+        'MethodChannel',
+        '_DefaultBinaryMessenger',
+        '_BufferingStreamSubscription',
+        '_RootZone',
+      ],
       // number of method calls to be displayed
       errorMethodCount: 3,
       // number of method calls if stacktrace is provided
