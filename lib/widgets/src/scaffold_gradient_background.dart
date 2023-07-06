@@ -364,7 +364,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
 
   final Widget? decorationImage;
 
-  final void Function()? onWillPop;
+  final Future<bool> Function()? onWillPop;
 
   const ScaffoldGradientBackground({
     this.gradient,
@@ -410,7 +410,7 @@ class ScaffoldGradientBackground extends StatelessWidget {
           if (onWillPop == null) {
             Get.back();
           } else {
-            onWillPop!();
+            return onWillPop!();
           }
         }
         return false;

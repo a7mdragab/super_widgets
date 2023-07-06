@@ -479,9 +479,9 @@ void mShowToast(String msg,
 
 final logger = Logger(
   printer: PrettyPrinter(
-      noBoxingByDefault: true,
-      stackTraceBeginIndex: 0,
-      methodCount: 3,
+      noBoxingByDefault: false,
+      stackTraceBeginIndex: 1,
+      methodCount: 5,
       // number of method calls to be displayed
       errorMethodCount: 3,
       // number of method calls if stacktrace is provided
