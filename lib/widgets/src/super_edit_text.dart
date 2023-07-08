@@ -37,7 +37,7 @@ class SuperEditText extends StatefulWidget {
 
   final bool enableValidate = true;
 
-  final void Function(String?)? onSubmitted;
+  final void Function()? onSubmitted;
   final List<String? Function(String?)>? validators;
 
   final bool enabled;
@@ -186,7 +186,7 @@ class SuperEditTextState extends State<SuperEditText> {
         onSubmitted: (text) => widget.nextFocus != null
             ? FocusScope.of(context).requestFocus(widget.nextFocus)
             : widget.onSubmitted != null
-                ? widget.onSubmitted!(text)
+                ? widget.onSubmitted!()
                 : null,
       ),
     );
