@@ -28,7 +28,7 @@ dependencies:
   shape_of_view_null_safe: ^2.0.0
   curved_progress_bar: ^1.0.2
   progress_indicator: ^0.2.2
-  url_launcher: ^6.1.11
+  url_launcher: ^6.1.12
   dotted_border: ^2.0.0+3
   draggable_scrollbar: ^0.1.0
   flutter_custom_clippers: ^2.1.0
@@ -71,7 +71,7 @@ dependency_overrides:
   ffi: ^2.0.2
   intl: ^0.18.1
   device_info_plus: ^9.0.2
-  permission_handler: ^10.4.1
+  permission_handler: ^10.4.2
   flutter_svg: ^2.0.7
 #  flutter_svg: ^1.0.5
   package_info_plus: ^4.0.2
