@@ -80,16 +80,19 @@ class SuperDecoratedContainer extends StatelessWidget {
       this.child})
       : super(key: key);
 
+  bool get isCircular => shape == BoxShape.circle;
+  bool get hasBorder => border != null || borderColor != null || borderWidth != null;
+
   @override
   Widget build(BuildContext context) {
     final color = this.color ?? Colors.transparent;
-    final bool hasBorder = border != null || borderColor != null || borderWidth != null;
     return Material(
       color: color,
+      type: isCircular ? MaterialType.circle : MaterialType.card,
       elevation: elevation,
-      borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+      borderRadius: isCircular ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
       child: ClipRRect(
-        borderRadius: shape == BoxShape.circle ? BorderRadius.zero : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+        borderRadius: isCircular ? BorderRadius.zero : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
         child: Container(
           height: height,
           width: width,
@@ -102,15 +105,15 @@ class SuperDecoratedContainer extends StatelessWidget {
             image: decorationImage,
             gradient: gradient,
             backgroundBlendMode: backgroundBlendMode,
-            borderRadius: shape == BoxShape.circle ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+            borderRadius: isCircular ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
             border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
           ),
           child: child == null
               ? null
-              : shape == BoxShape.circle
-                  ? ClipOval(child: child)
+              : isCircular
+                  ? ClipOval(child: Center(child: child))
                   : ClipRRect(
-                      borderRadius: shape == BoxShape.circle ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+                      borderRadius: isCircular ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
                       child: child,
                     ),
         ),
