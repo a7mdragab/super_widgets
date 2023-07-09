@@ -86,38 +86,64 @@ class SuperDecoratedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = this.color ?? Colors.transparent;
-    return Material(
-      color: color,
-      type: isCircular ? MaterialType.circle : MaterialType.card,
-      elevation: elevation,
-      borderRadius: isCircular ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-      child: ClipRRect(
-        borderRadius: isCircular ? BorderRadius.zero : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-        child: Container(
-          height: height,
-          width: width,
-          margin: margin,
-          padding: padding,
-          decoration: BoxDecoration(
+    return elevation == 0
+        ? Container(
+            height: height,
+            width: width,
+            margin: margin,
+            padding: padding,
+            decoration: BoxDecoration(
+              color: color,
+              shape: shape,
+              boxShadow: boxShadow,
+              image: decorationImage,
+              gradient: gradient,
+              backgroundBlendMode: backgroundBlendMode,
+              borderRadius: isCircular ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+              border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
+            ),
+            child: child == null
+                ? null
+                : isCircular
+                    ? ClipOval(child: Center(child: child))
+                    : ClipRRect(
+                        borderRadius: isCircular ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+                        child: child,
+                      ),
+          )
+        : Material(
             color: color,
-            shape: shape,
-            boxShadow: boxShadow,
-            image: decorationImage,
-            gradient: gradient,
-            backgroundBlendMode: backgroundBlendMode,
+            type: isCircular ? MaterialType.circle : MaterialType.card,
+            elevation: elevation,
+            clipBehavior: Clip.antiAlias,
             borderRadius: isCircular ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-            border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
-          ),
-          child: child == null
-              ? null
-              : isCircular
-                  ? ClipOval(child: Center(child: child))
-                  : ClipRRect(
-                      borderRadius: isCircular ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
-                      child: child,
-                    ),
-        ),
-      ),
-    );
+            child: ClipRRect(
+              borderRadius: isCircular ? BorderRadius.zero : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+              child: Container(
+                height: height,
+                width: width,
+                margin: margin,
+                padding: padding,
+                decoration: BoxDecoration(
+                  color: color,
+                  shape: shape,
+                  boxShadow: boxShadow,
+                  image: decorationImage,
+                  gradient: gradient,
+                  backgroundBlendMode: backgroundBlendMode,
+                  borderRadius: isCircular ? null : borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+                  border: hasBorder ? border ?? (Border.all(color: borderColor ?? const Color(0xFF000000), width: borderWidth ?? 1)) : null,
+                ),
+                child: child == null
+                    ? null
+                    : isCircular
+                        ? ClipOval(child: Center(child: child))
+                        : ClipRRect(
+                            borderRadius: isCircular ? BorderRadius.zero : BorderRadius.all(Radius.circular(borderRadius ?? 0)),
+                            child: child,
+                          ),
+              ),
+            ),
+          );
   }
 }
