@@ -480,7 +480,7 @@ void mShowToast(String msg,
 final logger = Logger(
   printer: PrettyPrinter(
       noBoxingByDefault: false,
-      stackTraceBeginIndex: 1,
+      stackTraceBeginIndex: 0,
       methodCount: 4,
       excludePaths: [
         '<asynchronous suspension>',
